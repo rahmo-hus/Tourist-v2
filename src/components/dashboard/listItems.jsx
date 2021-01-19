@@ -25,7 +25,7 @@ export function MainListItems(){
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Pregled zadataka" />
         </ListItem>
         <ListItem button 
         selected={component==='A'} 
@@ -35,13 +35,13 @@ export function MainListItems(){
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
-            <ListItemText primary="Orders" />
+            <ListItemText primary="Dodavanje zadatka" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary="Customers" />
+            <ListItemText primary="Statistika" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>

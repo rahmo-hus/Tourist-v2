@@ -24,6 +24,17 @@ const taskReducer = (state = initState, action) =>{
                 ...state,
                 inProgress:true
             }
+        case "UPLOAD_SUCCESSFUL":
+            return state
+        
+        case "UPLOAD_ERROR":
+            return {
+                ...state,
+                err:action.err
+            }
+
+        case "UPLOAD_PENDING":
+            return state;
         default:
             return state;
     }
