@@ -1,6 +1,6 @@
 import { Button, Fab, Grid, Paper, TextField } from "@material-ui/core";
 import React from "react";
-import { createTask } from "../../store/actions/taskActions";
+import { createTask, uploadFile } from "../../store/actions/taskActions";
 import { connect } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import Alert from "@material-ui/lab/Alert";
@@ -33,7 +33,8 @@ class AddAssignment extends React.Component {
   };
 
   handleFileChange = (event) =>{
-    console.log(event.target.files[0]);
+    console.log(event.target.files[0])
+    this.props.uploadFile(event.target.files[0])
   }
   render() {
     return (
@@ -152,6 +153,7 @@ class AddAssignment extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     createTask: (task) => dispatch(createTask(task)),
+    uploadFile: (file) => dispatch(uploadFile(file))
   };
 };
 
