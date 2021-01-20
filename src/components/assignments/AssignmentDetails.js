@@ -104,6 +104,17 @@ function AssignmentDetails(props) {
             >
               {task.coordinates}
             </Typography>
+            {task.imageURL !== '' && 
+            (<><Divider />
+            <Typography
+              className={classes.pos}
+              align="center"
+              variant="body1"
+              component="p"
+            >
+              <img src={task.imageURL} alt="slika" />
+            </Typography> </>)
+            }
           </CardContent>
           <CardActions>
             <Button size="small">Neki batn za izmjenu</Button>

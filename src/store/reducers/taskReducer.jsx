@@ -1,7 +1,8 @@
 const initState = {
     error: '',
-    success:false,
-    uploadProgress:0
+    success:'',
+    uploadProgress:0,
+    imageURL:''
 }
 const taskReducer = (state = initState, action) =>{
 
@@ -11,7 +12,7 @@ const taskReducer = (state = initState, action) =>{
             return{
                 ...state,
                 inProgress:false,
-                success: true
+                success: 'Uspjesno dodato'
             }
         case "CREATE_TASK_ERROR":
             console.log("error create task", action.err);
@@ -26,7 +27,10 @@ const taskReducer = (state = initState, action) =>{
                 inProgress:true
             }
         case "UPLOAD_SUCCESS":
-            return state
+            return {
+                ...state,
+                imageURL:action.imageURL
+            }
         
         case "UPLOAD_ERROR":
             return {
@@ -38,6 +42,14 @@ const taskReducer = (state = initState, action) =>{
             return {
                 ...state,
                 uploadProgress:action.uploadProgress
+            }
+        case "RESTORE_DEFAULTS":
+            return {
+                ...state,
+                imageURL:action.imageURL,
+                uploadProgress:action.uploadProgress,
+                err:action.err,
+                success:''
             }
         default:
             return state;

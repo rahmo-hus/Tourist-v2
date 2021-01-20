@@ -1,6 +1,19 @@
-import { Box, Button, Fab, Grid, Paper, TextField, withStyles, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Fab,
+  Grid,
+  Paper,
+  TextField,
+  withStyles,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
-import { createTask, uploadFile } from "../../store/actions/taskActions";
+import {
+  createTask,
+  uploadFile,
+  restoreDefaults,
+} from "../../store/actions/taskActions";
 import { connect } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import Alert from "@material-ui/lab/Alert";
@@ -13,24 +26,25 @@ const initState = {
   locationDescription: "",
 };
 
- const BorderLinearProgress = withStyles((theme) => ({
-   root: {
-     height: 15,
-     borderRadius: 5,
-   },
-   colorPrimary: {
-     backgroundColor: "#EEEEEE",
-   },
-   bar: {
-     borderRadius: 5,
-     backgroundColor: "#1a90ff",
-   },
- }))(LinearProgress);
+const BorderLinearProgress = withStyles((theme) => ({
+  root: {
+    height: 15,
+    borderRadius: 5,
+  },
+  colorPrimary: {
+    backgroundColor: "#EEEEEE",
+  },
+  bar: {
+    borderRadius: 5,
+    backgroundColor: "#1a90ff",
+  },
+}))(LinearProgress);
 
 class AddAssignment extends React.Component {
   constructor(props) {
     super(props);
     this.state = Object.assign(initState);
+    this.props.restoreDefaults()
   }
 
   handleChange = (event) => {
@@ -41,21 +55,29 @@ class AddAssignment extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.createTask(this.state);
+    this.props.createTask({
+      ...this.state,
+      imageURL: this.props.imageURL
+    });
   };
   resetState = () => {
     this.setState(Object.assign(initState));
   };
 
-  handleFileChange = (event) =>{
-    console.log(event.target.files[0])
-    this.props.uploadFile(event.target.files[0])
-  }
+  handleFileChange = (event) => {
+    console.log(event.target.files[0]);
+    this.props.uploadFile(event.target.files[0]);
+  };
   render() {
     return (
       <form autoComplete="off" onSubmit={this.handleSubmit}>
         {this.props.error && (
           <Alert severity="danger">{this.props.error}</Alert>
+        )}
+        {this.props.addTaskSuccess !== "" && (
+          <Alert style={{ justify: "center" }} severity="success">
+            {this.props.addTaskSuccess}
+          </Alert>
         )}
         <Paper style={{ padding: 16 }}>
           <Grid
@@ -119,24 +141,25 @@ class AddAssignment extends React.Component {
               />
             </Grid>
             <Grid item xs={12}>
-            <div className="mg20">
-            {this.props.uploadProgress !== 0 && this.props.uploadProgress !==100 && (
-              <Box className="mb25" display="flex" alignItems="center">
-                <Box width="100%" mr={1}>
-                  <BorderLinearProgress
-                    variant="determinate"
-                    value={this.props.uploadProgress}
-                  />
-                </Box>
-                <Box minWidth={35}>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                  >{`${this.props.uploadProgress}%`}</Typography>
-                </Box>
-              </Box>
-            )}
-            </div>
+              <div className="mg20">
+                {this.props.uploadProgress !== 0 &&
+                  this.props.uploadProgress !== 100 && (
+                    <Box className="mb25" display="flex" alignItems="center">
+                      <Box width="100%" mr={1}>
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={this.props.uploadProgress}
+                        />
+                      </Box>
+                      <Box minWidth={35}>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                        >{`${this.props.uploadProgress}%`}</Typography>
+                      </Box>
+                    </Box>
+                  )}
+              </div>
             </Grid>
             <Grid container justify="center" alignItems="center">
               <label htmlFor="upload-photo">
@@ -156,7 +179,18 @@ class AddAssignment extends React.Component {
                 >
                   <AddIcon />
                 </Fab>
+                <br />
+                <br />
               </label>
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+              {this.props.imageURL !== "" ? (
+                <a href={this.props.imageURL} target="_blank">
+                  <img src={this.props.imageURL} alt="photo" width="300" />
+                </a>
+              ) : (
+                <p>Nije dodana nijedna fotografija</p>
+              )}
             </Grid>
             <Grid item style={{ marginTop: 16 }}>
               <Button
@@ -188,7 +222,8 @@ class AddAssignment extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     createTask: (task) => dispatch(createTask(task)),
-    uploadFile: (file) => dispatch(uploadFile(file))
+    uploadFile: (file) => dispatch(uploadFile(file)),
+    restoreDefaults: () => dispatch(restoreDefaults()),
   };
 };
 
@@ -196,8 +231,9 @@ const mapStateToProps = (state) => {
   return {
     error: state.task.error,
     inProgress: state.task.inProgress,
-    success: state.task.success,
-    uploadProgress: state.task.uploadProgress
+    addTaskSuccess: state.task.success,
+    uploadProgress: state.task.uploadProgress,
+    imageURL: state.task.imageURL,
   };
 };
 

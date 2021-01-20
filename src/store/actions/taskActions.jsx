@@ -45,13 +45,27 @@ export const uploadFile = (file) =>{
         err:error
       })
     }, ()=> {
-      dispatch({
-        type:"UPLOAD_SUCCESS",
-        uploadProgress: 0
+      firebase.storage().ref('nesto').child(file.name).getDownloadURL().then(url=>{
+        console.log(url)
+        dispatch({
+          type:"UPLOAD_SUCCESS",
+          imageURL:url,
+          uploadProgress: 0
+        })
       })
     })
 
    // firebase.uploadFile('/nesto', file, '/nesto');
 
   }
+}
+export const restoreDefaults = () =>{
+    return (dispatch, state, {getFirebase, getFirestore}) =>{
+      dispatch({
+        type:"RESTORE_DEFAULTS",
+        err:null,
+        imageURL: '',
+        uploadProgress: 0
+      })
+    }
 }
