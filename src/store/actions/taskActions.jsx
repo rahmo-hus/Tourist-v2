@@ -1,5 +1,3 @@
-import { useFirebase } from "react-redux-firebase";
-
 export const createTask = (task) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     //in this function we will do some async code to database
@@ -34,9 +32,26 @@ export const uploadFile = (file) =>{
 
     const firebase = getFirebase();
 
-    //console.log(firebase)
+    var uploadTask= firebase.storage().ref(`nesto/${file.name}`).put(file);
 
-    firebase.uploadFile('/nesto', file, '/nesto').then(()=>console.log('yeaaaaaah'))
+    uploadTask.on('state_changed' , (snapshot) =>{
+      dispatch({
+        type: "UPLOAD_PENDING",
+        uploadProgress: Math.round(snapshot.bytesTransferred * 100 / snapshot.totalBytes)
+      });
+    } , (error) => {
+      dispatch({
+        type:"UPLOAD_ERROR",
+        err:error
+      })
+    }, ()=> {
+      dispatch({
+        type:"UPLOAD_SUCCESS",
+        uploadProgress: 0
+      })
+    })
+
+   // firebase.uploadFile('/nesto', file, '/nesto');
 
   }
 }

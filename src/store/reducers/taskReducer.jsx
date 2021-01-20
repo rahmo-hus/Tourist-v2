@@ -1,6 +1,7 @@
 const initState = {
     error: '',
-    success:false
+    success:false,
+    uploadProgress:0
 }
 const taskReducer = (state = initState, action) =>{
 
@@ -24,7 +25,7 @@ const taskReducer = (state = initState, action) =>{
                 ...state,
                 inProgress:true
             }
-        case "UPLOAD_SUCCESSFUL":
+        case "UPLOAD_SUCCESS":
             return state
         
         case "UPLOAD_ERROR":
@@ -34,7 +35,10 @@ const taskReducer = (state = initState, action) =>{
             }
 
         case "UPLOAD_PENDING":
-            return state;
+            return {
+                ...state,
+                uploadProgress:action.uploadProgress
+            }
         default:
             return state;
     }
