@@ -1,6 +1,7 @@
 import { Card, CardContent, Grid, Typography } from "@material-ui/core"
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { makeStyles } from '@material-ui/core/styles';
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles({
     card: {
@@ -18,7 +19,7 @@ const AssignmentSummary = (props) =>{
     const { task } = props;
     return (
         <Grid item xs={12}>
-            <CardActionArea component="a" href={`task/${task.id}`}>
+            <CardActionArea component={Link} to={`task/${task.id}`}>
                 <Card className={classes.card}>
                     <div className={classes.cardDetails}>
                         <CardContent>

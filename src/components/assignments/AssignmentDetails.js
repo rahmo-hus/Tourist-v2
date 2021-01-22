@@ -112,7 +112,7 @@ function AssignmentDetails(props) {
               variant="body1"
               component="p"
             >
-              <img src={task.imageURL} alt="slika" />
+              <img src={task.imageURL} style={{maxWidth:"100%", maxHeight:"100vh", margin: "auto"}} alt="slika" />
             </Typography> </>)
             }
           </CardContent>
