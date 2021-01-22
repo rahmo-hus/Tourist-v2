@@ -59,6 +59,23 @@ export const uploadFile = (file) =>{
 
   }
 }
+
+export const deleteTask = (id) =>{
+  return(dispatch, state, {getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection('tasks').doc(id).delete()
+    .then(()=>{
+      dispatch({
+        type:"DELETE_SUCCESS"
+      })
+    }).catch(err=>{
+      dispatch({
+        type:"DELETE_ERROR",
+        err
+      })
+    })
+  }
+}
 export const restoreDefaults = () =>{
     return (dispatch, state, {getFirebase, getFirestore}) =>{
       dispatch({

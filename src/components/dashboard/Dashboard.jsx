@@ -125,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Dashboard(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const { match } = props;
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -182,8 +182,8 @@ function Dashboard(props) {
                    
                         <Switch>
                             <Route exact path={`${match.path}/`} render={()=> {return <div><h2>Dobrodosli na pocetnu stranicu sistema Tourist</h2></div>}} />
-                            <Route path={`${match.path}/master`} component={AddAssignment} />
-                            <Route path={`${match.path}/summary`} component={AssignmentList} />
+                            <Route path={`${match.path}/addtask`} component={AddAssignment} />
+                            <Route path={`${match.path}/tasks`} component={AssignmentList} />
                             <Route path={`${match.path}/task/:id`} component={AssignmentDetails} />
                         </Switch>
                 

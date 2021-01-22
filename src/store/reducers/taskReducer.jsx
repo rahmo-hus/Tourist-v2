@@ -51,6 +51,14 @@ const taskReducer = (state = initState, action) =>{
                 err:action.err,
                 success:''
             }
+        case "DELETE_SUCCESS":
+            console.log('delete success')
+            return state;
+        case "DELETE_ERROR":
+            return {
+                ...state,
+                err: action.err
+            }
         default:
             return state;
     }
