@@ -30,26 +30,59 @@ export const createTask = (task) => {
 export const uploadFile = (file) =>{
   return (dispatch, state, {getFirebase, getFirestore}) => {
 
-    const firestore = getFirestore()
-    const uploadTask = firestore.storage().ref(`/files/${file.name}`).put(file);
-    dispatch({
-      type:"UPLOAD_PENDING"
-    })
-    uploadTask.on('state_changed', (snapshot) => {
-      console.log(snapshot.bytesTransferred/snapshot.totalBytes)
-    }, 
-    (error) =>{
-      console.log('error occured during upload', error)
+    const firebase = getFirebase();
+
+    var uploadTask= firebase.storage().ref(`nesto/${file.name}`).put(file);
+
+    uploadTask.on('state_changed' , (snapshot) =>{
+      dispatch({
+        type: "UPLOAD_PENDING",
+        uploadProgress: Math.round(snapshot.bytesTransferred * 100 / snapshot.totalBytes)
+      });
+    } , (error) => {
       dispatch({
         type:"UPLOAD_ERROR",
         err:error
       })
-    }, 
-    () => dispatch({
-      type:"UPLOAD_SUCCESSFUL",
-      file: file
-    }))
+    }, ()=> {
+      firebase.storage().ref('nesto').child(file.name).getDownloadURL().then(url=>{
+        console.log(url)
+        dispatch({
+          type:"UPLOAD_SUCCESS",
+          imageURL:url,
+          uploadProgress: 0
+        })
+      })
+    })
 
+   // firebase.uploadFile('/nesto', file, '/nesto');
 
   }
+}
+
+export const deleteTask = (id) =>{
+  return(dispatch, state, {getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection('tasks').doc(id).delete()
+    .then(()=>{
+      dispatch({
+        type:"DELETE_SUCCESS"
+      })
+    }).catch(err=>{
+      dispatch({
+        type:"DELETE_ERROR",
+        err
+      })
+    })
+  }
+}
+export const restoreDefaults = () =>{
+    return (dispatch, state, {getFirebase, getFirestore}) =>{
+      dispatch({
+        type:"RESTORE_DEFAULTS",
+        err:null,
+        imageURL: '',
+        uploadProgress: 0,
+      })
+    }
 }

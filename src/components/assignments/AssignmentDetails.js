@@ -5,12 +5,15 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import React from "react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import AlertDialog from "../dialogs/AlertDialog";
+import FormDialog from '../dialogs/FormDialog';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +32,9 @@ const useStyles = makeStyles({
 });
 
 function AssignmentDetails(props) {
+  const [dialogOpen, setDialogOpen] = React.useState(false)
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
   const classes = useStyles();
   const { task } = props;
   if (task) {
@@ -104,9 +110,31 @@ function AssignmentDetails(props) {
             >
               {task.coordinates}
             </Typography>
+            {task.imageURL !== "" && (
+              <>
+                <Divider />
+                <Typography
+                  className={classes.pos}
+                  align="center"
+                  variant="body1"
+                  component="p"
+                >
+                  <img
+                    src={task.imageURL}
+                    style={{
+                      maxWidth: "100%",
+                      maxHeight: "100vh",
+                      margin: "auto",
+                    }}
+                    alt="slika"
+                  />
+                </Typography>{" "}
+              </>
+            )}
           </CardContent>
           <CardActions>
-            <Button size="small">Neki batn za izmjenu</Button>
+            <FormDialog id={props.match.params.id} task={task}/>
+            <AlertDialog id={props.match.params.id} />
           </CardActions>
         </Card>
       </div>

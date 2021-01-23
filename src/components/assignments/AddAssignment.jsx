@@ -1,9 +1,19 @@
-import { Button, Fab, Grid, Paper, TextField } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  Paper
+} from "@material-ui/core";
 import React from "react";
-import { createTask, uploadFile } from "../../store/actions/taskActions";
+import {
+  createTask,
+  uploadFile,
+  restoreDefaults,
+} from "../../store/actions/taskActions";
 import { connect } from "react-redux";
-import AddIcon from "@material-ui/icons/Add";
 import Alert from "@material-ui/lab/Alert";
+import ProgressBar from "../layout/ProgressBar"
+import UploadBox from "../layout/UploadBox"
+import AddTaskForm from "../layout/forms/AddTaskForm";
 
 const initState = {
   title: "",
@@ -12,10 +22,12 @@ const initState = {
   locationDescription: "",
 };
 
+
 class AddAssignment extends React.Component {
   constructor(props) {
     super(props);
     this.state = Object.assign(initState);
+    this.props.restoreDefaults()
   }
 
   handleChange = (event) => {
@@ -26,21 +38,29 @@ class AddAssignment extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.createTask(this.state);
+    this.props.createTask({
+      ...this.state,
+      imageURL: this.props.imageURL
+    });
   };
   resetState = () => {
     this.setState(Object.assign(initState));
   };
 
-  handleFileChange = (event) =>{
-    console.log(event.target.files[0])
-    this.props.uploadFile(event.target.files[0])
-  }
+  handleFileChange = (event) => {
+    console.log(event.target.files[0]);
+    this.props.uploadFile(event.target.files[0]);
+  };
   render() {
     return (
       <form autoComplete="off" onSubmit={this.handleSubmit}>
         {this.props.error && (
           <Alert severity="danger">{this.props.error}</Alert>
+        )}
+        {this.props.addTaskSuccess !== "" && (
+          <Alert style={{ justify: "center" }} severity="success">
+            {this.props.addTaskSuccess}
+          </Alert>
         )}
         <Paper style={{ padding: 16 }}>
           <Grid
@@ -49,79 +69,23 @@ class AddAssignment extends React.Component {
             alignItems="center"
             spacing={3}
           >
+          <Grid item xs={12}>
+              <AddTaskForm task={this.state} handleChange={this.handleChange} />
+          </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                required
-                id="title"
-                value={this.state.title}
-                name="title"
-                label="Naziv zadatka"
-                variant="outlined"
-                onChange={this.handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                required
-                value={this.state.gameDescription}
-                multiline
-                id="gameDescription"
-                type="text"
-                name="gameDescription"
-                rows={4}
-                onChange={this.handleChange}
-                label="Opis igre"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                id="coordinates"
-                required
-                value={this.state.coordinates}
-                name="lat"
-                variant="outlined"
-                onChange={this.handleChange}
-                label="Koordinate lokacije"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                required
-                variant="outlined"
-                value={this.state.locationDescription}
-                multiline
-                id="locationDescription"
-                onChange={this.handleChange}
-                type="text"
-                name="locationDescription"
-                rows={4}
-                label="Opis lokacije (po zavrsetku)"
-              />
+              <ProgressBar uploadProgress={this.props.uploadProgress} />
             </Grid>
             <Grid container justify="center" alignItems="center">
-                <label htmlFor="upload-photo">
-                  <br />
-                  <input
-                    style={{ display: "none" }}
-                    id="upload-photo"
-                    name="upload-photo"
-                    type="file"
-                    onChange={this.handleFileChange}
-                  />
-                  <Fab
-                    color="primary"
-                    size="small"
-                    component="span"
-                    aria-label="add"
-                  >
-                    <AddIcon />
-                  </Fab>
-                </label>
+              <UploadBox handleFileChange = {this.handleFileChange} />
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+              {this.props.imageURL !== "" ? (
+                <a href={this.props.imageURL} target="_blank">
+                  <img src={this.props.imageURL} alt="photo" width="300" />
+                </a>
+              ) : (
+                <p>Nije dodana nijedna fotografija</p>
+              )}
             </Grid>
             <Grid item style={{ marginTop: 16 }}>
               <Button
@@ -153,7 +117,8 @@ class AddAssignment extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     createTask: (task) => dispatch(createTask(task)),
-    uploadFile: (file) => dispatch(uploadFile(file))
+    uploadFile: (file) => dispatch(uploadFile(file)),
+    restoreDefaults: () => dispatch(restoreDefaults()),
   };
 };
 
@@ -161,7 +126,9 @@ const mapStateToProps = (state) => {
   return {
     error: state.task.error,
     inProgress: state.task.inProgress,
-    success: state.task.success,
+    addTaskSuccess: state.task.success,
+    uploadProgress: state.task.uploadProgress,
+    imageURL: state.task.imageURL,
   };
 };
 

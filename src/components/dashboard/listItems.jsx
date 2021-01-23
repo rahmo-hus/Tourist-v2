@@ -21,7 +21,7 @@ export function MainListItems(){
          selected={component==='D'} 
          onClick={()=>setComponent('D')} 
          component={Link} 
-         to="/dashboard/summary">
+         to="/dashboard/tasks">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
@@ -31,7 +31,7 @@ export function MainListItems(){
         selected={component==='A'} 
         onClick={()=>setComponent('A')} 
         component={Link} 
-        to="/dashboard/master">
+        to="/dashboard/addtask">
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
