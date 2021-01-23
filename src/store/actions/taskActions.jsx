@@ -82,7 +82,7 @@ export const restoreDefaults = () =>{
         type:"RESTORE_DEFAULTS",
         err:null,
         imageURL: '',
-        uploadProgress: 0
+        uploadProgress: 0,
       })
     }
 }

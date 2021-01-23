@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import AlertDialog from "../dialogs/AlertDialog";
+import FormDialog from '../dialogs/FormDialog';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles({
@@ -109,21 +110,31 @@ function AssignmentDetails(props) {
             >
               {task.coordinates}
             </Typography>
-            {task.imageURL !== '' && 
-            (<><Divider />
-            <Typography
-              className={classes.pos}
-              align="center"
-              variant="body1"
-              component="p"
-            >
-              <img src={task.imageURL} style={{maxWidth:"100%", maxHeight:"100vh", margin: "auto"}} alt="slika" />
-            </Typography> </>)
-            }
+            {task.imageURL !== "" && (
+              <>
+                <Divider />
+                <Typography
+                  className={classes.pos}
+                  align="center"
+                  variant="body1"
+                  component="p"
+                >
+                  <img
+                    src={task.imageURL}
+                    style={{
+                      maxWidth: "100%",
+                      maxHeight: "100vh",
+                      margin: "auto",
+                    }}
+                    alt="slika"
+                  />
+                </Typography>{" "}
+              </>
+            )}
           </CardContent>
           <CardActions>
-            <Button size="small">Izmjeni</Button>
-            <AlertDialog id = {props.match.params.id}  />
+            <FormDialog id={props.match.params.id} task={task}/>
+            <AlertDialog id={props.match.params.id} />
           </CardActions>
         </Card>
       </div>

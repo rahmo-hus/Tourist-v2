@@ -57,6 +57,8 @@ function AlertDialog(props) {
             }}
             color="primary"
             autoFocus
+            component={Link}
+            to='/dashboard/tasks'
           >
             Da
           </Button>

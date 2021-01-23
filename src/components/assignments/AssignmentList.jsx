@@ -8,7 +8,7 @@ import {compose } from 'redux'
 
 function ViewAssignment(props) {
     const {tasks} = props;
-    const content = tasks ? tasks.map((task) =>{
+    const content = tasks ? tasks.map((task, key) =>{
         return <AssignmentSummary task={task} /> 
     }) : <></>
     return (
