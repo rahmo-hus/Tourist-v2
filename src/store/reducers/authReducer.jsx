@@ -32,7 +32,6 @@ const authReducer = (state = initState, action) =>{
             inProgress:true
         }
       default:
-        console.log("default", state)
         return state;
     }
 }

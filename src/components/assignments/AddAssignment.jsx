@@ -1,8 +1,4 @@
-import {
-  Button,
-  Grid,
-  Paper
-} from "@material-ui/core";
+import { Button, Grid, Paper } from "@material-ui/core";
 import React from "react";
 import {
   createTask,
@@ -11,8 +7,8 @@ import {
 } from "../../store/actions/taskActions";
 import { connect } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
-import ProgressBar from "../layout/ProgressBar"
-import UploadBox from "../layout/UploadBox"
+import ProgressBar from "../layout/ProgressBar";
+import UploadBox from "../layout/UploadBox";
 import AddTaskForm from "../layout/forms/AddTaskForm";
 
 const initState = {
@@ -22,12 +18,11 @@ const initState = {
   locationDescription: "",
 };
 
-
 class AddAssignment extends React.Component {
   constructor(props) {
     super(props);
     this.state = Object.assign(initState);
-    this.props.restoreDefaults()
+    this.props.restoreDefaults();
   }
 
   handleChange = (event) => {
@@ -40,7 +35,7 @@ class AddAssignment extends React.Component {
     event.preventDefault();
     this.props.createTask({
       ...this.state,
-      imageURL: this.props.imageURL
+      imageURL: this.props.imageURL,
     });
   };
   resetState = () => {
@@ -69,14 +64,14 @@ class AddAssignment extends React.Component {
             alignItems="center"
             spacing={3}
           >
-          <Grid item xs={12}>
+            <Grid item xs={12}>
               <AddTaskForm task={this.state} handleChange={this.handleChange} />
-          </Grid>
+            </Grid>
             <Grid item xs={12}>
               <ProgressBar uploadProgress={this.props.uploadProgress} />
             </Grid>
             <Grid container justify="center" alignItems="center">
-              <UploadBox handleFileChange = {this.handleFileChange} />
+              <UploadBox handleFileChange={this.handleFileChange} />
             </Grid>
             <Grid container justify="center" alignItems="center">
               {this.props.imageURL !== "" ? (

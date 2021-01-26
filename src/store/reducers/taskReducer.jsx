@@ -59,6 +59,13 @@ const taskReducer = (state = initState, action) =>{
                 ...state,
                 err: action.err
             }
+        case "UPDATE_SUCCESS":
+            return state;
+        case "UPDATE_FAILED":
+            return {
+                ...state,
+                err: action.err
+            }
         default:
             return state;
     }

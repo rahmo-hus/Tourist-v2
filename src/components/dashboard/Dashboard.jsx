@@ -18,7 +18,7 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { MainListItems  } from './listItems';
+import MainListItems  from './listItems';
 import AddAssignment from '../assignments/AddAssignment'
 import AssignmentList from '../assignments/AssignmentList'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -152,9 +152,6 @@ function Dashboard(props) {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         Dashboard
           </Typography>
-                    <Button color="secondary" variant="contained" onClick={props.signOut}>
-                        Odjava
-                    </Button>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -171,7 +168,7 @@ function Dashboard(props) {
                 </div>
                 <Divider />
                 <List>
-                    <MainListItems />
+                    <MainListItems signOut = {props.signOut}/>
                 </List>
                 <Divider />
                

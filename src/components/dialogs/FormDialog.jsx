@@ -6,29 +6,52 @@ import Grid from "@material-ui/core/Grid";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import {updateTask, uploadFile} from "../../store/actions/taskActions"
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddTaskForm from "../layout/forms/AddTaskForm";
+import { connect } from "react-redux";
+import ProgressBar from "../layout/ProgressBar";
+import UploadBox from "../layout/UploadBox";
 
-export default function FormDialog(props) {
+function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
   const { task, id } = props;
+  const [fileChangeClicked, setFileChangeClicked] = React.useState(false);
   const [taskProperties, setTaskProperties] = React.useState({});
+  const [imgURL, setImgURL] = React.useState('')
   const handleClickOpen = () => {
     setOpen(true);
     setTaskProperties(task);
-    //console.log(taskProperties);
+    setImgURL(props.task.imageURL);
+    setFileChangeClicked(false);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setTaskProperties(task);
+    setFileChangeClicked(false);
   };
 
   const handleChange = (event) => {
     setTaskProperties({
-      ...taskProperties,
+      ...taskProperties, //form becomes ugly without this
       [event.target.id]: event.target.value,
     });
   };
+
+  const handleConfirm = () =>{
+      //setTaskProperties({imageURL:props.imageURL}) does not work for some reason... :(
+      props.updateTask({
+        ...taskProperties,
+        imageURL:props.imageURL
+      }, id);
+  }
+
+  const handleFileChange = (event) =>{
+      props.uploadFile(event.target.files[0]);
+      setFileChangeClicked(true);
+      setImgURL('')
+  }
 
   return (
     <div>
@@ -51,13 +74,42 @@ export default function FormDialog(props) {
             <Grid item xs={12}>
               <AddTaskForm task={taskProperties} handleChange={handleChange} />
             </Grid>
+            <Grid item xs={12}>
+              <ProgressBar uploadProgress={props.uploadProgress} />
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+              <UploadBox handleFileChange={handleFileChange} />
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+              {!fileChangeClicked ? (
+                imgURL !== "" ? (
+                  <a href={imgURL} target="_blank">
+                    <img src={imgURL} alt="photo" width="300" />
+                  </a>
+                ) : (
+                  <p>Nije dodana nijedna fotografija</p>
+                )
+              ) : props.imageURL !== "" ? (
+                <a href={props.imageURL} target="_blank">
+                  <img src={props.imageURL} alt="photo" width="300" />
+                </a>
+              ) : (
+                <p>Nije dodana nijedna fotografija</p>
+              )}
+            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Odustani
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button
+            onClick={() => {
+              handleClose();
+              handleConfirm();
+            }}
+            color="primary"
+          >
             Potvrdi
           </Button>
         </DialogActions>
@@ -65,3 +117,19 @@ export default function FormDialog(props) {
     </div>
   );
 }
+
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    updateTask: (task, id) => dispatch(updateTask(task, id)),
+    uploadFile: (file) => dispatch(uploadFile(file)),
+  }
+}
+
+const mapStateToProps = (state) =>{
+  return{
+    uploadProgress : state.task.uploadProgress,
+    imageURL : state.task.imageURL,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormDialog)

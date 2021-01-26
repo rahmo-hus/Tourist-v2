@@ -12,8 +12,13 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Redirect, Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList'
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import ViewHeadlineIcon from "@material-ui/icons/ViewHeadline";
+import AddIcon from "@material-ui/icons/Add";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import { Divider } from '@material-ui/core';
 
-export function MainListItems(){
+export default function MainListItems(props){
     const[component, setComponent] = React.useState('')
     return(
     <div>
@@ -23,7 +28,7 @@ export function MainListItems(){
          component={Link} 
          to="/dashboard/tasks">
             <ListItemIcon>
-                <DashboardIcon />
+                <ViewHeadlineIcon />
             </ListItemIcon>
             <ListItemText primary="Pregled zadataka" />
         </ListItem>
@@ -33,27 +38,25 @@ export function MainListItems(){
         component={Link} 
         to="/dashboard/addtask">
             <ListItemIcon>
-                <ShoppingCartIcon />
+                <AddIcon />
             </ListItemIcon>
             <ListItemText primary="Dodavanje zadatka" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
-                <PeopleIcon />
+               <VisibilityIcon />
             </ListItemIcon>
             <ListItemText primary="Statistika" />
         </ListItem>
-        <ListItem button>
+        <Divider />
+        <ListItem button selected={component === 'L'} onClick = {()=>{
+            setComponent('L')
+            props.signOut()
+        }  }>
             <ListItemIcon>
-                <BarChartIcon />
+                <ExitToAppIcon />
             </ListItemIcon>
-            <ListItemText primary="Reports" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <LayersIcon />
-            </ListItemIcon>
-            <ListItemText primary="Integrations" />
+            <ListItemText primary="Odjava" />
         </ListItem>
     </div>
     )

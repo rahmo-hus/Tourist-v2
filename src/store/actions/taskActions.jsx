@@ -86,3 +86,22 @@ export const restoreDefaults = () =>{
       })
     }
 }
+
+export const updateTask = (task, id) =>{
+    return (dispatch, state, {getFirebase, getFirestore}) =>{
+      const firestore = getFirestore();
+
+      firestore.collection('tasks').doc(id).update({
+          ...task
+      }).then(()=>{
+        dispatch({
+          type:"UPDATE_SUCCESS"
+        })
+      }).catch(err =>{
+        dispatch({
+          type:"UPDATE_ERROR",
+          err
+        })
+      })
+    }
+}

@@ -56,13 +56,12 @@ function AuthIsLoaded({ children }) {
     );
   return children;
 }
+
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
       <AuthIsLoaded>
-        <React.StrictMode>
           <App />
-        </React.StrictMode>
       </AuthIsLoaded>
     </ReactReduxFirebaseProvider>
   </Provider>,
