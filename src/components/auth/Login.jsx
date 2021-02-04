@@ -15,18 +15,6 @@ import Container from "@material-ui/core/Container";
 import {connect} from 'react-redux'
 import {signIn} from '../../store/actions/authActions'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 
  function SignIn(props) {
   const classes = useStyles();
-
   const emailRef = React.useRef()
   const passwordRef = React.useRef()
 
@@ -73,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Tourist - prijava na sistem
         </Typography>
         {props.authError && <p>{props.authError}</p>}
         <form className={classes.form} onSubmit={handleSubmit}>
@@ -109,20 +96,10 @@ const useStyles = makeStyles((theme) => ({
             className={classes.submit}
             disabled={props.inProgress}
           >
-            Sign In
+            Prijava
           </Button>
-          <Grid container alignItems="center" justify="center">
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

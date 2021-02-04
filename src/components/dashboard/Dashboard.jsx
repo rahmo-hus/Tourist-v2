@@ -29,19 +29,6 @@ import {connect} from 'react-redux'
 import {signOut} from '../../store/actions/authActions'
 import { render } from 'react-dom';
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-      </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -183,10 +170,6 @@ function Dashboard(props) {
                             <Route path={`${match.path}/tasks`} component={AssignmentList} />
                             <Route path={`${match.path}/task/:id`} component={AssignmentDetails} />
                         </Switch>
-                
-                    <Box pt={4}>
-                        <Copyright />
-                    </Box>
                 </Container>
             </main>
         </div>
