@@ -42,7 +42,11 @@ export default function MainListItems(props){
             </ListItemIcon>
             <ListItemText primary="Dodavanje zadatka" />
         </ListItem>
-        <ListItem button>
+        <ListItem button
+         selected={component==='S'} 
+         onClick={()=>setComponent('S')} 
+         component={Link} 
+         to="/dashboard/statistics">
             <ListItemIcon>
                <VisibilityIcon />
             </ListItemIcon>

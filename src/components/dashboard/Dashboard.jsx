@@ -27,11 +27,13 @@ import AssignmentDetails from '../assignments/AssignmentDetails';
 import { Button } from '@material-ui/core';
 import {connect} from 'react-redux'
 import {signOut} from '../../store/actions/authActions'
+import Statistics from '../statistics/Statistics'
 import { render } from 'react-dom';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+    theme:'dark2',
     root: {
         display: 'flex',
     },
@@ -169,6 +171,7 @@ function Dashboard(props) {
                             <Route path={`${match.path}/addtask`} component={AddAssignment} />
                             <Route path={`${match.path}/tasks`} component={AssignmentList} />
                             <Route path={`${match.path}/task/:id`} component={AssignmentDetails} />
+                            <Route path={`${match.path}/statistics`} component={Statistics} />
                         </Switch>
                 </Container>
             </main>
