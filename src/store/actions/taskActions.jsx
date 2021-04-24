@@ -1,6 +1,5 @@
 export const createTask = (task) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    //in this function we will do some async code to database
 
     const firestore = getFirestore();
     dispatch({type:"ADDING_TASK"})
@@ -12,11 +11,13 @@ export const createTask = (task) => {
         authorFirstName: "Author",
         authorLastName: "Someone",
       })
-      .then(() => {
+      .then((ref) => {
         dispatch({
           type: "CREATE_TASK",
-          task: task,
+          task: task
         });
+        firestore.collection("statistics").doc(ref.id).set({title:task.title, timesSolved:0}).then(() => {console.log('success add stat')})
+      .catch((err) => {console.log('error add stat')});
       })
       .catch((err) => {
         dispatch({
@@ -103,5 +104,8 @@ export const updateTask = (task, id) =>{
           err
         })
       })
+
+      firestore.collection('statistics').doc(id).update({title:task.title}).then(() => {console.log('do some dispatch')})
+      .catch(err => {console.log('catch error')});
     }
 }

@@ -1,15 +1,40 @@
 
 import React, { Component} from 'react';
 import {CanvasJSChart, CanvasJS} from 'canvasjs-react-charts'
+import {connect} from 'react-redux'
+import {firestoreConnect} from 'react-redux-firebase'
+import {compose } from 'redux'
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  Typography,
+} from "@material-ui/core";
 
 
+class Statistics extends Component {
 
-class Statistics extends Component {	
+    constructor(props) {
+        super(props);
+    }
+
 	render() {
+        var timesSolvedTotal = 0;
+        this.props.statistics && this.props.statistics.map((value, key) => {
+            timesSolvedTotal +=value.timesSolved;
+        });
+        const dataPoints = [];
+        this.props.statistics && this.props.statistics.map((value, key) =>{
+            dataPoints.push({
+                y: timesSolvedTotal != 0 ? Math.round(value.timesSolved *100 / timesSolvedTotal) : 0,
+                label: value.title
+            });
+        });
+
 		const options = {
 			animationEnabled: true,
-			exportEnabled: true,
-			theme: "dark1", // "light1", "dark1", "dark2"
+			exportEnabled: true, // "light1", "dark1", "dark2"
 			title:{
 				text: "Statistika po broju posjećenih lokacija"
 			},
@@ -17,26 +42,38 @@ class Statistics extends Component {
 				type: "pie",
 				indexLabel: "{label}: {y}%",		
 				startAngle: -90,
-				dataPoints: [
-					{ y: 20, label: "Airfare" },
-					{ y: 24, label: "Food & Drinks" },
-					{ y: 20, label: "Accomodation" },
-					{ y: 14, label: "Transportation" },
-					{ y: 12, label: "Activities" },
-					{ y: 10, label: "Misc" }	
-				]
+				dataPoints: dataPoints
 			}]
 		}
+       
 		
 		return (
 		<div>
-			<CanvasJSChart options = {options} 
+        <Card>
+            <CardContent>
+			    <CanvasJSChart options = {options} 
 				/* onRef={ref => this.chart = ref} */
-			/>
-			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+			    />
+			    {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties    and methods*/}
+            </CardContent>
+        </Card>
 		</div>
 		);
 	}
 }
  
-export default Statistics;
+
+const mapStateToProps = (state, ownProps) =>{
+    return{
+        statistics: state.firestore.ordered.statistics
+    }
+}
+
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect([
+        {
+            collection: 'statistics'
+        }
+    ])
+)(Statistics)
