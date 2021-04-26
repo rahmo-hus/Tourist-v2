@@ -68,7 +68,8 @@ export const deleteTask = (id) =>{
     .then(()=>{
       dispatch({
         type:"DELETE_SUCCESS"
-      })
+      });
+      firestore.collection('statistics').doc(id).delete().then(()=>console.log('stats deleted as well')).catch(()=> console.log('nooo'));
     }).catch(err=>{
       dispatch({
         type:"DELETE_ERROR",

@@ -10,16 +10,26 @@ import {
   CardActions,
   Button,
   Typography,
+  Paper,
+  Box
 } from "@material-ui/core";
+import Leaderboard from './Leaderboard';
+import { spacing } from '@material-ui/system';
+import {
+  withStyles,
+  MuiThemeProvider
+} from "@material-ui/core/styles";
 
 
 class Statistics extends Component {
 
+
+
     constructor(props) {
         super(props);
     }
-
 	render() {
+        console.log(this.props)
         var timesSolvedTotal = 0;
         this.props.statistics && this.props.statistics.map((value, key) => {
             timesSolvedTotal +=value.timesSolved;
@@ -51,12 +61,14 @@ class Statistics extends Component {
 		<div>
         <Card>
             <CardContent>
-			    <CanvasJSChart options = {options} 
-				/* onRef={ref => this.chart = ref} */
-			    />
-			    {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties    and methods*/}
+			    <CanvasJSChart options = {options} />
             </CardContent>
         </Card>
+        <Box paddingTop={2} color="primary">
+            <Paper>
+                  <Leaderboard />
+             </Paper>
+        </Box>
 		</div>
 		);
 	}
