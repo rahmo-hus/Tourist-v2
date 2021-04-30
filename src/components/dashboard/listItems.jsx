@@ -23,19 +23,25 @@ export default function MainListItems(props){
     return(
     <div>
         <ListItem button
-         selected={component==='D'} 
-         onClick={()=>setComponent('D')} 
-         component={Link} 
+         selected={component==='Pregled zadataka'}
+         onClick={()=>{
+             setComponent('Pregled zadataka')
+             props.setTitle('Pregled zadataka')
+         }}
+         component={Link}
          to="/dashboard/tasks">
             <ListItemIcon>
                 <ViewHeadlineIcon />
             </ListItemIcon>
             <ListItemText primary="Pregled zadataka" />
         </ListItem>
-        <ListItem button 
-        selected={component==='A'} 
-        onClick={()=>setComponent('A')} 
-        component={Link} 
+        <ListItem button
+        selected={component==='Dodavanje zadatka'}
+        onClick={()=>{
+            setComponent('Dodavanje zadatka');
+            props.setTitle('Dodavanje zadatka');
+        }}
+        component={Link}
         to="/dashboard/addtask">
             <ListItemIcon>
                 <AddIcon />
@@ -43,9 +49,12 @@ export default function MainListItems(props){
             <ListItemText primary="Dodavanje zadatka" />
         </ListItem>
         <ListItem button
-         selected={component==='S'} 
-         onClick={()=>setComponent('S')} 
-         component={Link} 
+                  selected={component==='Statistika'}
+                  onClick={()=>{
+                      setComponent('Statistika');
+                        props.setTitle('Statistika');
+         }}
+         component={Link}
          to="/dashboard/statistics">
             <ListItemIcon>
                <VisibilityIcon />

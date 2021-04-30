@@ -32,7 +32,6 @@ const useStyles = makeStyles({
 });
 
 function AssignmentDetails(props) {
-  const [dialogOpen, setDialogOpen] = React.useState(false)
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
   const classes = useStyles();

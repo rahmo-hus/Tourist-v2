@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
@@ -18,22 +18,22 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MainListItems  from './listItems';
+import MainListItems from './listItems';
 import AddAssignment from '../assignments/AddAssignment'
 import AssignmentList from '../assignments/AssignmentList'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { withRouter } from 'react-router'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import {withRouter} from 'react-router'
 import AssignmentDetails from '../assignments/AssignmentDetails';
-import { Button } from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import {connect} from 'react-redux'
 import {signOut} from '../../store/actions/authActions'
 import Statistics from '../statistics/Statistics'
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-    theme:'dark2',
+    theme: 'dark2',
     root: {
         display: 'flex',
     },
@@ -115,7 +115,8 @@ const useStyles = makeStyles((theme) => ({
 function Dashboard(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const { match } = props;
+    const {match} = props;
+    const [title, setPageTitle] = React.useState('Početna stranica');
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -124,9 +125,13 @@ function Dashboard(props) {
     };
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+    const setTitle = (title) =>{
+        setPageTitle(title);
+    }
+
     return (
         <div className={classes.root}>
-            <CssBaseline />
+            <CssBaseline/>
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
@@ -136,11 +141,11 @@ function Dashboard(props) {
                         onClick={handleDrawerOpen}
                         className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
-          </Typography>
+                        {title}
+                    </Typography>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -152,36 +157,44 @@ function Dashboard(props) {
             >
                 <div className={classes.toolbarIcon}>
                     <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
+                        <ChevronLeftIcon/>
                     </IconButton>
                 </div>
-                <Divider />
+                <Divider/>
                 <List>
-                    <MainListItems signOut = {props.signOut}/>
+                    <MainListItems signOut={props.signOut} setTitle={setTitle}/>
                 </List>
-                <Divider />
-               
+                <Divider/>
+
             </Drawer>
             <main className={classes.content}>
-                <div className={classes.appBarSpacer} />
+                <div className={classes.appBarSpacer}/>
                 <Container maxWidth="lg" className={classes.container}>
-                   
-                        <Switch>
-                            <Route exact path={`${match.path}/`} render={()=> {return <div><h2>Dobrodosli na pocetnu stranicu sistema Tourist</h2></div>}} />
-                            <Route path={`${match.path}/addtask`} component={AddAssignment} />
-                            <Route path={`${match.path}/tasks`} component={AssignmentList} />
-                            <Route path={`${match.path}/task/:id`} component={AssignmentDetails} />
-                            <Route path={`${match.path}/statistics`} component={Statistics} />
-                        </Switch>
+
+                    <Switch>
+                        <Route exact path={`${match.path}/`} render={() => {
+                            return <div><h2>Dobrodosli na pocetnu stranicu sistema Tourist</h2></div>
+                        }}/>
+                        <Route path={`${match.path}/addtask`} component={AddAssignment}/>
+                        <Route path={`${match.path}/tasks`} component={AssignmentList}/>
+                        <Route path={`${match.path}/task/:id`} component={AssignmentDetails}/>
+                        <Route path={`${match.path}/statistics`} component={Statistics}/>
+                        <Route path={`${match.path}/*`} render={() => (
+                            <div>
+                                <Typography variant="h4" component="h3">Stranica ne postoji</Typography>
+                                <Link href="/dashboard" variant="body2">Početna stranica</Link>
+                            </div>)
+                        }/>
+                    </Switch>
                 </Container>
             </main>
         </div>
     );
 }
 
-const mapDispatchToProps = (dispatch) =>{
-    return{
-        signOut : () => dispatch(signOut())
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signOut: () => dispatch(signOut())
     }
 }
 
