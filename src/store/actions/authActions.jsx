@@ -29,3 +29,23 @@ export const signOut =()=>{
         })
     }
 }
+
+export const resetPassword = (email) =>{
+    console.log(email)
+    return(dispatch, getState, {getFirebase}) =>{
+        const firebase = getFirebase();
+        dispatch({
+            type:"PASSWORD_RESET_PROGRESS"
+        });
+        firebase.auth().sendPasswordResetEmail(email)
+            .then(() =>{
+                dispatch({
+                    type:"PASSWORD_RESET_EMAIL_SENT_SUCCESS"
+                })}).catch((err)=>{
+                    dispatch({
+                        type:"PASSWORD_RESET_FAILED",
+                        err
+                    })
+        })
+    }
+}

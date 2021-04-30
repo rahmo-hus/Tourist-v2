@@ -1,9 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider } from "@material-ui/core/styles";
 import App from "./App";
-import theme from "./theme";
 import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./store/reducers/rootReducer";
 import { Provider, useSelector } from "react-redux";
@@ -18,10 +15,8 @@ import {
 import {
   getFirebase,
   isLoaded,
-  useFirebase,
   ReactReduxFirebaseProvider,
 } from "react-redux-firebase";
-import { reactReduxFirebase } from "react-redux-firebase";
 import { CircularProgress } from "@material-ui/core";
 
 const store = createStore(

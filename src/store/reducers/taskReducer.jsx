@@ -8,14 +8,12 @@ const taskReducer = (state = initState, action) =>{
 
     switch (action.type) {
         case "CREATE_TASK":
-            console.log("created task", action.task)
             return{
                 ...state,
                 inProgress:false,
                 success: 'Uspjesno dodato'
             }
         case "CREATE_TASK_ERROR":
-            console.log("error create task", action.err);
             return {
                 ...state,
                 inProgress:false,
@@ -31,7 +29,7 @@ const taskReducer = (state = initState, action) =>{
                 ...state,
                 imageURL:action.imageURL
             }
-        
+
         case "UPLOAD_ERROR":
             return {
                 ...state,
@@ -52,7 +50,6 @@ const taskReducer = (state = initState, action) =>{
                 success:''
             }
         case "DELETE_SUCCESS":
-            console.log('delete success')
             return state;
         case "DELETE_ERROR":
             return {

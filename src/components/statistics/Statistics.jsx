@@ -86,7 +86,7 @@ function Statistics(props) {
         <Leaderboard leaderboard = {props.leaderboard} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        To be continued...
+        Broj odigranih igara po danima
       </TabPanel>
     </div>
   );
