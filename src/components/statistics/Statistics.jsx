@@ -76,7 +76,7 @@ function Statistics(props) {
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  variant="fullWidth">
           <Tab label="Posjećene lokacije" {...a11yProps(0)} />
           <Tab label="Rang lista" {...a11yProps(1)} />
-          <Tab label="To be continued..." {...a11yProps(2)} />
+          <Tab label="To be continued" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -99,4 +99,14 @@ const mapStateToProps = (state) =>{
     }
 }
 
-export default connect(mapStateToProps)(Statistics)
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect([
+        {
+            collection:'statistics'
+        },
+        {
+            collection:'halloffame'
+        }
+    ])
+)(Statistics)
