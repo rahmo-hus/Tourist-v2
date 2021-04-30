@@ -1,4 +1,3 @@
-
 import React, { Component} from 'react';
 import {CanvasJSChart, CanvasJS} from 'canvasjs-react-charts'
 import {connect} from 'react-redux'
@@ -11,71 +10,89 @@ import {
   Button,
   Typography,
   Paper,
-  Box
+  Box,
+  Tab,
+  Tabs,
+  AppBar
 } from "@material-ui/core";
+import PropTypes from 'prop-types';
 import Leaderboard from './Leaderboard';
+import { makeStyles } from '@material-ui/core/styles';
 import { spacing } from '@material-ui/system';
-import {
-  withStyles,
-  MuiThemeProvider
-} from "@material-ui/core/styles";
+import VisitedLocationsChart from './VisitedLocationsChart';
 
 
-class Statistics extends Component {
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-
-
-    constructor(props) {
-        super(props);
-    }
-	render() {
-        console.log(this.props)
-        var timesSolvedTotal = 0;
-        this.props.statistics && this.props.statistics.map((value, key) => {
-            timesSolvedTotal +=value.timesSolved;
-        });
-        const dataPoints = [];
-        this.props.statistics && this.props.statistics.map((value, key) =>{
-            dataPoints.push({
-                y: timesSolvedTotal != 0 ? Math.round(value.timesSolved *100 / timesSolvedTotal) : 0,
-                label: value.title
-            });
-        });
-
-		const options = {
-			animationEnabled: true,
-			exportEnabled: true, // "light1", "dark1", "dark2"
-			title:{
-				text: "Statistika po broju posjećenih lokacija"
-			},
-			data: [{
-				type: "pie",
-				indexLabel: "{label}: {y}%",		
-				startAngle: -90,
-				dataPoints: dataPoints
-			}]
-		}
-       
-		
-		return (
-		<div>
-        <Card>
-            <CardContent>
-			    <CanvasJSChart options = {options} />
-            </CardContent>
-        </Card>
-        <Box paddingTop={2} color="primary">
-            <Paper>
-                  <Leaderboard />
-             </Paper>
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
         </Box>
-		</div>
-		);
-	}
+      )}
+    </div>
+  );
 }
- 
 
-const mapStateToProps = (state, ownProps) =>{
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
+function Statistics(props) {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  variant="fullWidth">
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="Item Three" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        <VisitedLocationsChart statistics={props.statistics} />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
+    </div>
+  );
+}
+
+const mapStateToProps = (state) =>{
     return{
         statistics: state.firestore.ordered.statistics
     }

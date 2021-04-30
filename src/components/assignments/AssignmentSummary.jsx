@@ -33,7 +33,7 @@ const AssignmentSummary = (props) =>{
                                 {task.authorFirstName}
                             </Typography>
                             <Typography variant="subtitle1" color="primary">
-                                Continue reading...
+                                Otvori za detalje...
                             </Typography>
                         </CardContent>
                     </div>

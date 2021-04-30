@@ -68,7 +68,7 @@ function Leaderboard(props) {
                 {key+1}
               </TableCell>
               <TableCell align="right">{value.username}</TableCell>
-              <TableCell align="center">{value.score}</TableCell>
+              <TableCell align="right">{value.score}</TableCell>
               <TableCell align="right">{new Date(value.endTime.toDate()-value.startTime.toDate()).toLocaleTimeString()}</TableCell>
             </TableRow>
           ))}
