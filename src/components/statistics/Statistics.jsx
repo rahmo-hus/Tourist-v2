@@ -34,7 +34,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box paddingTop={2}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -74,19 +74,19 @@ function Statistics(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  variant="fullWidth">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Posjećene lokacije" {...a11yProps(0)} />
+          <Tab label="Rang lista" {...a11yProps(1)} />
+          <Tab label="To be continued..." {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <VisitedLocationsChart statistics={props.statistics} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Leaderboard leaderboard = {props.leaderboard} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        To be continued...
       </TabPanel>
     </div>
   );
@@ -94,15 +94,9 @@ function Statistics(props) {
 
 const mapStateToProps = (state) =>{
     return{
-        statistics: state.firestore.ordered.statistics
+        statistics: state.firestore.ordered.statistics,
+        leaderboard: state.firestore.ordered.halloffame
     }
 }
 
-export default compose(
-    connect(mapStateToProps),
-    firestoreConnect([
-        {
-            collection: 'statistics'
-        }
-    ])
-)(Statistics)
+export default connect(mapStateToProps)(Statistics)

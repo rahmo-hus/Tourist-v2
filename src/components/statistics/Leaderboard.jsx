@@ -15,18 +15,6 @@ import Grid from '@material-ui/core/Grid';
 import Title from './Title';
 import { Date } from 'prismic-reactjs';
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod) {
-  return { id, date, name, shipTo, paymentMethod };
-}
-
-const rows = [
-  createData(0, '16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719'),
-  createData(1, '16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574'),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253'),
-  createData(3, '16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000'),
-  createData(4, '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919'),
-];
 
 function preventDefault(event) {
   event.preventDefault();
@@ -50,7 +38,7 @@ function Leaderboard(props) {
 >
     <Title>Rang lista</Title>
     </Grid>
-      <TableContainer component={Paper}>
+      <TableContainer>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -79,17 +67,4 @@ function Leaderboard(props) {
   );
 }
 
-const mapStateToProps = (state) =>{
-    return{
-        leaderboard: state.firestore.ordered.halloffame
-    }
-}
-
-export default compose(
-    connect(mapStateToProps),
-    firestoreConnect([
-        {
-            collection: 'halloffame'
-        }
-    ])
-)(Leaderboard)
+export default Leaderboard;
