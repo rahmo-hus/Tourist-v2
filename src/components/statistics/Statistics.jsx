@@ -88,7 +88,9 @@ function Statistics(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={1}>
-        <VisitedLocationsChart statistics={props.statistics} />
+          <Paper className={fixedHeightPaper}>
+            <VisitedLocationsChart statistics={props.statistics} />
+          </Paper>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Leaderboard leaderboard = {props.leaderboard} />
