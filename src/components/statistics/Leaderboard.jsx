@@ -45,7 +45,7 @@ function Leaderboard(props) {
             <TableCell>Redni broj</TableCell>
             <TableCell align="right">Korisnicko ime</TableCell>
             <TableCell align="right">Osvojeni broj bodova&nbsp;</TableCell>
-            <TableCell align="right">Tajanje igre&nbsp;</TableCell>
+            <TableCell align="right">Trajanje igre&nbsp;</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

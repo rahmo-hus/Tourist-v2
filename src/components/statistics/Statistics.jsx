@@ -82,7 +82,7 @@ function Statistics(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  variant="fullWidth">
-          <Tab label="To be continued" {...a11yProps(0)} />
+          <Tab label="Broj odigranih igara" {...a11yProps(0)} />
           <Tab label="Posjećene lokacije" {...a11yProps(1)} />
           <Tab label="Rang lista" {...a11yProps(2)} />
         </Tabs>
