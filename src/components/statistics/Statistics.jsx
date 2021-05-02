@@ -4,10 +4,6 @@ import {connect} from 'react-redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {compose } from 'redux'
 import {
-  Card,
-  CardContent,
-  CardActions,
-  Button,
   Typography,
   Paper,
   Box,
@@ -18,8 +14,9 @@ import {
 import PropTypes from 'prop-types';
 import Leaderboard from './Leaderboard';
 import { makeStyles } from '@material-ui/core/styles';
-import { spacing } from '@material-ui/system';
 import VisitedLocationsChart from './VisitedLocationsChart';
+import TimelineChart from "./TimelineChart";
+import clsx from "clsx";
 
 
 function TabPanel(props) {
@@ -60,6 +57,15 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+    fixedHeight:{
+      height:400
+    },
+    paper:{
+      padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column'
+    }
 }));
 
 function Statistics(props) {
@@ -70,23 +76,27 @@ function Statistics(props) {
     setValue(newValue);
   };
 
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  variant="fullWidth">
-          <Tab label="Posjećene lokacije" {...a11yProps(0)} />
-          <Tab label="Rang lista" {...a11yProps(1)} />
-          <Tab label="To be continued" {...a11yProps(2)} />
+          <Tab label="To be continued" {...a11yProps(0)} />
+          <Tab label="Posjećene lokacije" {...a11yProps(1)} />
+          <Tab label="Rang lista" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={1}>
         <VisitedLocationsChart statistics={props.statistics} />
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={2}>
         <Leaderboard leaderboard = {props.leaderboard} />
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Broj odigranih igara po danima
+      <TabPanel value={value} index={0}>
+          <Paper className={fixedHeightPaper} >
+            <TimelineChart />
+          </Paper>
       </TabPanel>
     </div>
   );
@@ -106,7 +116,8 @@ export default compose(
             collection:'statistics'
         },
         {
-            collection:'halloffame'
+            collection:'halloffame',
+            orderBy:['score', 'desc']
         }
     ])
 )(Statistics)
