@@ -3,12 +3,12 @@ import {connect} from 'react-redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {compose } from 'redux'
 import {
-  Typography,
-  Paper,
-  Box,
-  Tab,
-  Tabs,
-  AppBar
+    Typography,
+    Paper,
+    Box,
+    Tab,
+    Tabs,
+    AppBar, CircularProgress
 } from "@material-ui/core";
 import PropTypes from 'prop-types';
 import Leaderboard from './Leaderboard';
@@ -64,6 +64,12 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column'
+    },
+    progress:{
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)"
     }
 }));
 
@@ -105,7 +111,10 @@ function Statistics(props) {
     }
     else
     {
-        return <div>Loading</div>
+        return (
+            <div className={classes.progress}>
+                <CircularProgress />
+            </div>)
     }
 }
 
