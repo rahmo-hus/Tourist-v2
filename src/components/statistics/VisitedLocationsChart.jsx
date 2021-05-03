@@ -5,10 +5,11 @@ import {CanvasJSChart, CanvasJS} from 'canvasjs-react-charts'
 function ChartComponent(props){
     const dataPoints = [];
     let timesSolvedTotal = 0;
-    props.statistics && props.statistics.map((value, key) => {
+    const {statistics} = props;
+    statistics.map((value, key) => {
             timesSolvedTotal +=value.timesSolved;
         });
-    props.statistics && props.statistics.map((value, key) =>{
+    statistics.map((value, key) =>{
             dataPoints.push({
                 y: timesSolvedTotal != 0 ? Math.round(value.timesSolved *100 / timesSolvedTotal) : 0,
                 label: value.title
@@ -18,7 +19,7 @@ function ChartComponent(props){
 			animationEnabled: true,
 			exportEnabled: true, // "light1", "dark1", "dark2"
 			title:{
-				text: "Statistika po broju posjećenih lokacija"
+				text: "Broj  posjećenih lokacija"
 			},
 			data: [{
 				type: "pie",

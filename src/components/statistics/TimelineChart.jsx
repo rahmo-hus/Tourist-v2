@@ -23,20 +23,11 @@ export default function TimelineChart(props) {
             && item.tasks.filter(task => task.isCompleted).length === item.tasks.length
         && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length
     }
-    const data = [
-        createData('Jan', filterStartedGamesByMonth(0), filterFinishedGamesByMonth(0)),
-        createData('Feb', filterStartedGamesByMonth(1) , filterFinishedGamesByMonth(1)),
-        createData('Mar', filterStartedGamesByMonth(2), filterFinishedGamesByMonth(2)),
-        createData('Apr', filterStartedGamesByMonth(3), filterFinishedGamesByMonth(3)),
-        createData('May', filterStartedGamesByMonth(4), filterFinishedGamesByMonth(4)),
-        createData('Jun', filterStartedGamesByMonth(5), filterFinishedGamesByMonth(5)),
-        createData('Jul', filterStartedGamesByMonth(6), filterFinishedGamesByMonth(6)),
-        createData('Aug', filterStartedGamesByMonth(7), filterFinishedGamesByMonth(7)),
-        createData('Sep', filterStartedGamesByMonth(8), filterFinishedGamesByMonth(8)),
-        createData('Oct', filterStartedGamesByMonth(9), filterFinishedGamesByMonth(9)),
-        createData('Nov', filterStartedGamesByMonth(10), filterFinishedGamesByMonth(10)),
-        createData('Dec', filterStartedGamesByMonth(11), filterFinishedGamesByMonth(11))
-    ]
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const data = [];
+    for(let i=0; i<12; i++){
+        data.push(createData(months[i], filterStartedGamesByMonth(i), filterFinishedGamesByMonth(i)));
+    }
 
     return (
         <React.Fragment>
@@ -47,7 +38,7 @@ export default function TimelineChart(props) {
                         justify="space-between"
                         alignItems="center"
                     >
-                        <Title>Broj odigranih igara po mjesecima godine {selectedYear.getFullYear()}</Title>
+                        <Title>Broj započetih/završenih igara po mjesecima godine {selectedYear.getFullYear()}</Title>
                         <DatePicker
                            views={["year"]}
                            value={selectedYear}

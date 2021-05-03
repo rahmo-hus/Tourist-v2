@@ -31,13 +31,6 @@ function Leaderboard(props) {
   const {leaderboard} = props;
   return (
     <React.Fragment>
-    <Grid  container
-  direction="row"
-  justify="center"
-  alignItems="center"
->
-    <Title>Rang lista</Title>
-    </Grid>
       <TableContainer>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
@@ -49,7 +42,7 @@ function Leaderboard(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {leaderboard && leaderboard
+          {leaderboard
           .map((value, key) => (
             <TableRow>
               <TableCell component="th" scope="row">

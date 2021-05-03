@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import VisitedLocationsChart from './VisitedLocationsChart';
 import TimelineChart from "./TimelineChart";
 import clsx from "clsx";
+import IndividualTaskSummary from "./IndividualTaskSummary";
 
 
 function TabPanel(props) {
@@ -82,8 +83,8 @@ function Statistics(props) {
   };
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    const {games, statistics, leaderboard} = props;
-    if(games && statistics && leaderboard) {
+    const {games, statistics, leaderboard, tasks} = props;
+    if(games && statistics && leaderboard && tasks) {
         return (
             <div className={classes.root}>
                 <AppBar position="static">
@@ -91,20 +92,24 @@ function Statistics(props) {
                         <Tab label="Broj odigranih igara" {...a11yProps(0)} />
                         <Tab label="Posjećene lokacije" {...a11yProps(1)} />
                         <Tab label="Rang lista" {...a11yProps(2)} />
+                        <Tab label="Zadaci" {...a11yProps(3)} />
                     </Tabs>
                 </AppBar>
+                <TabPanel value={value} index={0}>
+                    <Paper className={fixedHeightPaper}>
+                        <TimelineChart games={games}/>
+                    </Paper>
+                </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Paper className={fixedHeightPaper}>
                         <VisitedLocationsChart statistics={statistics}/>
                     </Paper>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <Leaderboard leaderboard={leaderboard}/>
+                        <Leaderboard leaderboard={leaderboard}/>
                 </TabPanel>
-                <TabPanel value={value} index={0}>
-                    <Paper className={fixedHeightPaper}>
-                        <TimelineChart games={games}/>
-                    </Paper>
+                <TabPanel index={value} value={3}>
+                   <IndividualTaskSummary tasks={tasks} games={games}/>
                 </TabPanel>
             </div>
         );
@@ -122,7 +127,8 @@ const mapStateToProps = (state) =>{
     return{
         statistics: state.firestore.ordered.statistics,
         leaderboard: state.firestore.ordered.halloffame,
-        games: state.firestore.ordered.game
+        games: state.firestore.ordered.game,
+        tasks: state.firestore.ordered.tasks
     }
 }
 
@@ -138,6 +144,9 @@ export default compose(
         },
         {
             collection:'game'
+        },
+        {
+            collection:'tasks'
         }
     ])
 )(Statistics)
