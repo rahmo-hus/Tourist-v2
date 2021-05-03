@@ -1,33 +1,41 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import {LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer, Tooltip} from 'recharts';
 import Title from './Title';
 import Grid from "@material-ui/core/Grid";
 import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 
 // Generate Sales Data
-function createData(time, amount) {
-    return { time, amount };
+function createData(time, započeto, završeno) {
+    return { time, započeto , završeno};
 }
 
 export default function TimelineChart(props) {
     const theme = useTheme();
     const {games} = props;
     const [selectedYear, handleChangeYear] = React.useState(new Date());
+    function filterStartedGamesByMonth(month){
+        return games.filter(item => item.startTime.toDate().getMonth() === month && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length;
+    }
+    function filterFinishedGamesByMonth(month){
+        return games.filter(item => item.startTime.toDate().getMonth() === month
+            && item.tasks.filter(task => task.isCompleted).length === item.tasks.length
+        && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length
+    }
     const data = [
-        createData('Jan', games.filter(item => item.startTime.toDate().getMonth() === 0 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Feb', games.filter(item => item.startTime.toDate().getMonth() === 1 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Mar', games.filter(item => item.startTime.toDate().getMonth() === 2 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Apr', games.filter(item => item.startTime.toDate().getMonth() === 3 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('May', games.filter(item => item.startTime.toDate().getMonth() === 4 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Jun', games.filter(item => item.startTime.toDate().getMonth() === 5 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Jul', games.filter(item => item.startTime.toDate().getMonth() === 6 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Aug', games.filter(item => item.startTime.toDate().getMonth() === 7 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Sep', games.filter(item => item.startTime.toDate().getMonth() === 8 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Oct', games.filter(item => item.startTime.toDate().getMonth() === 9 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Nov', games.filter(item => item.startTime.toDate().getMonth() === 10 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
-        createData('Dec', games.filter(item => item.startTime.toDate().getMonth() === 11 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length)
+        createData('Jan', filterStartedGamesByMonth(0), filterFinishedGamesByMonth(0)),
+        createData('Feb', filterStartedGamesByMonth(1) , filterFinishedGamesByMonth(1)),
+        createData('Mar', filterStartedGamesByMonth(2), filterFinishedGamesByMonth(2)),
+        createData('Apr', filterStartedGamesByMonth(3), filterFinishedGamesByMonth(3)),
+        createData('May', filterStartedGamesByMonth(4), filterFinishedGamesByMonth(4)),
+        createData('Jun', filterStartedGamesByMonth(5), filterFinishedGamesByMonth(5)),
+        createData('Jul', filterStartedGamesByMonth(6), filterFinishedGamesByMonth(6)),
+        createData('Aug', filterStartedGamesByMonth(7), filterFinishedGamesByMonth(7)),
+        createData('Sep', filterStartedGamesByMonth(8), filterFinishedGamesByMonth(8)),
+        createData('Oct', filterStartedGamesByMonth(9), filterFinishedGamesByMonth(9)),
+        createData('Nov', filterStartedGamesByMonth(10), filterFinishedGamesByMonth(10)),
+        createData('Dec', filterStartedGamesByMonth(11), filterFinishedGamesByMonth(11))
     ]
 
     return (
@@ -70,7 +78,9 @@ export default function TimelineChart(props) {
                             Broj odigranih igara
                         </Label>
                     </YAxis>
-                    <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
+                    <Line type="monotone" dataKey="završeno" stroke={theme.palette.secondary.main} dot={false} />
+                    <Line type="monotone" dataKey="započeto" stroke={theme.palette.primary.main} dot={false} />
+                    <Tooltip />
                 </LineChart>
             </ResponsiveContainer>
         </React.Fragment>
