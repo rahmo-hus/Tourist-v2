@@ -2,6 +2,7 @@ import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
+import Grid from "@material-ui/core/Grid";
 
 // Generate Sales Data
 function createData(time, amount) {
@@ -23,15 +24,36 @@ const data = [
     createData('Dec', 2000),
 ];
 
-export default function TimelineChart() {
+export default function TimelineChart(props) {
     const theme = useTheme();
+    const {games} = props;
+    const tempData = [
+        createData('Jan', games.filter(item => item.startTime.toDate().getMonth() === 1).length),
+        createData('Feb', games.filter(item => item.startTime.toDate().getMonth() === 2).length),
+        createData('Mar', games.filter(item => item.startTime.toDate().getMonth() === 3).length),
+        createData('Apr', games.filter(item => item.startTime.toDate().getMonth() === 4).length),
+        createData('May', games.filter(item => item.startTime.toDate().getMonth() === 5).length),
+        createData('Jun', games.filter(item => item.startTime.toDate().getMonth() === 6).length),
+        createData('Jul', games.filter(item => item.startTime.toDate().getMonth() === 7).length),
+        createData('Aug', games.filter(item => item.startTime.toDate().getMonth() === 8).length),
+        createData('Sep', games.filter(item => item.startTime.toDate().getMonth() === 9).length),
+        createData('Oct', games.filter(item => item.startTime.toDate().getMonth() === 10).length),
+        createData('Nov', games.filter(item => item.startTime.toDate().getMonth() === 11).length),
+        createData('Dec', games.filter(item => item.startTime.toDate().getMonth() === 12).length)
+    ]
 
     return (
         <React.Fragment>
-            <Title>Today</Title>
+            <Grid  container
+                   direction="row"
+                   justify="center"
+                   alignItems="center"
+            >
+                <Title>Posljednjih godinu dana</Title>
+            </Grid>
             <ResponsiveContainer>
                 <LineChart
-                    data={data}
+                    data={tempData}
                     margin={{
                         top: 16,
                         right: 16,

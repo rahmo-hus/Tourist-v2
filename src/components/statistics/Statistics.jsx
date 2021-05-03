@@ -1,5 +1,4 @@
 import React, { Component} from 'react';
-import {CanvasJSChart, CanvasJS} from 'canvasjs-react-charts'
 import {connect} from 'react-redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {compose } from 'redux'
@@ -77,37 +76,44 @@ function Statistics(props) {
   };
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example"  variant="fullWidth">
-          <Tab label="Broj odigranih igara" {...a11yProps(0)} />
-          <Tab label="Posjećene lokacije" {...a11yProps(1)} />
-          <Tab label="Rang lista" {...a11yProps(2)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={1}>
-          <Paper className={fixedHeightPaper}>
-            <VisitedLocationsChart statistics={props.statistics} />
-          </Paper>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Leaderboard leaderboard = {props.leaderboard} />
-      </TabPanel>
-      <TabPanel value={value} index={0}>
-          <Paper className={fixedHeightPaper} >
-            <TimelineChart />
-          </Paper>
-      </TabPanel>
-    </div>
-  );
+    const {games, statistics, leaderboard} = props;
+    if(games && statistics && leaderboard) {
+        return (
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" variant="fullWidth">
+                        <Tab label="Broj odigranih igara" {...a11yProps(0)} />
+                        <Tab label="Posjećene lokacije" {...a11yProps(1)} />
+                        <Tab label="Rang lista" {...a11yProps(2)} />
+                    </Tabs>
+                </AppBar>
+                <TabPanel value={value} index={1}>
+                    <Paper className={fixedHeightPaper}>
+                        <VisitedLocationsChart statistics={statistics}/>
+                    </Paper>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <Leaderboard leaderboard={leaderboard}/>
+                </TabPanel>
+                <TabPanel value={value} index={0}>
+                    <Paper className={fixedHeightPaper}>
+                        <TimelineChart games={games}/>
+                    </Paper>
+                </TabPanel>
+            </div>
+        );
+    }
+    else
+    {
+        return <div>Loading</div>
+    }
 }
 
 const mapStateToProps = (state) =>{
     return{
         statistics: state.firestore.ordered.statistics,
-        leaderboard: state.firestore.ordered.halloffame
+        leaderboard: state.firestore.ordered.halloffame,
+        games: state.firestore.ordered.game
     }
 }
 
@@ -120,6 +126,9 @@ export default compose(
         {
             collection:'halloffame',
             orderBy:['score', 'desc']
+        },
+        {
+            collection:'game'
         }
     ])
 )(Statistics)

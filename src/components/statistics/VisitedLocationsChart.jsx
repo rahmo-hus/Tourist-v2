@@ -1,17 +1,5 @@
 import React, { Component} from 'react';
 import {CanvasJSChart, CanvasJS} from 'canvasjs-react-charts'
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  Typography,
-  Paper,
-  Box,
-  Tab,
-  Tabs,
-  AppBar
-} from "@material-ui/core";
 
 
 function ChartComponent(props){
@@ -34,12 +22,12 @@ function ChartComponent(props){
 			},
 			data: [{
 				type: "pie",
-				indexLabel: "{label}: {y}%",		
+				indexLabel: "{label}: {y}%",
 				startAngle: -90,
 				dataPoints: dataPoints
 			}]
 		}
-    
+
     return <CanvasJSChart options = {options} />
 }
 
