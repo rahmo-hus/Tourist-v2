@@ -3,57 +3,56 @@ import { useTheme } from '@material-ui/core/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
 import Grid from "@material-ui/core/Grid";
+import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 // Generate Sales Data
 function createData(time, amount) {
     return { time, amount };
 }
 
-const data = [
-    createData('Jan', 0),
-    createData('Feb', 300),
-    createData('Mar', 600),
-    createData('Apr', 800),
-    createData('May', 1500),
-    createData('Jun', 2000),
-    createData('Jul', 2100),
-    createData('Aug', 1000),
-    createData('Sep', 500),
-    createData('Oct', 4000),
-    createData('Nov', 3000),
-    createData('Dec', 2000),
-];
-
 export default function TimelineChart(props) {
     const theme = useTheme();
     const {games} = props;
-    const tempData = [
-        createData('Jan', games.filter(item => item.startTime.toDate().getMonth() === 1).length),
-        createData('Feb', games.filter(item => item.startTime.toDate().getMonth() === 2).length),
-        createData('Mar', games.filter(item => item.startTime.toDate().getMonth() === 3).length),
-        createData('Apr', games.filter(item => item.startTime.toDate().getMonth() === 4).length),
-        createData('May', games.filter(item => item.startTime.toDate().getMonth() === 5).length),
-        createData('Jun', games.filter(item => item.startTime.toDate().getMonth() === 6).length),
-        createData('Jul', games.filter(item => item.startTime.toDate().getMonth() === 7).length),
-        createData('Aug', games.filter(item => item.startTime.toDate().getMonth() === 8).length),
-        createData('Sep', games.filter(item => item.startTime.toDate().getMonth() === 9).length),
-        createData('Oct', games.filter(item => item.startTime.toDate().getMonth() === 10).length),
-        createData('Nov', games.filter(item => item.startTime.toDate().getMonth() === 11).length),
-        createData('Dec', games.filter(item => item.startTime.toDate().getMonth() === 12).length)
+    const [selectedYear, handleChangeYear] = React.useState(new Date());
+    const data = [
+        createData('Jan', games.filter(item => item.startTime.toDate().getMonth() === 0 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Feb', games.filter(item => item.startTime.toDate().getMonth() === 1 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Mar', games.filter(item => item.startTime.toDate().getMonth() === 2 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Apr', games.filter(item => item.startTime.toDate().getMonth() === 3 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('May', games.filter(item => item.startTime.toDate().getMonth() === 4 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Jun', games.filter(item => item.startTime.toDate().getMonth() === 5 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Jul', games.filter(item => item.startTime.toDate().getMonth() === 6 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Aug', games.filter(item => item.startTime.toDate().getMonth() === 7 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Sep', games.filter(item => item.startTime.toDate().getMonth() === 8 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Oct', games.filter(item => item.startTime.toDate().getMonth() === 9 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Nov', games.filter(item => item.startTime.toDate().getMonth() === 10 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length),
+        createData('Dec', games.filter(item => item.startTime.toDate().getMonth() === 11 && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length)
     ]
 
     return (
         <React.Fragment>
-            <Grid  container
-                   direction="row"
-                   justify="center"
-                   alignItems="center"
-            >
-                <Title>Posljednjih godinu dana</Title>
-            </Grid>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center"
+                    >
+                        <Title>Broj odigranih igara po mjesecima godine {selectedYear.getFullYear()}</Title>
+                        <DatePicker
+                           views={["year"]}
+                           value={selectedYear}
+                           minDate = {new Date("2018-01-01")}
+                           maxDate = {new Date()}
+                           label="Izaberi godinu"
+                           onChange={handleChangeYear}
+                         />
+                    </Grid>
+                </MuiPickersUtilsProvider>
             <ResponsiveContainer>
                 <LineChart
-                    data={tempData}
+                    data={data}
                     margin={{
                         top: 16,
                         right: 16,
