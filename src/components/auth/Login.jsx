@@ -11,6 +11,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import {connect} from 'react-redux'
 import {signIn} from '../../store/actions/authActions'
+import {Alert} from "@material-ui/lab";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,12 +32,19 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    warning:{
+        width: '100%',
+        '& > * * *':{
+            marginTop:theme.spacing(2)
+        }
+    }
 }));
 
 function SignIn(props) {
     const classes = useStyles();
     const emailRef = React.useRef()
     const passwordRef = React.useRef()
+    const {authError} = props;
 
 
     function handleSubmit(event) {
@@ -45,8 +53,6 @@ function SignIn(props) {
             email: emailRef.current.value,
             password: passwordRef.current.value
         })
-
-
     }
 
     return (
@@ -59,7 +65,7 @@ function SignIn(props) {
                 <Typography component="h1" variant="h5">
                     Tourist - prijava na sistem
                 </Typography>
-                {props.authError && <p>{props.authError}</p>}
+                {authError && <Alert className={classes.warning} severity="warning" fullWidth>{authError}</Alert> }
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
                         variant="outlined"
@@ -67,7 +73,7 @@ function SignIn(props) {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Email adresa"
                         name="email"
                         autoComplete="email"
                         inputRef={emailRef}
@@ -79,7 +85,7 @@ function SignIn(props) {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Lozinka"
                         type="password"
                         id="password"
                         inputRef={passwordRef}

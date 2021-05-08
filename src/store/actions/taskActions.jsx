@@ -7,17 +7,14 @@ export const createTask = (task) => {
       .collection("tasks")
       .add({
         ...task,
-        createdAt: new Date(),
-        authorFirstName: "Author",
-        authorLastName: "Someone",
+        createdAt: new Date()
       })
       .then((ref) => {
         dispatch({
           type: "CREATE_TASK",
           task: task
         });
-        firestore.collection("statistics").doc(ref.id).set({title:task.title, timesSolved:0}).then(() => {console.log('success add stat')})
-      .catch((err) => {console.log('error add stat')});
+        firestore.collection("statistics").doc(ref.id).set({title:task.title, timesSolved:0});
       })
       .catch((err) => {
         dispatch({
@@ -33,7 +30,7 @@ export const uploadFile = (file) =>{
 
     const firebase = getFirebase();
 
-    var uploadTask= firebase.storage().ref(`nesto/${file.name}`).put(file);
+    const uploadTask = firebase.storage().ref(`photos/${file.name}`).put(file);
 
     uploadTask.on('state_changed' , (snapshot) =>{
       dispatch({
@@ -46,7 +43,7 @@ export const uploadFile = (file) =>{
         err:error
       })
     }, ()=> {
-      firebase.storage().ref('nesto').child(file.name).getDownloadURL().then(url=>{
+      firebase.storage().ref('photos').child(file.name).getDownloadURL().then(url=>{
         console.log(url)
         dispatch({
           type:"UPLOAD_SUCCESS",
@@ -55,9 +52,6 @@ export const uploadFile = (file) =>{
         })
       })
     })
-
-   // firebase.uploadFile('/nesto', file, '/nesto');
-
   }
 }
 
@@ -69,7 +63,7 @@ export const deleteTask = (id) =>{
       dispatch({
         type:"DELETE_SUCCESS"
       });
-      firestore.collection('statistics').doc(id).delete().then(()=>console.log('stats deleted as well')).catch(()=> console.log('nooo'));
+      firestore.collection('statistics').doc(id).delete().then().catch();
     }).catch(err=>{
       dispatch({
         type:"DELETE_ERROR",
@@ -106,7 +100,7 @@ export const updateTask = (task, id) =>{
         })
       })
 
-      firestore.collection('statistics').doc(id).update({title:task.title}).then(() => {console.log('do some dispatch')})
-      .catch(err => {console.log('catch error')});
+      firestore.collection('statistics').doc(id).update({title:task.title}).then()
+      .catch();
     }
 }

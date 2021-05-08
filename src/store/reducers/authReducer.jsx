@@ -9,7 +9,7 @@ const authReducer = (state = initState, action) => {
         case "LOGIN_ERROR":
             return {
                 ...state,
-                authError: "Login failed",
+                authError: "Neispravno korisničko ime ili lozinka",
                 inProgress: false
             };
         case "LOGIN_SUCCESS":

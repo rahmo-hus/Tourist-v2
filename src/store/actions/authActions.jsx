@@ -31,7 +31,6 @@ export const signOut =()=>{
 }
 
 export const resetPassword = (email) =>{
-    console.log(email)
     return(dispatch, getState, {getFirebase}) =>{
         const firebase = getFirebase();
         dispatch({
