@@ -43,7 +43,6 @@ class AddAssignment extends React.Component {
   };
 
   handleFileChange = (event) => {
-    console.log(event.target.files[0]);
     this.props.uploadFile(event.target.files[0]);
   };
   render() {

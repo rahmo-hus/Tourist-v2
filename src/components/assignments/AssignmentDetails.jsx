@@ -36,7 +36,6 @@ function AssignmentDetails(props) {
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
   const classes = useStyles();
   const { task } = props;
-  console.log('task detals', task);
   if (task) {
     return (
       <div style={{ justifyContent: "center" }}>

@@ -100,7 +100,6 @@ export const updateTask = (task, id) =>{
         })
       })
 
-      firestore.collection('statistics').doc(id).update({title:task.title}).then()
-      .catch();
+      firestore.collection('statistics').doc(id).update({title:task.title});
     }
 }

@@ -34,13 +34,12 @@ function FormDialog(props) {
 
   const handleChange = (event) => {
     setTaskProperties({
-      ...taskProperties, //form becomes ugly without this
+      ...taskProperties,
       [event.target.id]: event.target.value,
     });
   };
 
   const handleConfirm = () =>{
-      //setTaskProperties({imageURL:props.imageURL}) does not work for some reason... :(
       props.updateTask({
         ...taskProperties,
         imageURL:props.imageURL
