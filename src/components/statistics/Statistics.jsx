@@ -17,6 +17,7 @@ import VisitedLocationsChart from './VisitedLocationsChart';
 import TimelineChart from "./TimelineChart";
 import clsx from "clsx";
 import IndividualTaskSummary from "./IndividualTaskSummary";
+import BarCharts from "./BarCharts";
 
 
 function TabPanel(props) {
@@ -106,7 +107,7 @@ function Statistics(props) {
                     </Paper>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                        <Leaderboard leaderboard={leaderboard}/>
+                        <BarCharts/>
                 </TabPanel>
                 <TabPanel index={value} value={3}>
                    <IndividualTaskSummary tasks={tasks} games={games}/>

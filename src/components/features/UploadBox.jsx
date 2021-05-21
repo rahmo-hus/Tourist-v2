@@ -11,7 +11,7 @@ function UploadBox(props) {
             style={{ display: "none" }}
             id="upload-photo"
             name="upload-photo"
-            type="file"
+            type="files"
             onChange={props.handleFileChange}
           />
           <Fab color="primary" size="small" component="span" aria-label="add">
