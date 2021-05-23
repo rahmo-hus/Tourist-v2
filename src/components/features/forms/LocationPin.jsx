@@ -22,23 +22,6 @@ const AnyReactComponent = ({text}) => <div>{text}</div>;
 
 class LocationPin extends Component {
 
-    state = {
-        marker: {
-            lat: 44.7722,
-            lng: 17.1910
-        },
-        zoom: 12
-    }
-
-
-    handleMapClick = e => {
-        const currentMarker = this.state.marker;
-        currentMarker.lat = e.lat;
-        currentMarker.lng = e.lng;
-        this.setState({marker: currentMarker});
-
-    }
-
     goBack = e => {
         e.preventDefault();
         this.props.prevStep();
@@ -51,7 +34,7 @@ class LocationPin extends Component {
 
     render() {
 
-        const {classes} = this.props;
+        const {classes, locationCoordinates, handleCoordinates} = this.props;
 
         return (
             <Paper>
@@ -62,13 +45,13 @@ class LocationPin extends Component {
                     <div style={{height: '70vh', width: '100%'}}>
                         <GoogleMapReact
                             bootstrapURLKeys={{key: process.env.REACT_APP_GOOGLE_MAP_API_KEY}}
-                            defaultCenter={this.state.marker}
-                            defaultZoom={this.state.zoom}
+                            defaultCenter={locationCoordinates}
+                            defaultZoom={12}
                             yesIWantToUseGoogleMapApiInternals
-                            onClick={this.handleMapClick}
+                            onClick={handleCoordinates}
 
                         >
-                            <Marker lat={this.state.marker.lat} lng={this.state.marker.lng}/>
+                            <Marker lat={locationCoordinates.lat} lng={locationCoordinates.lng}/>
                         </GoogleMapReact>
                     </div>
                     <Grid container justify="space-between">

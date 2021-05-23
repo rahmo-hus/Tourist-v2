@@ -85,6 +85,13 @@ class AddQuest extends React.Component {
         this.setState({gameDescription: gameDescription});
     }
 
+    handleCoordinates = e => {
+        const {locationCoordinates} = this.state;
+        locationCoordinates.lat = e.lat;
+        locationCoordinates.lng = e.lng;
+        this.setState({locationCoordinates: locationCoordinates});
+    }
+
 
     render() {
         const {step} = this.state;
@@ -141,7 +148,7 @@ class AddQuest extends React.Component {
                         prevStep = {this.prevStep}
                         nextStep = {this.nextStep}
                         locationCoordinates = {locationCoordinates}
-                        onChange = {this.handleChange}/>
+                        handleCoordinates = {this.handleCoordinates}/>
             case 5:
                 return <h1>Galerija</h1>
             case 6:
