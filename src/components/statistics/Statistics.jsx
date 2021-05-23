@@ -107,7 +107,7 @@ function Statistics(props) {
                     </Paper>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                        <BarCharts/>
+                        <BarCharts statistics = {statistics}/>
                 </TabPanel>
                 <TabPanel index={value} value={3}>
                    <IndividualTaskSummary tasks={tasks} games={games}/>
