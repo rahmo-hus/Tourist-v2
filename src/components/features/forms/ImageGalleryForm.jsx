@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import {Button, Paper, withStyles} from "@material-ui/core";
+import {Button, Fab, Paper, withStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Files from "react-butterfiles";
+import {DropzoneArea} from 'material-ui-dropzone';
+import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import UploadBox from "../UploadBox";
 
 const useStyles = theme => ({
     paper: {
@@ -13,15 +16,17 @@ const useStyles = theme => ({
     },
     button: {
         margin: 15
-    }
+    },
+    input: {
+        display: "none"
+    },
 })
 
 class ImageGalleryForm extends Component {
 
     state = {
         mainImg: undefined,
-        gallery: undefined,
-        errors: undefined
+        gallery: undefined
     }
 
     continue = e => {
@@ -33,12 +38,14 @@ class ImageGalleryForm extends Component {
         this.props.prevStep();
     }
 
-    onFileChange = e => {
-        const files = Array.from(e.target.files);
-        this.setState({
-            gallery: files
-        });
+    onFileChange = files => {
+        this.setState({gallery: files})
+    }
 
+    handleMainImageChange = e =>{
+        this.setState({
+            mainImg: e.target.files[0]
+        })
     }
 
     render() {
@@ -47,84 +54,64 @@ class ImageGalleryForm extends Component {
 
         return (
             <Paper className={classes.paper}>
-                <Grid container direction="column" justify="center">
-                    <input type="file" multiple accept="image/jpeg, image/png"
-                           required onChange={this.onFileChange.bind(this)}/>
-                    <br/>
-                    <Files
-                        multiple
-                        convertToBase64
-                        accept={["image/jpg", "image/jpeg", "image/png"]}
-                        onError={this.handleErrors}
-                        onSuccess={files =>
-                            // Will append images at the end of the list.
-                            this.handleFiles(files, this.state.files.length)
+                <Grid container
+                      direction="column"
+                      justify="center"
+                      spacing={2}>
+                    <Grid container justify="center" alignItems="center">
+                        <h1>Korak 5: Upload fotografija</h1>
+                    </Grid>
+                    <Grid container justify="center" alignItems="center" direction="column">
+                        <label for="contained-button-file">Naslovna fotografija</label>
+                        <input
+                            accept="image/*"
+                            className={classes.input}
+                            id="contained-button-file"
+                            multiple
+                            type="file"
+                            onChange={this.handleMainImageChange}
+                        />
+                        <label htmlFor="contained-button-file">
+                            <Fab component="span" className={classes.button}>
+                                <AddPhotoAlternateIcon />
+                            </Fab>
+                        </label>
+                        {this.state.mainImg &&
+                        <img src={URL.createObjectURL(this.state.mainImg)} width="99%" height="50%"/>
                         }
-                    >
-                        {({ browseFiles, getDropZoneProps }) => (
-                            <div
-                                {...getDropZoneProps({
-                                    className:
-                                        gallery + (this.state.dragging ? " dragging" : ""),
-                                    onDragEnter: () => this.setState({ dragging: true }),
-                                    onDragLeave: () => this.setState({ dragging: false }),
-                                    onDrop: () => this.setState({ dragging: false })
-                                })}
-                            >
-                                <ul>
-                                    {this.state.files.map((image, index) => (
-                                        <li
-                                            key={index}
-                                            onClick={() => {
-                                                browseFiles({
-                                                    onErrors: this.handleErrors,
-                                                    onSuccess: files => {
-                                                        // Will insert images after the clicked image.
-                                                        this.handleFiles(files, index + 1);
-                                                    }
-                                                });
-                                            }}
-                                        >
-                                            <img src={image.src} />
-                                        </li>
-                                    ))}
-                                    <li
-                                        className="new-image"
-                                        onClick={() => {
-                                            browseFiles({
-                                                onErrors: this.handleErrors,
-                                                onSuccess: files => {
-                                                    // Will append images at the end of the list.
-                                                    this.handleFiles(
-                                                        files,
-                                                        this.state.files.length
-                                                    );
-                                                }
-                                            });
-                                        }}
-                                    >
-                                        <div>+</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        )}
-                    </Files>
-                    {this.state.errors.length > 0 && <div>An error occurred.</div>}
-                </Grid>
-                <Grid container direction="column" spacing={2}>
+                    </Grid>
                     <Grid item xs>
-                        {this.state.gallery && this.state.gallery.map((file, key) => {
-                            return <img src={URL.createObjectURL(file)} width="100%" height="auto"/>
-                        })}
+                        <DropzoneArea
+                            acceptedFiles={['image/*']}
+                            dropzoneText={"Prevuci fotografije za galeriju ili klikni ovdje"}
+                            filesLimit={10}
+                            onChange={(files) => this.onFileChange(files)}
+                        />
                     </Grid>
                 </Grid>
+
+                <Grid container
+                      justify="center"
+                      alignItems="center">
+                    <Button
+                        variant="contained"
+                        color="default"
+                        className={classes.button}
+                        startIcon={<CloudUploadIcon />}
+                    >
+                        Upload
+                    </Button>
+                </Grid>
+
                 <Grid container justify="space-between">
                     <Button
+                        className={classes.button}
                         variant="contained"
                         color="primary"
                         onClick={this.goBack}
                     >Natrag</Button>
                     <Button
+                        className={classes.button}
                         variant="contained"
                         color="primary"
                         onClick={this.continue}

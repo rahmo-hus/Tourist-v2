@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import DifficultyAndCategoryForm from "../features/forms/DifficultyAndCategoryForm";
 import QuestInfoForm from "../features/forms/QuestInfoForm";
 import LocationPin from "../features/forms/LocationPin";
-import {Paper} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import ImageGalleryForm from "../features/forms/ImageGalleryForm";
 
