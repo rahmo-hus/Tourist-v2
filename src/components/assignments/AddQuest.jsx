@@ -4,6 +4,7 @@ import QuestInfoForm from "../features/forms/QuestInfoForm";
 import LocationPin from "../features/forms/LocationPin";
 import {Paper} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import ImageGalleryForm from "../features/forms/ImageGalleryForm";
 
 class AddQuest extends React.Component {
 
@@ -49,37 +50,37 @@ class AddQuest extends React.Component {
         this.setState({[input]: e.target.value});
     }
 
-    handleLocationDescriptionEn = e =>{
+    handleLocationDescriptionEn = e => {
         const {locationDescription} = this.state;
         locationDescription.en_us = e.target.value;
         this.setState({locationDescription: locationDescription});
     }
 
-    handleLocationDescriptionBih = e =>{
+    handleLocationDescriptionBih = e => {
         const {locationDescription} = this.state;
         locationDescription.sr_bih = e.target.value;
         this.setState({locationDescription: locationDescription});
     }
 
-    handleTitleChangeEn = e =>{
+    handleTitleChangeEn = e => {
         const {title} = this.state;
         title.en_us = e.target.value;
         this.setState({title: title});
     }
 
-    handleTitleChangeBih = e =>{
+    handleTitleChangeBih = e => {
         const {title} = this.state;
         title.sr_bih = e.target.value;
         this.setState({title: title});
     }
 
-    handleGameDescriptionChangeEn = e =>{
+    handleGameDescriptionChangeEn = e => {
         const {gameDescription} = this.state;
         gameDescription.en_us = e.target.value;
         this.setState({gameDescription: gameDescription});
     }
 
-    handleGameDescriptionChangeBih = e =>{
+    handleGameDescriptionChangeBih = e => {
         const {gameDescription} = this.state;
         gameDescription.sr_bih = e.target.value;
         this.setState({gameDescription: gameDescription});
@@ -114,43 +115,45 @@ class AddQuest extends React.Component {
                     />
                 )
             case 2:
-                return<div>
-                <QuestInfoForm
-                    heading="Korak 2: Unos na engleskom jeziku"
-                    title = {values.title.en_us}
-                    locationDescription = {values.locationDescription.en_us}
-                    gameDescription = {values.gameDescription.en_us}
-                    nextStep = {this.nextStep}
-                    prevStep = {this.prevStep}
-                    handleLocationDescriptionChange={this.handleLocationDescriptionEn}
-                    handleTitleChange = {this.handleTitleChangeEn}
-                    handleGameDescriptionChange = {this.handleGameDescriptionChangeEn}
-                />
+                return <div>
+                    <QuestInfoForm
+                        heading="Korak 2: Unos na engleskom jeziku"
+                        title={values.title.en_us}
+                        locationDescription={values.locationDescription.en_us}
+                        gameDescription={values.gameDescription.en_us}
+                        nextStep={this.nextStep}
+                        prevStep={this.prevStep}
+                        handleLocationDescriptionChange={this.handleLocationDescriptionEn}
+                        handleTitleChange={this.handleTitleChangeEn}
+                        handleGameDescriptionChange={this.handleGameDescriptionChangeEn}
+                    />
                     {console.log(this.state)}
                 </div>
 
             case 3:
-                return<div>
+                return <div>
                     <QuestInfoForm
                         heading="Korak 3: Unos na maticnom jeziku"
-                        title = {values.title.sr_bih}
-                        locationDescription = {values.locationDescription.sr_bih}
-                        gameDescription = {values.gameDescription.sr_bih}
-                        nextStep = {this.nextStep}
-                        prevStep = {this.prevStep}
+                        title={values.title.sr_bih}
+                        locationDescription={values.locationDescription.sr_bih}
+                        gameDescription={values.gameDescription.sr_bih}
+                        nextStep={this.nextStep}
+                        prevStep={this.prevStep}
                         handleLocationDescriptionChange={this.handleLocationDescriptionBih}
-                        handleTitleChange = {this.handleTitleChangeBih}
-                        handleGameDescriptionChange = {this.handleGameDescriptionChangeBih}
+                        handleTitleChange={this.handleTitleChangeBih}
+                        handleGameDescriptionChange={this.handleGameDescriptionChangeBih}
                     />
                 </div>
             case 4:
                 return <LocationPin
-                        prevStep = {this.prevStep}
-                        nextStep = {this.nextStep}
-                        locationCoordinates = {locationCoordinates}
-                        handleCoordinates = {this.handleCoordinates}/>
+                    prevStep={this.prevStep}
+                    nextStep={this.nextStep}
+                    locationCoordinates={locationCoordinates}
+                    handleCoordinates={this.handleCoordinates}/>
             case 5:
-                return <h1>Galerija</h1>
+                return <ImageGalleryForm
+                    prevStep={this.prevStep}
+                    nextStep={this.nextStep}/>
             case 6:
                 return <h1>Submit</h1>
         }
