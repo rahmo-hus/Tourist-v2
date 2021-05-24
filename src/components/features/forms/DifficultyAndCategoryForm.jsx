@@ -61,9 +61,9 @@ class DifficultyAndCategoryForm extends Component {
                                 value={category}
                                 onChange={handleChange('category')}
                             >
-                                <MenuItem value={"cultural"}>Kulturni</MenuItem>
-                                <MenuItem value={"historical"}>Historijski</MenuItem>
-                                <MenuItem value={"nature"}>Priroda</MenuItem>
+                                <MenuItem value={"kulturni"}>Kulturni</MenuItem>
+                                <MenuItem value={"historisjki"}>Historijski</MenuItem>
+                                <MenuItem value={"priroda"}>Priroda</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

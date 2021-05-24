@@ -4,6 +4,7 @@ import QuestInfoForm from "../features/forms/QuestInfoForm";
 import LocationPin from "../features/forms/LocationPin";
 import Grid from "@material-ui/core/Grid";
 import ImageGalleryForm from "../features/forms/ImageGalleryForm";
+import QuestSummary from "../features/forms/QuestSummary";
 
 class AddQuest extends React.Component {
 
@@ -25,6 +26,7 @@ class AddQuest extends React.Component {
             lat: 44.7722,
             lng: 17.1910
         },
+        headingImageURL:'',
         imagesURL: [],
         category: '',
         difficulty: 1
@@ -92,16 +94,30 @@ class AddQuest extends React.Component {
         this.setState({locationCoordinates: locationCoordinates});
     }
 
+    setHeadingImageURL = url =>{
+        this.setState({
+            headingImageURL:url
+        });
+    }
+
+    addGalleryImageURL= url =>{
+
+        const imagesURL = this.state.imagesURL;
+        imagesURL.push(url);
+
+        this.setState({imagesURL});
+    }
+
 
     render() {
         const {step} = this.state;
         const {
             title, gameDescription, category, locationCoordinates,
-            imagesURL, locationDescription, difficulty
+            imagesURL, headingImageURL, locationDescription, difficulty
         } = this.state;
         const values = {
             title, gameDescription, category, locationCoordinates,
-            imagesURL, locationDescription, difficulty
+            imagesURL, headingImageURL, locationDescription, difficulty
         };
 
         switch (step) {
@@ -152,9 +168,16 @@ class AddQuest extends React.Component {
             case 5:
                 return <ImageGalleryForm
                     prevStep={this.prevStep}
-                    nextStep={this.nextStep}/>
+                    nextStep={this.nextStep}
+                    setHeadingImageURL={this.setHeadingImageURL}
+                    addGalleryImageURL={this.addGalleryImageURL}
+                />
             case 6:
-                return <h1>Submit</h1>
+                return <QuestSummary
+                    prevStep={this.prevStep}
+                    nextStep={this.nextStep}
+                    values = {values}
+                />
         }
 
     }

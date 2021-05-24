@@ -4,6 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import {DropzoneArea} from 'material-ui-dropzone';
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import {connect} from "react-redux";
+import {compose} from "redux";
+import {uploadFile} from "../../../store/actions/taskActions";
+import ProgressBar from "../ProgressBar";
 
 const useStyles = theme => ({
     paper: {
@@ -30,6 +34,7 @@ class ImageGalleryForm extends Component {
 
     continue = e => {
         e.preventDefault();
+        this.props.setHeadingImageURL(this.props.imageURL);
         this.props.nextStep();
     }
     goBack = e => {
@@ -44,6 +49,16 @@ class ImageGalleryForm extends Component {
     handleMainImageChange = e => {
         this.setState({
             mainImg: e.target.files[0]
+        })
+    }
+
+    handleUploadClicked = () =>{
+        this.props.uploadFile(this.state.mainImg)
+        this.props.setHeadingImageURL(this.props.imageURL)
+        console.log(this.state.gallery)
+        this.state.gallery.forEach(file =>{
+            this.props.uploadFile(file);
+            this.props.addGalleryImageURL(this.props.imageURL);
         })
     }
 
@@ -97,9 +112,16 @@ class ImageGalleryForm extends Component {
                         color="default"
                         className={classes.button}
                         startIcon={<CloudUploadIcon/>}
+                        onClick={this.handleUploadClicked}
                     >
                         Upload
                     </Button>
+                </Grid>
+
+                <Grid container>
+                    <Grid item xs={12}>
+                         <ProgressBar uploadProgress = {this.props.uploadProgress} />
+                    </Grid>
                 </Grid>
 
                 <Grid container justify="space-between">
@@ -122,4 +144,21 @@ class ImageGalleryForm extends Component {
     }
 }
 
-export default withStyles(useStyles)(ImageGalleryForm);
+const mapStateToProps = state =>{
+    return{
+        error: state.task.error,
+        uploadProgress: state.task.uploadProgress,
+        imageURL: state.task.imageURL
+    }
+}
+
+const mapDispatchToProps = dispatch =>{
+    return{
+        uploadFile: file => dispatch(uploadFile(file))
+    }
+}
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withStyles(useStyles)
+)(ImageGalleryForm);
