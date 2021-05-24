@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import {DropzoneArea} from 'material-ui-dropzone';
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import UploadBox from "../UploadBox";
 
 const useStyles = theme => ({
     paper: {
@@ -42,7 +41,7 @@ class ImageGalleryForm extends Component {
         this.setState({gallery: files})
     }
 
-    handleMainImageChange = e =>{
+    handleMainImageChange = e => {
         this.setState({
             mainImg: e.target.files[0]
         })
@@ -73,7 +72,7 @@ class ImageGalleryForm extends Component {
                         />
                         <label htmlFor="contained-button-file">
                             <Fab component="span" className={classes.button}>
-                                <AddPhotoAlternateIcon />
+                                <AddPhotoAlternateIcon/>
                             </Fab>
                         </label>
                         {this.state.mainImg &&
@@ -97,7 +96,7 @@ class ImageGalleryForm extends Component {
                         variant="contained"
                         color="default"
                         className={classes.button}
-                        startIcon={<CloudUploadIcon />}
+                        startIcon={<CloudUploadIcon/>}
                     >
                         Upload
                     </Button>
