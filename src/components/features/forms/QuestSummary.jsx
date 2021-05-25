@@ -25,12 +25,13 @@ class QuestSummary extends Component {
     }
     goBack = e => {
         e.preventDefault();
+        console.log(this.props.values)
         this.props.prevStep();
     }
 
     render() {
 
-        const {classes, values} = this.props;
+        const {classes, values, submitQuest} = this.props;
 
         return (
             <Paper className={classes.paper}>
@@ -94,7 +95,10 @@ class QuestSummary extends Component {
 
                 <Grid container
                       direction="column">
-                    <img src={values.headingImageURL}/>
+                    <img src={values.headingImageURL} width="100%"/>
+                    {values.imagesURL.map((image, key) =>{
+                        return <img src={image} />
+                    })}
                 </Grid>
 
                 <Grid container justify="space-between">
@@ -108,9 +112,9 @@ class QuestSummary extends Component {
                         className={classes.button}
                         variant="contained"
                         color="primary"
-                        onClick={this.continue}
+                        onClick={submitQuest}
                     >
-                        Nastavak</Button>
+                        Potvrdi</Button>
                 </Grid>
             </Paper>
         );

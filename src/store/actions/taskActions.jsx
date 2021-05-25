@@ -4,7 +4,7 @@ export const createTask = (task) => {
     const firestore = getFirestore();
     dispatch({type:"ADDING_TASK"})
     firestore
-      .collection("tasks")
+      .collection("quests")
       .add({
         ...task,
         createdAt: new Date()

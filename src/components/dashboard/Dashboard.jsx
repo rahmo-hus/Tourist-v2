@@ -29,7 +29,8 @@ import {connect} from 'react-redux'
 import {signOut} from '../../store/actions/authActions'
 import Statistics from '../statistics/Statistics'
 import {render} from 'react-dom';
-import AddQuest from "../assignments/AddQuest";
+import AddQuest from "../quests/AddQuest";
+import QuestDetails from "../quests/QuestDetails";
 
 const drawerWidth = 240;
 
@@ -178,7 +179,7 @@ function Dashboard(props) {
                         }}/>
                         <Route path={`${match.path}/addtask`} component={AddQuest}/>
                         <Route path={`${match.path}/tasks`} component={AssignmentList}/>
-                        <Route path={`${match.path}/task/:id`} component={AssignmentDetails}/>
+                        <Route path={`${match.path}/task/:id`} component={QuestDetails}/>
                         <Route path={`${match.path}/statistics`} component={Statistics}/>
                         <Route path={`${match.path}/*`} render={() => (
                             <div>

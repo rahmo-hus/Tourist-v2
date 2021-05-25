@@ -5,6 +5,8 @@ import LocationPin from "../features/forms/LocationPin";
 import Grid from "@material-ui/core/Grid";
 import ImageGalleryForm from "../features/forms/ImageGalleryForm";
 import QuestSummary from "../features/forms/QuestSummary";
+import {createTask, restoreDefaults, uploadFile} from "../../store/actions/taskActions";
+import {connect} from "react-redux";
 
 class AddQuest extends React.Component {
 
@@ -108,6 +110,12 @@ class AddQuest extends React.Component {
         this.setState({imagesURL});
     }
 
+    submitQuest = () =>{
+        this.props.createTask({
+            ...this.state
+        })
+    }
+
 
     render() {
         const {step} = this.state;
@@ -177,10 +185,25 @@ class AddQuest extends React.Component {
                     prevStep={this.prevStep}
                     nextStep={this.nextStep}
                     values = {values}
+                    submitQuest = {this.submitQuest}
                 />
         }
 
     }
 }
 
-export default AddQuest;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createTask: (task) => dispatch(createTask(task))
+    };
+};
+
+const mapStateToProps = (state) => {
+    return {
+        error: state.task.error,
+        inProgress: state.task.inProgress,
+        addTaskSuccess: state.task.success,
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddQuest);

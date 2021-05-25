@@ -24,10 +24,10 @@ const AssignmentSummary = (props) =>{
                     <div className={classes.cardDetails}>
                         <CardContent>
                             <Typography component="h2" variant="h5">
-                                {task.title}
+                                {task.title.en_us}
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
-                                {task.gameDescription}
+                                {task.gameDescription.en_us}
                             </Typography>
                             <Typography variant="subtitle1" paragraph>
                                 {task.authorFirstName}

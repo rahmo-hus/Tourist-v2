@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {uploadFile} from "../../../store/actions/taskActions";
 import ProgressBar from "../ProgressBar";
+import UploadDialog from "../../dialogs/UploadDialog";
 
 const useStyles = theme => ({
     paper: {
@@ -29,7 +30,10 @@ class ImageGalleryForm extends Component {
 
     state = {
         mainImg: undefined,
-        gallery: undefined
+        gallery: undefined,
+        nextButtonDisabled: true,
+        uploadDisabled:false
+
     }
 
     continue = e => {
@@ -60,6 +64,7 @@ class ImageGalleryForm extends Component {
             this.props.uploadFile(file);
             this.props.addGalleryImageURL(this.props.imageURL);
         })
+        this.setState({uploadDisabled: true, nextButtonDisabled: false});
     }
 
     render() {
@@ -113,10 +118,13 @@ class ImageGalleryForm extends Component {
                         className={classes.button}
                         startIcon={<CloudUploadIcon/>}
                         onClick={this.handleUploadClicked}
+                        disabled={this.state.uploadDisabled}
                     >
                         Upload
                     </Button>
                 </Grid>
+
+                <UploadDialog open={this.props.uploadProgress !== 0 && this.props.uploadProgress !== 100}/>
 
                 <Grid container>
                     <Grid item xs={12}>
@@ -135,6 +143,7 @@ class ImageGalleryForm extends Component {
                         className={classes.button}
                         variant="contained"
                         color="primary"
+                        disabled={this.state.nextButtonDisabled}
                         onClick={this.continue}
                     >
                         Nastavak</Button>

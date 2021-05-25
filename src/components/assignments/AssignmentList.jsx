@@ -31,7 +31,7 @@ function ViewAssignment(props) {
         return searchText === '' ?
             <AssignmentSummary task={task} />
             :
-                task.title.toLowerCase().includes(searchText.toLowerCase()) ? <AssignmentSummary task={task} /> : <></>
+                task.title.en_us.toLowerCase().includes(searchText.toLowerCase()) ? <AssignmentSummary task={task} /> : <></>
     }) : (
         <div className={classes.root}>
             <CircularProgress />
@@ -60,7 +60,7 @@ function ViewAssignment(props) {
 
 const mapStateToProps = (state) =>{
     return{
-        tasks: state.firestore.ordered.tasks
+        tasks:  state.firestore.ordered.quests
     }
 }
 
@@ -68,8 +68,7 @@ export default compose(
     connect(mapStateToProps),
     firestoreConnect([
         {
-            collection: 'tasks',
-            orderBy:['title', 'asc']
+            collection: 'quests'
         }
     ])
 )(ViewAssignment)
