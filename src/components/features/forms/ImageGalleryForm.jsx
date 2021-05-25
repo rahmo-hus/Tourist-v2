@@ -6,8 +6,8 @@ import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {uploadFile} from "../../../store/actions/taskActions";
-import ProgressBar from "../ProgressBar";
+import {uploadFile, uploadMultipleFiles} from "../../../store/actions/taskActions";
+import ProgressBar from "../utils/ProgressBar";
 import UploadDialog from "../../dialogs/UploadDialog";
 
 const useStyles = theme => ({
@@ -32,13 +32,15 @@ class ImageGalleryForm extends Component {
         mainImg: undefined,
         gallery: undefined,
         nextButtonDisabled: true,
-        uploadDisabled:false
+        uploadDisabled:false,
+        imagesURL: []
 
     }
 
     continue = e => {
         e.preventDefault();
         this.props.setHeadingImageURL(this.props.imageURL);
+        this.props.addGalleryImageURLs(this.props.images);
         this.props.nextStep();
     }
     goBack = e => {
@@ -56,14 +58,9 @@ class ImageGalleryForm extends Component {
         })
     }
 
-    handleUploadClicked = () =>{
+    handleUploadClicked =() => {
         this.props.uploadFile(this.state.mainImg)
-        this.props.setHeadingImageURL(this.props.imageURL)
-        console.log(this.state.gallery)
-        this.state.gallery.forEach(file =>{
-            this.props.uploadFile(file);
-            this.props.addGalleryImageURL(this.props.imageURL);
-        })
+        this.props.uploadMultipleFiles(this.state.gallery);
         this.setState({uploadDisabled: true, nextButtonDisabled: false});
     }
 
@@ -157,13 +154,15 @@ const mapStateToProps = state =>{
     return{
         error: state.task.error,
         uploadProgress: state.task.uploadProgress,
-        imageURL: state.task.imageURL
+        imageURL: state.task.imageURL,
+        images: state.task.gallery
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return{
-        uploadFile: file => dispatch(uploadFile(file))
+        uploadFile: file => dispatch(uploadFile(file)),
+        uploadMultipleFiles: files => dispatch(uploadMultipleFiles(files))
     }
 }
 

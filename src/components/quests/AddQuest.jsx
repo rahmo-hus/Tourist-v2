@@ -102,12 +102,12 @@ class AddQuest extends React.Component {
         });
     }
 
-    addGalleryImageURL= url =>{
+    addGalleryImageURLs= urls =>{
 
-        const imagesURL = this.state.imagesURL;
-        imagesURL.push(url);
+        this.setState({
+            imagesURL : urls
+        })
 
-        this.setState({imagesURL});
     }
 
     submitQuest = () =>{
@@ -178,7 +178,7 @@ class AddQuest extends React.Component {
                     prevStep={this.prevStep}
                     nextStep={this.nextStep}
                     setHeadingImageURL={this.setHeadingImageURL}
-                    addGalleryImageURL={this.addGalleryImageURL}
+                    addGalleryImageURLs={this.addGalleryImageURLs}
                 />
             case 6:
                 return <QuestSummary

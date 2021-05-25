@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import {Box, Button, Paper} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {withStyles} from "@material-ui/core/styles";
-import Marker from "../Marker";
+import Marker from "../utils/Marker";
 
 const useStyles = theme => ({
     paper: {

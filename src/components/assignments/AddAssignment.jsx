@@ -7,8 +7,8 @@ import {
 } from "../../store/actions/taskActions";
 import { connect } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
-import ProgressBar from "../features/ProgressBar";
-import UploadBox from "../features/UploadBox";
+import ProgressBar from "../features/utils/ProgressBar";
+import UploadBox from "../features/utils/UploadBox";
 import AddTaskForm from "../features/forms/AddTaskForm";
 
 const initState = {

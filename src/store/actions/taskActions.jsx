@@ -25,11 +25,48 @@ export const createTask = (task) => {
   };
 };
 
+export const uploadMultipleFiles = (files)=>{
+
+  return (dispatch, state, {getFirebase, getFirestore}) => {
+
+    const firebase = getFirebase();
+    const imageURLs = [];
+
+    for(const file of files) {
+      const uploadTask = firebase.storage().ref(`photos/${file.name}`).put(file);
+
+      uploadTask.on('state_changed', (snapshot) => {
+        dispatch({
+          type: "UPLOAD_PENDING",
+          uploadProgress: Math.round(snapshot.bytesTransferred * 100 / snapshot.totalBytes)
+        });
+      }, (error) => {
+        dispatch({
+          type: "UPLOAD_ERROR",
+          err: error
+        })
+      }, () => {
+        firebase.storage().ref('photos').child(file.name).getDownloadURL().then(url => {
+          dispatch({
+            type: "UPLOAD_SUCCESS",
+            uploadProgress: 0
+          });
+          imageURLs.push(url);
+        })
+      })
+    }
+    dispatch({
+      type:"GALLERY_UPLOAD_SUCCESS",
+      gallery: imageURLs
+    })
+  }
+
+}
+
 export const uploadFile = (file) =>{
   return (dispatch, state, {getFirebase, getFirestore}) => {
 
     const firebase = getFirebase();
-
     const uploadTask = firebase.storage().ref(`photos/${file.name}`).put(file);
 
     uploadTask.on('state_changed' , (snapshot) =>{
@@ -44,7 +81,6 @@ export const uploadFile = (file) =>{
       })
     }, ()=> {
       firebase.storage().ref('photos').child(file.name).getDownloadURL().then(url=>{
-        console.log(url)
         dispatch({
           type:"UPLOAD_SUCCESS",
           imageURL:url,
@@ -58,7 +94,7 @@ export const uploadFile = (file) =>{
 export const deleteTask = (id) =>{
   return(dispatch, state, {getFirestore}) => {
     const firestore = getFirestore();
-    firestore.collection('tasks').doc(id).delete()
+    firestore.collection('quests').doc(id).delete()
     .then(()=>{
       dispatch({
         type:"DELETE_SUCCESS"

@@ -109,8 +109,7 @@ function QuestDetails(props) {
                             variant="body1"
                             component="p"
                         >
-                            {quest.locationCoordinates.lat}<br/>
-                            {quest.locationCoordinates.lng}
+                            {quest.locationCoordinates.lat}°N {quest.locationCoordinates.lng}°E
                         </Typography>
                         <Divider />
                         <Typography
@@ -179,7 +178,7 @@ function QuestDetails(props) {
 const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id;
     const quests = state.firestore.data.quests;
-    const quest = quests ? quests[id] : {};
+    const quest = quests ? quests[id] : null;
     return {
         quest: quest,
     };

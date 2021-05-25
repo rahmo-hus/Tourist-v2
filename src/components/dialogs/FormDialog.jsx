@@ -10,8 +10,8 @@ import {updateTask, uploadFile} from "../../store/actions/taskActions"
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddTaskForm from "../features/forms/AddTaskForm";
 import { connect } from "react-redux";
-import ProgressBar from "../features/ProgressBar";
-import UploadBox from "../features/UploadBox";
+import ProgressBar from "../features/utils/ProgressBar";
+import UploadBox from "../features/utils/UploadBox";
 
 function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
