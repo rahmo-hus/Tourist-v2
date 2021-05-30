@@ -37,7 +37,6 @@ class LocationPin extends Component {
         const {classes, locationCoordinates, handleCoordinates} = this.props;
 
         return (
-            <Paper>
                 <Grid container justify="center" direction="column">
                     <Grid container justify="center">
                         <h1>Korak 4: Odabir lokacije na mapi</h1>
@@ -54,23 +53,22 @@ class LocationPin extends Component {
                             <Marker lat={locationCoordinates.lat} lng={locationCoordinates.lng}/>
                         </GoogleMapReact>
                     </div>
-                    <Grid container justify="space-between">
-                        <Button
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            onClick={this.goBack}
-                        >Natrag</Button>
-                        <Button
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            onClick={this.continue}
-                        >
-                            Nastavak</Button>
-                    </Grid>
+                    {/*<Grid container justify="space-between">*/}
+                    {/*    <Button*/}
+                    {/*        className={classes.button}*/}
+                    {/*        variant="contained"*/}
+                    {/*        color="primary"*/}
+                    {/*        onClick={this.goBack}*/}
+                    {/*    >Natrag</Button>*/}
+                    {/*    <Button*/}
+                    {/*        className={classes.button}*/}
+                    {/*        variant="contained"*/}
+                    {/*        color="primary"*/}
+                    {/*        onClick={this.continue}*/}
+                    {/*    >*/}
+                    {/*        Nastavak</Button>*/}
+                    {/*</Grid>*/}
                 </Grid>
-            </Paper>
         );
     }
 }

@@ -101,21 +101,21 @@ class QuestSummary extends Component {
                     })}
                 </Grid>
 
-                <Grid container justify="space-between">
-                    <Button
-                        className={classes.button}
-                        variant="contained"
-                        color="primary"
-                        onClick={this.goBack}
-                    >Natrag</Button>
-                    <Button
-                        className={classes.button}
-                        variant="contained"
-                        color="primary"
-                        onClick={submitQuest}
-                    >
-                        Potvrdi</Button>
-                </Grid>
+                {/*<Grid container justify="space-between">*/}
+                {/*    <Button*/}
+                {/*        className={classes.button}*/}
+                {/*        variant="contained"*/}
+                {/*        color="primary"*/}
+                {/*        onClick={this.goBack}*/}
+                {/*    >Natrag</Button>*/}
+                {/*    <Button*/}
+                {/*        className={classes.button}*/}
+                {/*        variant="contained"*/}
+                {/*        color="primary"*/}
+                {/*        onClick={submitQuest}*/}
+                {/*    >*/}
+                {/*        Potvrdi</Button>*/}
+                {/*</Grid>*/}
             </Paper>
         );
     }

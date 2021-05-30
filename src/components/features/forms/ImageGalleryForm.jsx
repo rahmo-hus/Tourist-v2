@@ -39,8 +39,6 @@ class ImageGalleryForm extends Component {
 
     continue = e => {
         e.preventDefault();
-        this.props.setHeadingImageURL(this.props.imageURL);
-        this.props.addGalleryImageURLs(this.props.images);
         this.props.nextStep();
     }
     goBack = e => {
@@ -69,7 +67,7 @@ class ImageGalleryForm extends Component {
         const {classes} = this.props;
 
         return (
-            <Paper className={classes.paper}>
+            <div>
                 <Grid container
                       direction="column"
                       justify="center"
@@ -129,23 +127,23 @@ class ImageGalleryForm extends Component {
                     </Grid>
                 </Grid>
 
-                <Grid container justify="space-between">
-                    <Button
-                        className={classes.button}
-                        variant="contained"
-                        color="primary"
-                        onClick={this.goBack}
-                    >Natrag</Button>
-                    <Button
-                        className={classes.button}
-                        variant="contained"
-                        color="primary"
-                        disabled={this.state.nextButtonDisabled}
-                        onClick={this.continue}
-                    >
-                        Nastavak</Button>
-                </Grid>
-            </Paper>
+                {/*<Grid container justify="space-between">*/}
+                {/*    <Button*/}
+                {/*        className={classes.button}*/}
+                {/*        variant="contained"*/}
+                {/*        color="primary"*/}
+                {/*        onClick={this.goBack}*/}
+                {/*    >Natrag</Button>*/}
+                {/*    <Button*/}
+                {/*        className={classes.button}*/}
+                {/*        variant="contained"*/}
+                {/*        color="primary"*/}
+                {/*        disabled={this.state.nextButtonDisabled}*/}
+                {/*        onClick={this.continue}*/}
+                {/*    >*/}
+                {/*        Nastavak</Button>*/}
+                {/*</Grid>*/}
+            </div>
         );
     }
 }
@@ -154,8 +152,6 @@ const mapStateToProps = state =>{
     return{
         error: state.task.error,
         uploadProgress: state.task.uploadProgress,
-        imageURL: state.task.imageURL,
-        images: state.task.gallery
     }
 }
 

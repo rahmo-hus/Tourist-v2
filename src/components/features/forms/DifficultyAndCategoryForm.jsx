@@ -68,14 +68,14 @@ class DifficultyAndCategoryForm extends Component {
                         </FormControl>
                     </Grid>
                     <br/>
-                    <Grid item xs>
-                        <Button className={classes.button}
-                                color="primary"
-                                variant="contained"
-                                onClick={this.continue}>
-                            Nastavak
-                        </Button>
-                    </Grid>
+                    {/*<Grid item xs>*/}
+                    {/*    <Button className={classes.button}*/}
+                    {/*            color="primary"*/}
+                    {/*            variant="contained"*/}
+                    {/*            onClick={this.continue}>*/}
+                    {/*        Nastavak*/}
+                    {/*    </Button>*/}
+                    {/*</Grid>*/}
                 </Grid>
             </Paper>
         );

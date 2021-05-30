@@ -13,6 +13,7 @@ import { compose } from "redux";
 import AlertDialog from "../dialogs/AlertDialog";
 import FormDialog from '../dialogs/FormDialog';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ChangeQuestDialog from "../dialogs/ChangeQuestDialog";
 
 const useStyles = makeStyles({
     root: {
@@ -164,7 +165,7 @@ function QuestDetails(props) {
                         )}
                     </CardContent>
                     <CardActions>
-                        <FormDialog id={props.match.params.id} task={quest}/>
+                        <ChangeQuestDialog id={props.match.params.id} quest={quest}/>
                         <AlertDialog id={props.match.params.id} />
                     </CardActions>
                 </Card>

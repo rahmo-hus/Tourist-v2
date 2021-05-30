@@ -90,21 +90,21 @@ class QuestInfoForm extends Component {
                             label="Detaljan opis lokacije"
                         />
                     </Grid>
-                    <Grid container justify="space-between">
-                        <Button
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            onClick={this.goBack}
-                        >Natrag</Button>
-                        <Button
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            onClick={this.continue}
-                        >
-                            Nastavak</Button>
-                    </Grid>
+                    {/*<Grid container justify="space-between">*/}
+                    {/*    <Button*/}
+                    {/*        className={classes.button}*/}
+                    {/*        variant="contained"*/}
+                    {/*        color="primary"*/}
+                    {/*        onClick={this.goBack}*/}
+                    {/*    >Natrag</Button>*/}
+                    {/*    <Button*/}
+                    {/*        className={classes.button}*/}
+                    {/*        variant="contained"*/}
+                    {/*        color="primary"*/}
+                    {/*        onClick={this.continue}*/}
+                    {/*    >*/}
+                    {/*        Nastavak</Button>*/}
+                    {/*</Grid>*/}
                 </Grid>
             </Paper>
         );
