@@ -34,6 +34,7 @@ class MainForm extends Component {
 
         return (
             <Paper className={classes.paper}>
+                {/*<form autoComplete="off" onSubmit={this.props.submitQuest}>*/}
                 <Grid container
                       justify="center"
                       alignItems="center"
@@ -162,17 +163,11 @@ class MainForm extends Component {
                 </Grid>
 
                 <ImageGalleryForm />
-
-                <Grid item xs={12}>
-                    <Button variant="contained"
-                            color="primary"
-                            onClick={this.props.submitQuest}
-                    >Submit</Button>
-                </Grid>
-
+                {/*</form>*/}
             </Paper>
         );
     }
 }
 
-export default withStyles(useStyles)(MainForm)
+export default withStyles(useStyles)(MainForm);
+

@@ -11,7 +11,7 @@ import { deleteTask } from "../../store/actions/taskActions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-function AlertDialog(props) {
+function QuestDeleteAlertDialog(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 
@@ -74,4 +74,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(AlertDialog);
+export default connect(null, mapDispatchToProps)(QuestDeleteAlertDialog);

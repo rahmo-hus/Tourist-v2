@@ -57,7 +57,6 @@ class ImageGalleryForm extends Component {
     }
 
     handleUploadClicked =() => {
-        this.props.uploadFile(this.state.mainImg)
         this.props.uploadMultipleFiles(this.state.gallery);
         this.setState({uploadDisabled: true, nextButtonDisabled: false});
     }
@@ -75,25 +74,24 @@ class ImageGalleryForm extends Component {
                     <Grid container justify="center" alignItems="center">
                         <h1>Korak 5: Upload fotografija</h1>
                     </Grid>
-                    <Grid container justify="center" alignItems="center" direction="column">
-                        <label for="contained-button-file">Naslovna fotografija</label>
-                        <input
-                            accept="image/*"
-                            className={classes.input}
-                            id="contained-button-file"
-                            multiple
-                            type="file"
-                            onChange={this.handleMainImageChange}
-                        />
-                        <label htmlFor="contained-button-file">
-                            <Fab component="span" className={classes.button}>
-                                <AddPhotoAlternateIcon/>
-                            </Fab>
-                        </label>
-                        {this.state.mainImg &&
-                        <img src={URL.createObjectURL(this.state.mainImg)} width="99%" height="50%"/>
-                        }
-                    </Grid>
+                    {/*<Grid container justify="center" alignItems="center" direction="column">*/}
+                    {/*    <label for="contained-button-file">Naslovna fotografija</label>*/}
+                    {/*    <input*/}
+                    {/*        accept="image/*"*/}
+                    {/*        className={classes.input}*/}
+                    {/*        id="contained-button-file"*/}
+                    {/*        type="file"*/}
+                    {/*        onChange={this.handleMainImageChange}*/}
+                    {/*    />*/}
+                    {/*    <label htmlFor="contained-button-file">*/}
+                    {/*        <Fab component="span" className={classes.button}>*/}
+                    {/*            <AddPhotoAlternateIcon/>*/}
+                    {/*        </Fab>*/}
+                    {/*    </label>*/}
+                    {/*    {this.state.mainImg &&*/}
+                    {/*    <img src={URL.createObjectURL(this.state.mainImg)} width="99%" height="50%"/>*/}
+                    {/*    }*/}
+                    {/*</Grid>*/}
                     <Grid item xs>
                         <DropzoneArea
                             acceptedFiles={['image/*']}

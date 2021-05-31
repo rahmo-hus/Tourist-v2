@@ -5,22 +5,44 @@ import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
 import DialogContentText from "@material-ui/core/DialogContentText";
-import {updateTask, uploadFile} from "../../store/actions/taskActions"
+import {updateQuest, uploadFile} from "../../store/actions/taskActions"
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddTaskForm from "../features/forms/AddTaskForm";
 import {connect} from "react-redux";
 import ProgressBar from "../features/utils/ProgressBar";
 import UploadBox from "../features/utils/UploadBox";
 import QuestInfoForm from "../features/forms/QuestInfoForm";
-import {FormControl, InputLabel, makeStyles, MenuItem, Select} from "@material-ui/core";
+import {FormControl, InputLabel, makeStyles, MenuItem, Paper, Select} from "@material-ui/core";
 import MainForm from "../features/forms/MainForm";
+import Carousel from "@brainhubeu/react-carousel";
+import IconButton from "@material-ui/core/IconButton";
+import {Close} from "@material-ui/icons";
+import ImageDeleteAlertDialog from "./ImageDeleteAlertDialog";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
     },
+    image_container: {
+        position: 'relative',
+        height: '300px'
+    },
+    image: {
+        objectFit:'cover',
+        objectPosition:'center',
+        height: '300px',
+        maxWidth:'100%'
+    },
+    x_button: {
+        position: 'absolute',
+        top: '0',
+        right: '0',
+        background: 'rgba(255,0,0,0.3)',
+        height:'40px'
+    }
 }));
 
 function ChangeQuestDialog(props) {
@@ -28,109 +50,112 @@ function ChangeQuestDialog(props) {
     const classes = useStyles();
     const {quest, id} = props;
     const [fileChangeClicked, setFileChangeClicked] = React.useState(false);
-    const [taskProperties, setTaskProperties] = React.useState({});
+    const [questProperties, setQuestProperties] = React.useState({});
     const [imgURL, setImgURL] = React.useState('')
     const handleClickOpen = () => {
         setOpen(true);
-        setTaskProperties(quest);
+        setQuestProperties(quest);
         //setImgURL(props.task.imageURL);
         setFileChangeClicked(false);
-        console.log(quest);
     };
 
     const handleClose = () => {
         setOpen(false);
-        setTaskProperties(quest);
+        setQuestProperties(quest);
         setFileChangeClicked(false);
     };
 
     const handleDifficultyChange = input => e => {
-        setTaskProperties({
-            ...taskProperties,
+        setQuestProperties({
+            ...questProperties,
             [input]: e.target.value
         });
 
     }
 
     const handleTitleChangeBih = e => {
-        setTaskProperties({
-            ...taskProperties,
+        setQuestProperties({
+            ...questProperties,
             title: {
-                ...taskProperties.title,
+                ...questProperties.title,
                 sr_bih: e.target.value
             }
         });
     }
     const handleTitleChangeEn = e => {
-        setTaskProperties({
-            ...taskProperties,
+        setQuestProperties({
+            ...questProperties,
             title: {
-                ...taskProperties.title,
+                ...questProperties.title,
                 en_us: e.target.value
             }
         });
     }
 
     const handleLocationDescriptionChangeEn = e => {
-        setTaskProperties({
-            ...taskProperties,
+        setQuestProperties({
+            ...questProperties,
             locationDescription: {
-                ...taskProperties.locationDescription,
+                ...questProperties.locationDescription,
                 en_us: e.target.value
             }
         });
     }
 
     const handleLocationDescriptionChangeBih = e => {
-        setTaskProperties({
-            ...taskProperties,
+        setQuestProperties({
+            ...questProperties,
             locationDescription: {
-                ...taskProperties.locationDescription,
+                ...questProperties.locationDescription,
                 sr_bih: e.target.value
             }
         });
     }
 
     const handleGameDescriptionChangeEn = e => {
-        setTaskProperties({
-            ...taskProperties,
+        setQuestProperties({
+            ...questProperties,
             gameDescription: {
-                ...taskProperties.gameDescription,
+                ...questProperties.gameDescription,
                 en_us: e.target.value
             }
         });
     }
 
     const handleGameDescriptionChangeBih = e => {
-        setTaskProperties({
-            ...taskProperties,
+        setQuestProperties({
+            ...questProperties,
             gameDescription: {
-                ...taskProperties.gameDescription,
+                ...questProperties.gameDescription,
                 sr_bih: e.target.value
             }
         });
     }
 
-    const handleChange = (event) => {
-        setTaskProperties({
-            ...taskProperties,
-            [event.target.id]: event.target.value,
-        });
-    };
 
     const handleConfirm = () => {
-        props.updateTask({
-            ...taskProperties,
-            imageURL: props.imageURL
+        const currentGallery = [];
+        if (props.images) {
+            props.images.map((image, key) => {
+                currentGallery.push(image);
+            });
+        }
+        questProperties.imagesURL.map((image, key) => {
+            currentGallery.push(image);
+        });
+        setOpen(false);
+        props.updateQuest({
+            ...questProperties,
+            imagesURL: currentGallery
         }, id);
     }
 
-    const handleCoordinates = e =>{
-        setTaskProperties({
-            ...taskProperties,
-            locationCoordinates:{
-                lat:e.lat,
-                lng:e.lng
+    const handleCoordinates = e => {
+        setQuestProperties({
+            ...questProperties,
+            locationCoordinates: {
+                lat: e.lat,
+                lng: e.lng
             }
         });
     }
@@ -159,7 +184,7 @@ function ChangeQuestDialog(props) {
                 </DialogContent>
                 <DialogContent>
 
-                    <MainForm values={taskProperties}
+                    <MainForm values={questProperties}
                               handleDifficultyChange={handleDifficultyChange}
                               handleTitleChangeBih={handleTitleChangeBih}
                               handleTitleChangeEn={handleTitleChangeEn}
@@ -169,6 +194,32 @@ function ChangeQuestDialog(props) {
                               handleGameDescriptionChangeEn={handleGameDescriptionChangeEn}
                               handleCoordinates={handleCoordinates}
                     />
+                    {
+                        questProperties.imagesURL &&
+                        <Paper>
+                            <Grid container justify="center">
+                                <h1>Pregled i uklanjanje fotografija</h1>
+                                <br/>
+                            </Grid>
+                            <Carousel
+                                plugins={[
+                                    'arrows'
+                                ]}
+                                dynamicHeight={true}
+                                width="50%">
+                                {
+                                    quest.imagesURL.map((image, key) => {
+                                        return (
+                                            <div className={classes.image_container}>
+                                                <img className={classes.image}  src={image} alt="photo"/>
+                                                <ImageDeleteAlertDialog />
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </Carousel>
+                        </Paper>
+                    }
 
                 </DialogContent>
                 <DialogActions>
@@ -176,10 +227,7 @@ function ChangeQuestDialog(props) {
                         Odustani
                     </Button>
                     <Button
-                        onClick={() => {
-                            handleClose();
-                            handleConfirm();
-                        }}
+                        onClick={handleConfirm}
                         color="primary"
                     >
                         Potvrdi
@@ -192,13 +240,15 @@ function ChangeQuestDialog(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateTask: (task, id) => dispatch(updateTask(task, id)),
+        updateQuest: (quest, id) => dispatch(updateQuest(quest, id)),
         uploadFile: (file) => dispatch(uploadFile(file)),
     }
 }
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        images: state.task.gallery
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeQuestDialog)

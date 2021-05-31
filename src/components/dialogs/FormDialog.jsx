@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import {updateTask, uploadFile} from "../../store/actions/taskActions"
+import {updateQuest, uploadFile} from "../../store/actions/taskActions"
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddTaskForm from "../features/forms/AddTaskForm";
 import { connect } from "react-redux";
@@ -119,7 +119,7 @@ function FormDialog(props) {
 
 const mapDispatchToProps = (dispatch) =>{
   return{
-    updateTask: (task, id) => dispatch(updateTask(task, id)),
+    updateTask: (task, id) => dispatch(updateQuest(task, id)),
     uploadFile: (file) => dispatch(uploadFile(file)),
   }
 }

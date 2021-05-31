@@ -2,43 +2,61 @@ import {
     Card,
     CardContent,
     CardActions,
-    Typography, CircularProgress,
+    Typography, CircularProgress, Button,
 } from "@material-ui/core";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import {makeStyles, useTheme} from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import React from "react";
-import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
-import { compose } from "redux";
-import AlertDialog from "../dialogs/AlertDialog";
+import {connect} from "react-redux";
+import {firestoreConnect} from "react-redux-firebase";
+import {compose} from "redux";
+import AlertDialog from "../dialogs/QuestDeleteAlertDialog";
 import FormDialog from '../dialogs/FormDialog';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ChangeQuestDialog from "../dialogs/ChangeQuestDialog";
+import Carousel, {Dots} from '@brainhubeu/react-carousel';
+import '@brainhubeu/react-carousel/lib/style.css';
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
-    root: {
-        minWidth: 275,
-    },
-    bullet: {
-        alignContent: "center",
-    },
-    title: {
-        fontSize: 14,
-        marginTop: "8px",
-    },
-    pos: {
-        margin: "15px 15px 15px 0px",
-    },
-});
+        root: {
+            minWidth: 275,
+        },
+        bullet: {
+            alignContent: "center",
+        },
+        title: {
+            fontSize: 14,
+            marginTop: "8px",
+        },
+        pos: {
+            margin: "15px 15px 15px 0px",
+        },
+        image_container: {
+            position: 'relative',
+            height: '300px'
+        },
+        image: {
+            objectFit: 'cover',
+            objectPosition: 'center',
+            height: '300px'
+        },
+        x_button: {
+            position: 'absolute',
+            top: '10px',
+            right: '10px'
+        }
+    }
+);
 
 function QuestDetails(props) {
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
     const classes = useStyles();
-    const { quest } = props;
+    const {quest} = props;
     if (quest) {
         return (
-            <div style={{ justifyContent: "center" }}>
+            <div style={{justifyContent: "center"}}>
                 <Card className={classes.root}>
                     <CardContent>
                         <Typography
@@ -58,7 +76,7 @@ function QuestDetails(props) {
                             {quest.title.en_us}<br/>
                             {quest.title.sr_bih}
                         </Typography>
-                        <Divider />
+                        <Divider/>
 
                         <Typography
                             className={classes.title}
@@ -77,7 +95,7 @@ function QuestDetails(props) {
                             {quest.gameDescription.en_us}<br/>
                             {quest.gameDescription.sr_bih}
                         </Typography>
-                        <Divider />
+                        <Divider/>
                         <Typography
                             className={classes.title}
                             color="textSecondary"
@@ -95,7 +113,7 @@ function QuestDetails(props) {
                             {quest.locationDescription.en_us}<br/>
                             {quest.locationDescription.sr_bih}
                         </Typography>
-                        <Divider />
+                        <Divider/>
                         <Typography
                             className={classes.title}
                             color="textSecondary"
@@ -112,7 +130,7 @@ function QuestDetails(props) {
                         >
                             {quest.locationCoordinates.lat}°N {quest.locationCoordinates.lng}°E
                         </Typography>
-                        <Divider />
+                        <Divider/>
                         <Typography
                             className={classes.title}
                             color="textSecondary"
@@ -127,7 +145,7 @@ function QuestDetails(props) {
                             component="p"
                         >   {quest.category}
                         </Typography>
-                        <Divider />
+                        <Divider/>
                         <Typography
                             className={classes.title}
                             color="textSecondary"
@@ -144,35 +162,46 @@ function QuestDetails(props) {
                         </Typography>
                         {quest.headingImageURL !== "" && (
                             <>
-                                <Divider />
+                                <Divider/>
                                 <Typography
                                     className={classes.pos}
                                     align="center"
                                     variant="body1"
                                     component="p"
                                 >
-                                    <img
-                                        src={quest.headingImageURL}
-                                        style={{
-                                            maxWidth: "100%",
-                                            maxHeight: "100vh",
-                                            margin: "auto",
-                                        }}
-                                        alt="slika"
-                                    />
                                 </Typography>{" "}
+                                {
+                                    quest.imagesURL &&
+                                    <Carousel
+                                        plugins={[
+                                            'arrows'
+                                        ]}
+                                        dynamicHeight={true}
+                                        width="50%">
+                                        {
+                                            quest.imagesURL.map((image, key) => {
+                                                return (
+                                                    <div className={classes.image_container}>
+                                                        <img className={classes.image} src={image} alt="photo"/>
+                                                        <Button className={classes.x_button}>X</Button>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </Carousel>
+                                }
                             </>
                         )}
                     </CardContent>
                     <CardActions>
                         <ChangeQuestDialog id={props.match.params.id} quest={quest}/>
-                        <AlertDialog id={props.match.params.id} />
+                        <AlertDialog id={props.match.params.id}/>
                     </CardActions>
                 </Card>
             </div>
         );
     } else {
-        return <CircularProgress />
+        return <CircularProgress/>
     }
 }
 

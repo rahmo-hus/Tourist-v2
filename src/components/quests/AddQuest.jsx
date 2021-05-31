@@ -29,8 +29,6 @@ class AddQuest extends Component {
             lat: 44.7722,
             lng: 17.1910
         },
-        headingImageURL: '',
-        imagesURL: [],
         category: 'historijski',
         difficulty: 1
     }
@@ -110,10 +108,11 @@ class AddQuest extends Component {
 
     submitQuest = event => {
 
+        event.preventDefault();
+
         this.props.createQuest({
             ...this.state,
             imagesURL: this.props.images,
-            headingImageURL: this.props.headingImageURL
         })
     }
 
@@ -121,11 +120,10 @@ class AddQuest extends Component {
     render() {
         const {
             title, gameDescription, category, locationCoordinates,
-            imagesURL, headingImageURL, locationDescription, difficulty
+            locationDescription, difficulty
         } = this.state;
         const values = {
-            title, gameDescription, category, locationCoordinates,
-            imagesURL, headingImageURL, locationDescription, difficulty,
+            title, gameDescription, category, locationCoordinates, locationDescription, difficulty,
         };
 
         return (
@@ -246,7 +244,8 @@ class AddQuest extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createQuest: (quest) => dispatch(createTask(quest))
+        createQuest: (quest) => dispatch(createTask(quest)),
+        restoreDefaults: () => dispatch(restoreDefaults())
     };
 };
 
@@ -255,7 +254,6 @@ const mapStateToProps = (state) => {
         error: state.task.error,
         inProgress: state.task.inProgress,
         addTaskSuccess: state.task.success,
-        headingImageURL: state.task.imageURL,
         images: state.task.gallery
     };
 };
