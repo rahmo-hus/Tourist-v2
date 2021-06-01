@@ -139,6 +139,11 @@ class AddQuest extends Component {
                           handleGameDescriptionChangeBih={this.handleGameDescriptionChangeBih}
                           handleDifficultyChange={this.handleDifficultyChange}
                           submitQuest={this.submitQuest}/>
+                <Button color="primary"
+                        variant="contained"
+                        onClick={this.submitQuest}>
+                    Submit
+                </Button>
 
                 {/*<form autoComplete="off" onSubmit={this.submitQuest}>*/}
                 {/*    <DifficultyAndCategoryForm values={values} handleChange={this.handleChange}/>*/}
