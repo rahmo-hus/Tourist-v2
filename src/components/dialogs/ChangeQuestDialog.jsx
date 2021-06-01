@@ -51,6 +51,7 @@ function ChangeQuestDialog(props) {
     const {quest, id} = props;
     const [fileChangeClicked, setFileChangeClicked] = React.useState(false);
     const [questProperties, setQuestProperties] = React.useState({});
+    const [currentGallery, setCurrentGallery] = React.useState([]);
     const [imgURL, setImgURL] = React.useState('')
     const handleClickOpen = () => {
         setOpen(true);
@@ -132,22 +133,25 @@ function ChangeQuestDialog(props) {
         });
     }
 
-
     const handleConfirm = () => {
-        const currentGallery = [];
+        const currentGalleryLocal = [];
         if (props.images) {
             props.images.map((image, key) => {
-                currentGallery.push(image);
+                currentGalleryLocal.push(image);
             });
         }
         questProperties.imagesURL.map((image, key) => {
-            currentGallery.push(image);
+            currentGalleryLocal.push(image);
         });
         setOpen(false);
         props.updateQuest({
             ...questProperties,
-            imagesURL: currentGallery
+            imagesURL: currentGalleryLocal
         }, id);
+    }
+
+    const removeImageFromGallery = image =>{
+        //TODO: remove image from gallery
     }
 
     const handleCoordinates = e => {
