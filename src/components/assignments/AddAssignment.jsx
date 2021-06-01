@@ -1,7 +1,7 @@
 import { Button, Grid, Paper } from "@material-ui/core";
 import React from "react";
 import {
-  createTask,
+  createQuest,
   uploadFile,
   restoreDefaults,
 } from "../../store/actions/taskActions";
@@ -43,7 +43,7 @@ class AddAssignment extends React.Component {
   };
 
   handleFileChange = (event) => {
-    this.props.uploadFile(event.target.files[0]);
+
   };
   render() {
     return (
@@ -110,8 +110,7 @@ class AddAssignment extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createTask: (task) => dispatch(createTask(task)),
-    uploadFile: (file) => dispatch(uploadFile(file)),
+    createTask: (task) => dispatch(createQuest(task)),
     restoreDefaults: () => dispatch(restoreDefaults()),
   };
 };

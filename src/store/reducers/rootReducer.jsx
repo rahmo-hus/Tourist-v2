@@ -5,7 +5,7 @@ import {firestoreReducer} from 'redux-firestore'
 import {combineReducers} from 'redux'
 
 const rootReducer = combineReducers({
-    task: taskReducer,
+    quest: taskReducer,
     auth:authReducer,
     firestore: firestoreReducer,
     firebase:firebaseReducer

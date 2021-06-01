@@ -11,6 +11,7 @@ import {FormControl, InputLabel, makeStyles, MenuItem, Paper, Select} from "@mat
 import MainForm from "../features/forms/MainForm";
 import Carousel from "@brainhubeu/react-carousel";
 import ImageDeleteAlertDialog from "./ImageDeleteAlertDialog";
+import {array} from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -48,17 +49,20 @@ function ChangeQuestDialog(props) {
         setOpen(true);
         setQuestProperties(quest);
         setFileChangeClicked(false);
-        const currentGalleryLocal = [];
-        quest.imagesURL.map((image, key)=>{
-            currentGalleryLocal.push(image);
-        })
-        setCurrentGallery(Object.assign(currentGalleryLocal));
+        if(currentGallery.length === 0) {
+            const currentGalleryLocal = [];
+            quest.imagesURL.map((image, key) => {
+                currentGalleryLocal.push(image);
+            })
+            setCurrentGallery(currentGalleryLocal);
+        }
     };
 
     const handleClose = () => {
         setOpen(false);
         setQuestProperties(quest);
         setFileChangeClicked(false);
+        setCurrentGallery([]);
     };
 
     const handleDifficultyChange = input => e => {
@@ -143,15 +147,16 @@ function ChangeQuestDialog(props) {
             ...questProperties,
             imagesURL: currentGalleryLocal
         }, id);
+        setCurrentGallery([]);
+        //TODO: handle uduplavanje
     }
 
     const removeImageFromGallery = image =>{
         console.log('prije', currentGallery);
-        const currentGalleryLocal = currentGallery
+        const currentGalleryLocal = Object.assign(currentGallery);
         const index = currentGalleryLocal.indexOf(image);
         currentGalleryLocal.splice(index,1);
-        setCurrentGallery(Object.assign(currentGalleryLocal));
-        setQuestProperties({...questProperties});
+        setCurrentGallery(currentGalleryLocal);
         console.log('poslije', currentGallery);
     }
 
@@ -235,6 +240,7 @@ function ChangeQuestDialog(props) {
                         onClick={handleConfirm}
                         color="primary"
                     >
+
                         Potvrdi
                     </Button>
                 </DialogActions>
@@ -246,13 +252,12 @@ function ChangeQuestDialog(props) {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateQuest: (quest, id) => dispatch(updateQuest(quest, id)),
-        uploadFile: (file) => dispatch(uploadFile(file)),
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        images: state.task.gallery
+        images: state.quest.gallery
     }
 }
 

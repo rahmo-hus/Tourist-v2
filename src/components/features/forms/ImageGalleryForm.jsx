@@ -58,7 +58,7 @@ class ImageGalleryForm extends Component {
 
     handleUploadClicked =() => {
         this.props.uploadMultipleFiles(this.state.gallery);
-        this.setState({uploadDisabled: true, nextButtonDisabled: false});
+        this.setState({uploadDisabled: true});
     }
 
     render() {
@@ -148,14 +148,14 @@ class ImageGalleryForm extends Component {
 
 const mapStateToProps = state =>{
     return{
-        error: state.task.error,
-        uploadProgress: state.task.uploadProgress,
+        error: state.quest.error,
+        uploadProgress: state.quest.uploadProgress,
+        uploadSuccess: state.quest.uploadSuccess
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return{
-        uploadFile: file => dispatch(uploadFile(file)),
         uploadMultipleFiles: files => dispatch(uploadMultipleFiles(files))
     }
 }

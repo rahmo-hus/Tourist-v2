@@ -47,7 +47,6 @@ function FormDialog(props) {
   }
 
   const handleFileChange = (event) =>{
-      props.uploadFile(event.target.files[0]);
       setFileChangeClicked(true);
       setImgURL('')
   }
@@ -120,7 +119,6 @@ function FormDialog(props) {
 const mapDispatchToProps = (dispatch) =>{
   return{
     updateTask: (task, id) => dispatch(updateQuest(task, id)),
-    uploadFile: (file) => dispatch(uploadFile(file)),
   }
 }
 

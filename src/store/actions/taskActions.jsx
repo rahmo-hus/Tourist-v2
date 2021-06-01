@@ -1,4 +1,4 @@
-export const createTask = (task) => {
+export const createQuest = (quest) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
 
         const firestore = getFirestore();
@@ -6,15 +6,15 @@ export const createTask = (task) => {
         firestore
             .collection("quests")
             .add({
-                ...task,
+                ...quest,
                 createdAt: new Date()
             })
             .then((ref) => {
                 dispatch({
                     type: "CREATE_TASK",
-                    task: task
+                    quest: quest
                 });
-                firestore.collection("statistics").doc(ref.id).set({title: task.title, timesSolved: 0});
+                firestore.collection("statistics").doc(ref.id).set({title: quest.title, timesSolved: 0});
             })
             .catch((err) => {
                 dispatch({
@@ -32,64 +32,41 @@ export const uploadMultipleFiles = (files) => {
         const firebase = getFirebase();
         const imageURLs = [];
 
-        for (const file of files) {
+        const promises = [];
+        files.forEach(file => {
             const uploadTask = firebase.storage().ref(`photos/${file.name}`).put(file);
-
-            uploadTask.on('state_changed', (snapshot) => {
+            promises.push(uploadTask);
+            uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+                snapshot => {
+                    const progress = snapshot.bytesTransferred * 100 / snapshot.totalBytes;
+                    if (snapshot.state === firebase.storage.TaskState.RUNNING) {
+                        dispatch({
+                            type: "UPLOAD_PROGRESS",
+                            uploadProgress: Math.round(progress)
+                        })
+                    }
+                },
+                err => console.log(err),
+                async () => {
+                    const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                    imageURLs.push(downloadURL);
+                }
+            )
+        });
+        Promise.all(promises)
+            .then(() => {
                 dispatch({
-                    type: "UPLOAD_PENDING",
-                    uploadProgress: Math.round(snapshot.bytesTransferred * 100 / snapshot.totalBytes)
-                });
-            }, (error) => {
-                dispatch({
-                    type: "UPLOAD_ERROR",
-                    err: error
-                })
-            }, () => {
-                firebase.storage().ref('photos').child(file.name).getDownloadURL().then(url => {
-                    imageURLs.push(url);
+                    type: "GALLERY_UPLOAD_SUCCESS",
+                    gallery: imageURLs,
+                    success: true
                 })
             })
-        }
-        dispatch({
-            type: "GALLERY_UPLOAD_SUCCESS",
-            gallery: imageURLs
-        })
-    }
-
-}
-
-export const uploadFile = (file) => {
-    return (dispatch, state, {getFirebase, getFirestore}) => {
-
-        const firebase = getFirebase();
-        const uploadTask = firebase.storage().ref(`photos/${file.name}`).put(file);
-        const imageURL = [];
-
-        uploadTask.on('state_changed', (snapshot) => {
-            dispatch({
-                type: "UPLOAD_PENDING",
-                uploadProgress: Math.round(snapshot.bytesTransferred * 100 / snapshot.totalBytes),
-                imageURL: ''
-            });
-        }, (error) => {
-            dispatch({
+            .catch(err => dispatch({
                 type: "UPLOAD_ERROR",
-                err: error,
-                imageURL: ''
-            })
-        }, () => {
-            firebase.storage().ref('photos').child(file.name).getDownloadURL().then(url => {
-                imageURL.push(url);
-                console.log(imageURL[0])
-                dispatch({
-                    type: "UPLOAD_SUCCESS",
-                    uploadProgress: 0,
-                    imageURL: imageURL[0]
-                });
-            })
-        })
+                err
+            }));
     }
+
 }
 
 export const deleteTask = (id) => {

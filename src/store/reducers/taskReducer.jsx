@@ -3,7 +3,8 @@ const initState = {
     success:'',
     uploadProgress:0,
     imageURL:'',
-    gallery:[]
+    gallery:[],
+    uploadSuccess:false
 }
 const taskReducer = (state = initState, action) =>{
 
@@ -45,7 +46,8 @@ const taskReducer = (state = initState, action) =>{
         case "GALLERY_UPLOAD_SUCCESS":
             return{
                 ...state,
-                gallery: action.gallery
+                gallery: action.gallery,
+                uploadSuccess: action.success
             }
         case "RESTORE_DEFAULTS":
             return {
