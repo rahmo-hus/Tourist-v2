@@ -1,24 +1,15 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
-import DialogContentText from "@material-ui/core/DialogContentText";
 import {updateQuest, uploadFile} from "../../store/actions/taskActions"
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AddTaskForm from "../features/forms/AddTaskForm";
 import {connect} from "react-redux";
-import ProgressBar from "../features/utils/ProgressBar";
-import UploadBox from "../features/utils/UploadBox";
-import QuestInfoForm from "../features/forms/QuestInfoForm";
 import {FormControl, InputLabel, makeStyles, MenuItem, Paper, Select} from "@material-ui/core";
 import MainForm from "../features/forms/MainForm";
 import Carousel from "@brainhubeu/react-carousel";
-import IconButton from "@material-ui/core/IconButton";
-import {Close} from "@material-ui/icons";
 import ImageDeleteAlertDialog from "./ImageDeleteAlertDialog";
 
 const useStyles = makeStyles((theme) => ({
@@ -56,8 +47,12 @@ function ChangeQuestDialog(props) {
     const handleClickOpen = () => {
         setOpen(true);
         setQuestProperties(quest);
-        //setImgURL(props.task.imageURL);
         setFileChangeClicked(false);
+        const currentGalleryLocal = [];
+        quest.imagesURL.map((image, key)=>{
+            currentGalleryLocal.push(image);
+        })
+        setCurrentGallery(Object.assign(currentGalleryLocal));
     };
 
     const handleClose = () => {
@@ -140,7 +135,7 @@ function ChangeQuestDialog(props) {
                 currentGalleryLocal.push(image);
             });
         }
-        questProperties.imagesURL.map((image, key) => {
+        currentGallery.map((image, key) => {
             currentGalleryLocal.push(image);
         });
         setOpen(false);
@@ -151,7 +146,13 @@ function ChangeQuestDialog(props) {
     }
 
     const removeImageFromGallery = image =>{
-        //TODO: remove image from gallery
+        console.log('prije', currentGallery);
+        const currentGalleryLocal = currentGallery
+        const index = currentGalleryLocal.indexOf(image);
+        currentGalleryLocal.splice(index,1);
+        setCurrentGallery(Object.assign(currentGalleryLocal));
+        setQuestProperties({...questProperties});
+        console.log('poslije', currentGallery);
     }
 
     const handleCoordinates = e => {
@@ -199,7 +200,7 @@ function ChangeQuestDialog(props) {
                               handleCoordinates={handleCoordinates}
                     />
                     {
-                        questProperties.imagesURL &&
+                        currentGallery &&
                         <Paper>
                             <Grid container justify="center">
                                 <h1>Pregled i uklanjanje fotografija</h1>
@@ -212,11 +213,11 @@ function ChangeQuestDialog(props) {
                                 dynamicHeight={true}
                                 width="50%">
                                 {
-                                    quest.imagesURL.map((image, key) => {
+                                    currentGallery.map((image, key) => {
                                         return (
                                             <div className={classes.image_container}>
                                                 <img className={classes.image}  src={image} alt="photo"/>
-                                                <ImageDeleteAlertDialog />
+                                                <ImageDeleteAlertDialog removeImageFromGalley = {removeImageFromGallery} image={image}/>
                                             </div>
                                         )
                                     })

@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {makeStyles} from "@material-ui/core/styles";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import CloseTwoToneIcon from "@material-ui/icons/CloseTwoTone";
 
 const useStyles = makeStyles({
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
 );
 
 
-export default function ImageDeleteAlertDialog() {
+export default function ImageDeleteAlertDialog(props) {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
@@ -39,7 +40,7 @@ export default function ImageDeleteAlertDialog() {
                     variant="contained"
                     component="span"
                     onClick={handleClickOpen}>
-                <CloseTwoToneIcon/>
+                <DeleteForeverIcon />
             </Button>
             <Dialog
                 open={open}
@@ -57,7 +58,10 @@ export default function ImageDeleteAlertDialog() {
                     <Button onClick={handleClose} color="primary">
                         Ne
                     </Button>
-                    <Button onClick={handleClose} color="primary" autoFocus>
+                    <Button onClick={()=>{
+                        props.removeImageFromGalley(props.image);
+                        handleClose();
+                    }} color="primary" autoFocus>
                         Da
                     </Button>
                 </DialogActions>

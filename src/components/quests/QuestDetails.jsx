@@ -183,7 +183,6 @@ function QuestDetails(props) {
                                                 return (
                                                     <div className={classes.image_container}>
                                                         <img className={classes.image} src={image} alt="photo"/>
-                                                        <Button className={classes.x_button}>X</Button>
                                                     </div>
                                                 )
                                             })
