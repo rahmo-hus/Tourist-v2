@@ -42,7 +42,8 @@ export const uploadMultipleFiles = (files) => {
                     if (snapshot.state === firebase.storage.TaskState.RUNNING) {
                         dispatch({
                             type: "UPLOAD_PROGRESS",
-                            uploadProgress: Math.round(progress)
+                            uploadProgress: Math.round(progress),
+                            success:false
                         })
                     }
                 },
@@ -93,7 +94,8 @@ export const restoreDefaults = () => {
             err: null,
             imageURL: '',
             uploadProgress: 0,
-            gallery: []
+            gallery: [],
+            success:false
         })
     }
 }

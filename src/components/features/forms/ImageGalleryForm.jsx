@@ -9,6 +9,7 @@ import {compose} from "redux";
 import {uploadFile, uploadMultipleFiles} from "../../../store/actions/taskActions";
 import ProgressBar from "../utils/ProgressBar";
 import UploadDialog from "../../dialogs/UploadDialog";
+import {Alert} from "@material-ui/lab";
 
 const useStyles = theme => ({
     paper: {
@@ -32,18 +33,9 @@ class ImageGalleryForm extends Component {
         mainImg: undefined,
         gallery: undefined,
         nextButtonDisabled: true,
-        uploadDisabled:false,
+        uploadDisabled: false,
         imagesURL: []
 
-    }
-
-    continue = e => {
-        e.preventDefault();
-        this.props.nextStep();
-    }
-    goBack = e => {
-        e.preventDefault();
-        this.props.prevStep();
     }
 
     onFileChange = files => {
@@ -56,7 +48,7 @@ class ImageGalleryForm extends Component {
         })
     }
 
-    handleUploadClicked =() => {
+    handleUploadClicked = () => {
         this.props.uploadMultipleFiles(this.state.gallery);
         this.setState({uploadDisabled: true});
     }
@@ -70,9 +62,14 @@ class ImageGalleryForm extends Component {
                 <Grid container
                       direction="column"
                       justify="center"
+                      alignContent="center"
                       spacing={2}>
                     <Grid container justify="center" alignItems="center">
                         <h1>Korak 5: Upload fotografija</h1>
+                    </Grid>
+                    <Grid item xs="auto">
+                        {this.props.uploadSuccess === true &&
+                        <Alert severity="success">Fotografije su uspješno dodane u zadatak</Alert>}
                     </Grid>
                     {/*<Grid container justify="center" alignItems="center" direction="column">*/}
                     {/*    <label for="contained-button-file">Naslovna fotografija</label>*/}
@@ -117,11 +114,11 @@ class ImageGalleryForm extends Component {
                     </Button>
                 </Grid>
 
-                <UploadDialog open={this.props.uploadProgress !== 0 && this.props.uploadProgress !== 100}/>
+                <UploadDialog open={this.props.uploadDisabled && !this.props.uploadSuccess}/>
 
                 <Grid container>
                     <Grid item xs={12}>
-                         <ProgressBar uploadProgress = {this.props.uploadProgress} />
+                        <ProgressBar uploadProgress={this.props.uploadProgress}/>
                     </Grid>
                 </Grid>
 
@@ -146,16 +143,16 @@ class ImageGalleryForm extends Component {
     }
 }
 
-const mapStateToProps = state =>{
-    return{
+const mapStateToProps = state => {
+    return {
         error: state.quest.error,
         uploadProgress: state.quest.uploadProgress,
         uploadSuccess: state.quest.uploadSuccess
     }
 }
 
-const mapDispatchToProps = dispatch =>{
-    return{
+const mapDispatchToProps = dispatch => {
+    return {
         uploadMultipleFiles: files => dispatch(uploadMultipleFiles(files))
     }
 }

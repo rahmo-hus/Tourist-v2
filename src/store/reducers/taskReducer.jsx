@@ -55,7 +55,8 @@ const taskReducer = (state = initState, action) =>{
                 imageURL:action.imageURL,
                 uploadProgress:action.uploadProgress,
                 err:action.err,
-                success:''
+                success:'',
+                uploadSuccess: action.success
             }
         case "DELETE_SUCCESS":
             return state;
