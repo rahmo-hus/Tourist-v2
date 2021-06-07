@@ -23,17 +23,17 @@ const useStyles = makeStyles((theme) => ({
         height: '300px'
     },
     image: {
-        objectFit:'cover',
-        objectPosition:'center',
+        objectFit: 'cover',
+        objectPosition: 'center',
         height: '300px',
-        maxWidth:'100%'
+        maxWidth: '100%'
     },
     x_button: {
         position: 'absolute',
         top: '0',
         right: '0',
         background: 'rgba(255,0,0,0.3)',
-        height:'40px'
+        height: '40px'
     }
 }));
 
@@ -49,7 +49,7 @@ function ChangeQuestDialog(props) {
         setOpen(true);
         setQuestProperties(quest);
         setFileChangeClicked(false);
-        if(currentGallery.length === 0) {
+        if (currentGallery.length === 0) {
             const currentGalleryLocal = [];
             quest.imagesURL.map((image, key) => {
                 currentGalleryLocal.push(image);
@@ -151,13 +151,12 @@ function ChangeQuestDialog(props) {
         //TODO: handle uduplavanje
     }
 
-    const removeImageFromGallery = image =>{
-        console.log('prije', currentGallery);
+    const removeImageFromGallery = image => {
         const currentGalleryLocal = Object.assign(currentGallery);
         const index = currentGalleryLocal.indexOf(image);
-        currentGalleryLocal.splice(index,1);
+        currentGalleryLocal.splice(index, 1);
         setCurrentGallery(currentGalleryLocal);
-        console.log('poslije', currentGallery);
+        setQuestProperties({...questProperties})
     }
 
     const handleCoordinates = e => {
@@ -221,8 +220,9 @@ function ChangeQuestDialog(props) {
                                     currentGallery.map((image, key) => {
                                         return (
                                             <div className={classes.image_container}>
-                                                <img className={classes.image}  src={image} alt="photo"/>
-                                                <ImageDeleteAlertDialog removeImageFromGalley = {removeImageFromGallery} image={image}/>
+                                                <img className={classes.image} src={image} alt="photo"/>
+                                                <ImageDeleteAlertDialog removeImageFromGalley={removeImageFromGallery}
+                                                                        image={image}/>
                                             </div>
                                         )
                                     })

@@ -36,7 +36,7 @@ export default function IndividualTaskSummary(props){
                <TableCell component="th" scope="row">{task.title}</TableCell>
                <TableCell align="right">{appearancesCount}</TableCell>
                <TableCell align="right">{questAccomplishmentsCount}</TableCell>
-               <TableCell align="right">{appearancesCount != 0 ? Math.round(100*questAccomplishmentsCount/appearancesCount) : 0}%</TableCell>
+               <TableCell align="right">{appearancesCount !== 0 ? Math.round(100*questAccomplishmentsCount/appearancesCount) : 0}%</TableCell>
            </TableRow>
        )
     })

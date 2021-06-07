@@ -14,23 +14,20 @@ const useStyles = makeStyles({
         width: 160,
     },
 });
-const AssignmentSummary = (props) =>{
+const QuestSummary = (props) =>{
     const classes = useStyles()
-    const { task } = props;
+    const { quest } = props;
     return (
         <Grid item xs={12}>
-            <CardActionArea component={Link} to={`task/${task.id}`}>
+            <CardActionArea component={Link} to={`quest/${quest.id}`}>
                 <Card className={classes.card}>
                     <div className={classes.cardDetails}>
                         <CardContent>
                             <Typography component="h2" variant="h5">
-                                {task.title.en_us}
+                                {quest.title.en_us}
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
-                                {task.gameDescription.en_us}
-                            </Typography>
-                            <Typography variant="subtitle1" paragraph>
-                                {task.authorFirstName}
+                                {quest.gameDescription.en_us}
                             </Typography>
                             <Typography variant="subtitle1" color="primary">
                                 Otvori za detalje...
@@ -42,4 +39,4 @@ const AssignmentSummary = (props) =>{
         </Grid>
     )
 }
-export default AssignmentSummary;
+export default QuestSummary;

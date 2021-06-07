@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import {Button, FormControl, InputLabel, MenuItem, Paper, Select} from "@material-ui/core";
+import {FormControl, InputLabel, MenuItem, Paper, Select} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import LocationPin from "./LocationPin";
 import ImageGalleryForm from "./ImageGalleryForm";
-import {compose} from "redux";
-import {connect} from "react-redux";
 
 const useStyles = theme => ({
     paper: {
@@ -162,7 +160,7 @@ class MainForm extends Component {
                                  handleCoordinates={this.props.handleCoordinates}/>
                 </Grid>
 
-                <ImageGalleryForm />
+                <ImageGalleryForm/>
                 {/*</form>*/}
             </Paper>
         );

@@ -1,9 +1,4 @@
-import {
-    Card,
-    CardContent,
-    CardActions,
-    Typography, CircularProgress, Button,
-} from "@material-ui/core";
+import {Card, CardActions, CardContent, CircularProgress, Typography,} from "@material-ui/core";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import React from "react";
@@ -11,12 +6,10 @@ import {connect} from "react-redux";
 import {firestoreConnect} from "react-redux-firebase";
 import {compose} from "redux";
 import AlertDialog from "../dialogs/QuestDeleteAlertDialog";
-import FormDialog from '../dialogs/FormDialog';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ChangeQuestDialog from "../dialogs/ChangeQuestDialog";
-import Carousel, {Dots} from '@brainhubeu/react-carousel';
+import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
-import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
         root: {

@@ -2,12 +2,10 @@ import React, {Component} from 'react';
 import {Button, Fab, Paper, withStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {DropzoneArea} from 'material-ui-dropzone';
-import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {uploadFile, uploadMultipleFiles} from "../../../store/actions/taskActions";
-import ProgressBar from "../utils/ProgressBar";
+import {uploadMultipleFiles} from "../../../store/actions/taskActions";
 import UploadDialog from "../../dialogs/UploadDialog";
 import {Alert} from "@material-ui/lab";
 
@@ -49,8 +47,8 @@ class ImageGalleryForm extends Component {
     }
 
     handleUploadClicked = () => {
-        this.props.uploadMultipleFiles(this.state.gallery);
         this.setState({uploadDisabled: true});
+        this.props.uploadMultipleFiles(this.state.gallery);
     }
 
     render() {
@@ -114,13 +112,9 @@ class ImageGalleryForm extends Component {
                     </Button>
                 </Grid>
 
-                <UploadDialog open={this.props.uploadDisabled && !this.props.uploadSuccess}/>
 
-                <Grid container>
-                    <Grid item xs={12}>
-                        <ProgressBar uploadProgress={this.props.uploadProgress}/>
-                    </Grid>
-                </Grid>
+                {this.state.uploadDisabled === true && this.props.uploadSuccess===false ? <UploadDialog open={true} /> :
+                <UploadDialog open={false} />}
 
                 {/*<Grid container justify="space-between">*/}
                 {/*    <Button*/}

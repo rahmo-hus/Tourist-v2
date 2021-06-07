@@ -3,34 +3,25 @@ import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MainListItems from './listItems';
-import AddAssignment from '../assignments/AddAssignment'
-import AssignmentList from '../assignments/AssignmentList'
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import {withRouter} from 'react-router'
-import AssignmentDetails from '../assignments/AssignmentDetails';
-import {Button} from '@material-ui/core';
+import {Route, Switch} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {signOut} from '../../store/actions/authActions'
 import Statistics from '../statistics/Statistics'
-import {render} from 'react-dom';
 import AddQuest from "../quests/AddQuest";
 import QuestDetails from "../quests/QuestDetails";
+import {restoreDefaults} from "../../store/actions/taskActions";
+import QuestList from "../quests/QuestList";
 
 const drawerWidth = 240;
 
@@ -127,7 +118,7 @@ function Dashboard(props) {
     };
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-    const setTitle = (title) =>{
+    const setTitle = (title) => {
         setPageTitle(title);
     }
 
@@ -164,7 +155,7 @@ function Dashboard(props) {
                 </div>
                 <Divider/>
                 <List>
-                    <MainListItems signOut={props.signOut} setTitle={setTitle}/>
+                    <MainListItems signOut={props.signOut} setTitle={setTitle} restoreDefaults={props.restoreDefaults}/>
                 </List>
                 <Divider/>
 
@@ -175,11 +166,11 @@ function Dashboard(props) {
 
                     <Switch>
                         <Route exact path={`${match.path}/`} render={() => {
-                            return <div><h2>Dobrodosli na pocetnu stranicu sistema Tourist</h2></div>
+                            return <div><h2>Dobrodošli na pocetnu stranicu sistema Tourist</h2></div>
                         }}/>
-                        <Route path={`${match.path}/addtask`} component={AddQuest}/>
-                        <Route path={`${match.path}/tasks`} component={AssignmentList}/>
-                        <Route path={`${match.path}/task/:id`} component={QuestDetails}/>
+                        <Route path={`${match.path}/add-quest`} component={AddQuest}/>
+                        <Route path={`${match.path}/quests`} component={QuestList}/>
+                        <Route path={`${match.path}/quest/:id`} component={QuestDetails}/>
                         <Route path={`${match.path}/statistics`} component={Statistics}/>
                         <Route path={`${match.path}/*`} render={() => (
                             <div>
@@ -196,7 +187,8 @@ function Dashboard(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        signOut: () => dispatch(signOut())
+        signOut: () => dispatch(signOut()),
+        restoreDefaults: () => dispatch(restoreDefaults())
     }
 }
 
