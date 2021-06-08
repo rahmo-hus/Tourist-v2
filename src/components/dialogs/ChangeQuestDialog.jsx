@@ -4,14 +4,13 @@ import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import {updateQuest, uploadFile} from "../../store/actions/taskActions"
+import {updateQuest} from "../../store/actions/taskActions"
 import DialogTitle from "@material-ui/core/DialogTitle";
 import {connect} from "react-redux";
-import {FormControl, InputLabel, makeStyles, MenuItem, Paper, Select} from "@material-ui/core";
+import {makeStyles, Paper} from "@material-ui/core";
 import MainForm from "../features/forms/MainForm";
 import Carousel from "@brainhubeu/react-carousel";
 import ImageDeleteAlertDialog from "./ImageDeleteAlertDialog";
-import {array} from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {

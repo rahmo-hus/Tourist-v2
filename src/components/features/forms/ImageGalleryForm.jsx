@@ -63,7 +63,7 @@ class ImageGalleryForm extends Component {
                       alignContent="center"
                       spacing={2}>
                     <Grid container justify="center" alignItems="center">
-                        <h1>Korak 5: Upload fotografija</h1>
+                        <h1>Upload fotografija</h1>
                     </Grid>
                     <Grid item xs="auto">
                         {this.props.uploadSuccess === true &&

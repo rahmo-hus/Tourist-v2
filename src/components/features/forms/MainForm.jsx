@@ -8,7 +8,7 @@ import ImageGalleryForm from "./ImageGalleryForm";
 
 const useStyles = theme => ({
     paper: {
-        padding: 16
+        padding:16
     },
     formControl: {
         margin: theme.spacing(1),
@@ -31,7 +31,7 @@ class MainForm extends Component {
         const {values} = this.props;
 
         return (
-            <Paper className={classes.paper}>
+            <>
                 {/*<form autoComplete="off" onSubmit={this.props.submitQuest}>*/}
                 <Grid container
                       justify="center"
@@ -39,7 +39,7 @@ class MainForm extends Component {
                       direction="column"
                       spacing={2}>
                     <Grid item xs>
-                        <h1>Korak 1</h1>
+                        <h1>Unos osnovnih podataka</h1>
                     </Grid>
                     <Grid item xs>
                         <FormControl className={classes.formControl}>
@@ -162,7 +162,7 @@ class MainForm extends Component {
 
                 <ImageGalleryForm/>
                 {/*</form>*/}
-            </Paper>
+            </>
         );
     }
 }

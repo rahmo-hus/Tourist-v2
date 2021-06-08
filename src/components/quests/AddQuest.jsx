@@ -2,8 +2,15 @@ import React, {Component} from "react";
 import {createQuest, restoreDefaults, uploadFile} from "../../store/actions/taskActions";
 import {connect} from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import {Button} from "@material-ui/core";
+import {Button, makeStyles, Paper, withStyles} from "@material-ui/core";
 import MainForm from "../features/forms/MainForm";
+import {compose} from "redux";
+
+const useStyles = theme => ({
+    paper:{
+        padding:16
+    }
+})
 
 class AddQuest extends Component {
 
@@ -79,7 +86,7 @@ class AddQuest extends Component {
 
     addGalleryImageURLs = urls => {
         const imagesURL = this.state.imagesURL;
-        for(let url of urls){
+        for (let url of urls) {
             imagesURL.push(url);
         }
 
@@ -107,26 +114,29 @@ class AddQuest extends Component {
         const values = {
             title, gameDescription, category, locationCoordinates, locationDescription, difficulty,
         };
+        const {classes} = this.props;
 
         return (
-            <Grid container direction="column">
+            <Paper className={classes.paper}>
+                <Grid container direction="column">
 
-                <MainForm values={values}
-                          handleCoordinates={this.handleCoordinates}
-                          handleLocationDescriptionChangeEn={this.handleLocationDescriptionEn}
-                          handleTitleChangeEn={this.handleTitleChangeEn}
-                          handleGameDescriptionChangeEn={this.handleGameDescriptionChangeEn}
-                          handleLocationDescriptionChangeBih={this.handleLocationDescriptionBih}
-                          handleTitleChangeBih={this.handleTitleChangeBih}
-                          handleGameDescriptionChangeBih={this.handleGameDescriptionChangeBih}
-                          handleDifficultyChange={this.handleDifficultyChange}
-                          submitQuest={this.submitQuest}/>
-                <Button color="primary"
-                        variant="contained"
-                        onClick={this.submitQuest}>
-                    Submit
-                </Button>
-            </Grid>
+                    <MainForm values={values}
+                              handleCoordinates={this.handleCoordinates}
+                              handleLocationDescriptionChangeEn={this.handleLocationDescriptionEn}
+                              handleTitleChangeEn={this.handleTitleChangeEn}
+                              handleGameDescriptionChangeEn={this.handleGameDescriptionChangeEn}
+                              handleLocationDescriptionChangeBih={this.handleLocationDescriptionBih}
+                              handleTitleChangeBih={this.handleTitleChangeBih}
+                              handleGameDescriptionChangeBih={this.handleGameDescriptionChangeBih}
+                              handleDifficultyChange={this.handleDifficultyChange}
+                              submitQuest={this.submitQuest}/>
+                    <Button color="primary"
+                            variant="contained"
+                            onClick={this.submitQuest}>
+                        Submit
+                    </Button>
+                </Grid>
+            </Paper>
         )
     }
 }
@@ -147,4 +157,7 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddQuest);
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withStyles(useStyles)
+)(AddQuest)

@@ -1,7 +1,17 @@
-import {Card, CardActions, CardContent, CircularProgress, Typography,} from "@material-ui/core";
+import {
+    Card,
+    CardActions,
+    CardContent,
+    CircularProgress,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    Typography,
+} from "@material-ui/core";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
-import React from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {firestoreConnect} from "react-redux-firebase";
 import {compose} from "redux";
@@ -10,8 +20,9 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ChangeQuestDialog from "../dialogs/ChangeQuestDialog";
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
+import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=>({
         root: {
             minWidth: 275,
         },
@@ -38,20 +49,43 @@ const useStyles = makeStyles({
             position: 'absolute',
             top: '10px',
             right: '10px'
+        },
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 120,
         }
     }
-);
+));
 
 function QuestDetails(props) {
     const theme = useTheme()
-    const fullScreen = useMediaQuery(theme.breakpoints.down("sm"))
+    useMediaQuery(theme.breakpoints.down("sm"));
     const classes = useStyles();
+    const [language, selectLanguage] = useState(10);
     const {quest} = props;
+
+
     if (quest) {
         return (
             <div style={{justifyContent: "center"}}>
                 <Card className={classes.root}>
                     <CardContent>
+                        <Grid container
+                              alignContent="flex-end"
+                              justify="flex-end">
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-label">Jezik</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={language}
+                                    onChange={e =>selectLanguage(e.target.value)}
+                                >
+                                    <MenuItem value={10}>Engleski</MenuItem>
+                                    <MenuItem value={20}>Srpski</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
                         <Typography
                             align="center"
                             className={classes.pos}
@@ -66,8 +100,7 @@ function QuestDetails(props) {
                             >
                                 Naslov
                             </Typography>
-                            {quest.title.en_us}<br/>
-                            {quest.title.sr_bih}
+                            {language === 10 ? quest.title.en_us : quest.title.sr_bih}
                         </Typography>
                         <Divider/>
 
@@ -85,8 +118,7 @@ function QuestDetails(props) {
                             variant="body2"
                             component="p"
                         >
-                            {quest.gameDescription.en_us}<br/>
-                            {quest.gameDescription.sr_bih}
+                            {language === 10 ? quest.gameDescription.en_us : quest.gameDescription.sr_bih}
                         </Typography>
                         <Divider/>
                         <Typography
@@ -103,8 +135,7 @@ function QuestDetails(props) {
                             variant="body1"
                             component="p"
                         >
-                            {quest.locationDescription.en_us}<br/>
-                            {quest.locationDescription.sr_bih}
+                            {language === 10 ? quest.locationDescription.en_us : quest.locationDescription.sr_bih}
                         </Typography>
                         <Divider/>
                         <Typography

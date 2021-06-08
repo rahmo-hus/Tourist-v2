@@ -27,7 +27,7 @@ class LocationPin extends Component {
         return (
             <Grid container justify="center" direction="column">
                 <Grid container justify="center">
-                    <h1>Korak 4: Odabir lokacije na mapi</h1>
+                    <h1>Odabir lokacije na mapi</h1>
                 </Grid>
                 <div style={{height: '70vh', width: '100%'}}>
                     <GoogleMapReact
