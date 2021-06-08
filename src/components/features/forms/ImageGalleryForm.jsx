@@ -69,24 +69,6 @@ class ImageGalleryForm extends Component {
                         {this.props.uploadSuccess === true &&
                         <Alert severity="success">Fotografije su uspješno dodane u zadatak</Alert>}
                     </Grid>
-                    {/*<Grid container justify="center" alignItems="center" direction="column">*/}
-                    {/*    <label for="contained-button-file">Naslovna fotografija</label>*/}
-                    {/*    <input*/}
-                    {/*        accept="image/*"*/}
-                    {/*        className={classes.input}*/}
-                    {/*        id="contained-button-file"*/}
-                    {/*        type="file"*/}
-                    {/*        onChange={this.handleMainImageChange}*/}
-                    {/*    />*/}
-                    {/*    <label htmlFor="contained-button-file">*/}
-                    {/*        <Fab component="span" className={classes.button}>*/}
-                    {/*            <AddPhotoAlternateIcon/>*/}
-                    {/*        </Fab>*/}
-                    {/*    </label>*/}
-                    {/*    {this.state.mainImg &&*/}
-                    {/*    <img src={URL.createObjectURL(this.state.mainImg)} width="99%" height="50%"/>*/}
-                    {/*    }*/}
-                    {/*</Grid>*/}
                     <Grid item xs>
                         <DropzoneArea
                             acceptedFiles={['image/*']}
@@ -116,22 +98,6 @@ class ImageGalleryForm extends Component {
                 {this.state.uploadDisabled === true && this.props.uploadSuccess===false ? <UploadDialog open={true} /> :
                 <UploadDialog open={false} />}
 
-                {/*<Grid container justify="space-between">*/}
-                {/*    <Button*/}
-                {/*        className={classes.button}*/}
-                {/*        variant="contained"*/}
-                {/*        color="primary"*/}
-                {/*        onClick={this.goBack}*/}
-                {/*    >Natrag</Button>*/}
-                {/*    <Button*/}
-                {/*        className={classes.button}*/}
-                {/*        variant="contained"*/}
-                {/*        color="primary"*/}
-                {/*        disabled={this.state.nextButtonDisabled}*/}
-                {/*        onClick={this.continue}*/}
-                {/*    >*/}
-                {/*        Nastavak</Button>*/}
-                {/*</Grid>*/}
             </div>
         );
     }
