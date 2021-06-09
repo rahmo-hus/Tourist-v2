@@ -1,17 +1,17 @@
-export const signIn = (credentials) =>{
-    return (dispatch, getState, {getFirebase}) =>{
+export const signIn = (credentials) => {
+    return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase()
-        dispatch({type:"LOGGING_IN"})
+        dispatch({type: "LOGGING_IN"})
         firebase.auth().signInWithEmailAndPassword(
             credentials.email,
             credentials.password
-        ).then(()=>{
+        ).then(() => {
             dispatch({
-                type:"LOGIN_SUCCESS"
+                type: "LOGIN_SUCCESS"
             })
-        }).catch((err) =>{
+        }).catch((err) => {
             dispatch({
-                type:"LOGIN_ERROR",
+                type: "LOGIN_ERROR",
                 err
             })
         })
@@ -19,32 +19,33 @@ export const signIn = (credentials) =>{
     }
 }
 
-export const signOut =()=>{
-    return (dispatch, getState, {getFirebase}) =>{
+export const signOut = () => {
+    return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase()
-        firebase.auth().signOut().then(()=>{
+        firebase.auth().signOut().then(() => {
             dispatch({
-                type:"LOGOUT_SUCCESS"
+                type: "LOGOUT_SUCCESS"
             })
         })
     }
 }
 
-export const resetPassword = (email) =>{
-    return(dispatch, getState, {getFirebase}) =>{
+export const resetPassword = (email) => {
+    return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
         dispatch({
-            type:"PASSWORD_RESET_PROGRESS"
+            type: "PASSWORD_RESET_PROGRESS"
         });
         firebase.auth().sendPasswordResetEmail(email)
-            .then(() =>{
+            .then(() => {
                 dispatch({
-                    type:"PASSWORD_RESET_EMAIL_SENT_SUCCESS"
-                })}).catch((err)=>{
-                    dispatch({
-                        type:"PASSWORD_RESET_FAILED",
-                        err
-                    })
+                    type: "PASSWORD_RESET_EMAIL_SENT_SUCCESS"
+                })
+            }).catch((err) => {
+            dispatch({
+                type: "PASSWORD_RESET_FAILED",
+                err
+            })
         })
     }
 }

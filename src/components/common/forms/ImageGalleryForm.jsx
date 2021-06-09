@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Fab, Paper, withStyles} from "@material-ui/core";
+import {Button, withStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {DropzoneArea} from 'material-ui-dropzone';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -95,8 +95,9 @@ class ImageGalleryForm extends Component {
                 </Grid>
 
 
-                {this.state.uploadDisabled === true && this.props.uploadSuccess===false ? <UploadDialog open={true} /> :
-                <UploadDialog open={false} />}
+                {this.state.uploadDisabled === true && this.props.uploadSuccess === false ?
+                    <UploadDialog open={true}/> :
+                    <UploadDialog open={false}/>}
 
             </div>
         );

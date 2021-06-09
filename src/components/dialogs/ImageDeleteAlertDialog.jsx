@@ -7,7 +7,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {makeStyles} from "@material-ui/core/styles";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import CloseTwoToneIcon from "@material-ui/icons/CloseTwoTone";
 
 const useStyles = makeStyles({
         x_button: {
@@ -40,7 +39,7 @@ export default function ImageDeleteAlertDialog(props) {
                     variant="contained"
                     component="span"
                     onClick={handleClickOpen}>
-                <DeleteForeverIcon />
+                <DeleteForeverIcon/>
             </Button>
             <Dialog
                 open={open}
@@ -58,7 +57,7 @@ export default function ImageDeleteAlertDialog(props) {
                     <Button onClick={handleClose} color="primary">
                         Ne
                     </Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         props.removeImageFromGalley(props.image);
                         handleClose();
                     }} color="primary" autoFocus>

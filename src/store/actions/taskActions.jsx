@@ -43,7 +43,7 @@ export const uploadMultipleFiles = (files) => {
                         dispatch({
                             type: "UPLOAD_PROGRESS",
                             uploadProgress: Math.round(progress),
-                            success:false
+                            success: false
                         })
                     }
                 },
@@ -95,7 +95,7 @@ export const restoreDefaults = () => {
             imageURL: '',
             uploadProgress: 0,
             gallery: [],
-            success:false
+            success: false
         })
     }
 }

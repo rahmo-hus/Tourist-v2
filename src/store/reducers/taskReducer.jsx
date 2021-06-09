@@ -1,50 +1,50 @@
 const initState = {
     error: '',
-    success:'',
-    uploadProgress:0,
-    imageURL:'',
-    gallery:[],
-    uploadSuccess:false
+    success: '',
+    uploadProgress: 0,
+    imageURL: '',
+    gallery: [],
+    uploadSuccess: false
 }
-const taskReducer = (state = initState, action) =>{
+const taskReducer = (state = initState, action) => {
 
     switch (action.type) {
         case "CREATE_TASK":
-            return{
+            return {
                 ...state,
-                inProgress:false,
+                inProgress: false,
                 success: 'Uspjesno dodato'
             }
         case "CREATE_TASK_ERROR":
             return {
                 ...state,
-                inProgress:false,
-                error:action.err
+                inProgress: false,
+                error: action.err
             }
         case "ADDING_TASK":
-            return{
+            return {
                 ...state,
-                inProgress:true
+                inProgress: true
             }
         case "UPLOAD_SUCCESS":
             return {
                 ...state,
-                imageURL:action.imageURL
+                imageURL: action.imageURL
             }
 
         case "UPLOAD_ERROR":
             return {
                 ...state,
-                err:action.err
+                err: action.err
             }
 
         case "UPLOAD_PENDING":
             return {
                 ...state,
-                uploadProgress:action.uploadProgress
+                uploadProgress: action.uploadProgress
             }
         case "GALLERY_UPLOAD_SUCCESS":
-            return{
+            return {
                 ...state,
                 gallery: action.gallery,
                 uploadSuccess: action.success
@@ -52,10 +52,10 @@ const taskReducer = (state = initState, action) =>{
         case "RESTORE_DEFAULTS":
             return {
                 ...state,
-                imageURL:action.imageURL,
-                uploadProgress:action.uploadProgress,
-                err:action.err,
-                success:'',
+                imageURL: action.imageURL,
+                uploadProgress: action.uploadProgress,
+                err: action.err,
+                success: '',
                 uploadSuccess: action.success
             }
         case "DELETE_SUCCESS":

@@ -1,14 +1,14 @@
 import React, {Component} from "react";
-import {createQuest, restoreDefaults, uploadFile} from "../../store/actions/taskActions";
+import {createQuest, restoreDefaults} from "../../store/actions/taskActions";
 import {connect} from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import {Button, makeStyles, Paper, withStyles} from "@material-ui/core";
+import {Button, Paper, withStyles} from "@material-ui/core";
 import MainForm from "../common/forms/MainForm";
 import {compose} from "redux";
 
 const useStyles = theme => ({
-    paper:{
-        padding:16
+    paper: {
+        padding: 16
     }
 })
 
