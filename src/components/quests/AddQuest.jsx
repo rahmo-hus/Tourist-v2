@@ -3,7 +3,7 @@ import {createQuest, restoreDefaults, uploadFile} from "../../store/actions/task
 import {connect} from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import {Button, makeStyles, Paper, withStyles} from "@material-ui/core";
-import MainForm from "../features/forms/MainForm";
+import MainForm from "../common/forms/MainForm";
 import {compose} from "redux";
 
 const useStyles = theme => ({

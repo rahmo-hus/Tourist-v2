@@ -8,7 +8,7 @@ import {updateQuest} from "../../store/actions/taskActions"
 import DialogTitle from "@material-ui/core/DialogTitle";
 import {connect} from "react-redux";
 import {makeStyles, Paper} from "@material-ui/core";
-import MainForm from "../features/forms/MainForm";
+import MainForm from "../common/forms/MainForm";
 import Carousel from "@brainhubeu/react-carousel";
 import ImageDeleteAlertDialog from "./ImageDeleteAlertDialog";
 

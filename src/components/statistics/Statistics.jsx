@@ -1,27 +1,19 @@
-import React, { Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux'
 import {firestoreConnect} from 'react-redux-firebase'
-import {compose } from 'redux'
-import {
-    Typography,
-    Paper,
-    Box,
-    Tab,
-    Tabs,
-    AppBar, CircularProgress
-} from "@material-ui/core";
+import {compose} from 'redux'
+import {AppBar, Box, CircularProgress, Paper, Tab, Tabs, Typography} from "@material-ui/core";
 import PropTypes from 'prop-types';
-import Leaderboard from './Leaderboard';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import VisitedLocationsChart from './VisitedLocationsChart';
 import TimelineChart from "./TimelineChart";
 import clsx from "clsx";
 import IndividualTaskSummary from "./IndividualTaskSummary";
-import BarCharts from "./BarCharts";
+import Leaderboard from "./Leaderboard";
 
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
 
   return (
     <div
@@ -107,7 +99,7 @@ function Statistics(props) {
                     </Paper>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                        <BarCharts statistics = {statistics}/>
+                        <Leaderboard leaderboard = {leaderboard}/>
                 </TabPanel>
                 <TabPanel index={value} value={3}>
                    <IndividualTaskSummary tasks={tasks} games={games}/>
