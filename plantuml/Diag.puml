@@ -1,40 +1,33 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-
-
-class App <<component>>
+class Login <<(F, green) component>>
 {
-    +render():ReactNode
-}
-
-class Login <<component>>
-{
+    +props:Object
     +classes: Theme
     +emailRef: ReactReference
     +passwordRef: ReactReference
-    +props: Object
     +handleSubmit(event: FormSubmitEvent): void
     +mapDispatchToProps(dispatch: DispatchEvent): void
     +mapStateToProps(state: Object): void
     +render(): ReactNode
 }
 
-class ForgotPassword <<component>>
+class ForgotPassword <<(F, green) component>>
 {
+    +props:Object
     +classes: Theme
     +emailRef: ReactReference
     +message: String
-    +props:Object
     +handleSubmit((event: FormSubmitEvent): void
     +mapStateToProps(state: Object):void
     +mapDispatchToProps(dispatch: DispatchEvent):void
     +render():ReactNode
 }
 
-class Dashboard <<component>>
+class Dashboard <<(F, green) component>>
 {
-    +props: Object
+    +props:Object
     +classes: Theme
     +title: String
     +open: Boolean
@@ -59,7 +52,7 @@ class AddQuest <<component>>
     +render(): ReactNode
 }
 
-class QuestDetails <<component>>
+class QuestDetails <<(F, green) component>>
 {
     +props:Object
     +classes: Theme
@@ -68,9 +61,9 @@ class QuestDetails <<component>>
     +render(): ReactNode
 }
 
-class QuestList <<component>>
+class QuestList <<(F, green) component>>
 {
-    +props:Object
+   +props:Object
     +classes: Theme
     +searchText: String
     +content: ReactNode
@@ -79,30 +72,31 @@ class QuestList <<component>>
     +render(): ReactNode
 }
 
-class QuestSummary <<component>>
+class QuestSummary <<(F, green) component>>
 {
-    +props:Object
+   +props:Object
     +classes:Theme
     +render():ReactNode
 }
 
-class Redux <<provider>>
+class ReduxStore <<(P, yellow) provider>>
 {
     +store
 }
 
 class MainQuestInputForm <<component>>
 {
+    +state:Object
     +props:Object
     +constructor(props)
     +render():ReactNode
 }
 
-class ChangeQuestDialog <<component>>
+class ChangeQuestDialog <<(F, green) component>>
 {
+    +props:Object
     +open: Boolean
     +classes: Theme
-    +props: Object
     +questProperties: Object
     +currentGallery: String[]
     +handleClickOpen(): void
@@ -116,15 +110,8 @@ class ChangeQuestDialog <<component>>
     +render():ReactNode
 }
 
-class ListItems <<component>>
-{
-    +props: Object
-    +component: String
-    +setComponent(title: String): void
-    +render():ReactNode
-}
 
-class ImageDeleteAlertDialog <<component>>
+class ImageDeleteAlertDialog <<(F, green) component>>
 {
     +props:Object
     +open: Boolean
@@ -134,7 +121,7 @@ class ImageDeleteAlertDialog <<component>>
     +render:ReactNode
 }
 
-class QuestDeleteAlertDialog <<component>>
+class QuestDeleteAlertDialog <<(F, green) component>>
 {
     +props:Object
     +open:Boolean
@@ -146,16 +133,17 @@ class QuestDeleteAlertDialog <<component>>
     +render():ReactNode
 }
 
-class UploadDialog <<component>>
+class UploadDialog <<(F, green) component>>
 {
     +props:Object
     +open: Boolean
     +handleClose(): void
-    +render:ReactNode
+    +render():ReactNode
 }
 
-class Statistics <<component>>
+class Statistics <<(F, green) component>>
 {
+   +props:Object
     +classes:Theme
     +value:Integer
     +fixedHeightPaper:Object
@@ -165,14 +153,14 @@ class Statistics <<component>>
     +render():ReactNode
 }
 
-class Leaderboard <<component>>
+class Leaderboard <<(F, green) component>>
 {
     +props:Object
     +classes: Theme
     +render():ReactNode
 }
 
-class TimeLineChart <<component>>
+class TimeLineChart <<(F, green) component>>
 {
     +props:Object
     +classes:Theme
@@ -182,7 +170,7 @@ class TimeLineChart <<component>>
     +render():ReactNode
 }
 
-class VisitedLocationsChart <<component>>
+class VisitedLocationsChart <<(F, green) component>>
 {
     +props:Object
     +dataPoints: Object[]
@@ -190,7 +178,7 @@ class VisitedLocationsChart <<component>>
     +render():ReactNode
 }
 
-class AllQuestStatisticsSummary <<component>>
+class AllQuestStatisticsSummary <<(F, green) component>>
 {
     +props:Object
     +classes:Theme
@@ -200,28 +188,15 @@ class AllQuestStatisticsSummary <<component>>
     +render():ReactNode
 }
 
-class LocationSelectPin <<component>>
+class LocationSelectPin <<(F, green) component>>
 {
     +props:Object
     +render(): ReactNode
 }
 
-class Marker <<component>>
-{
-    +props:Object
-    +render():ReactNode
-}
-
-class BaseRouter <<router>>
-{
-    +props:Object
-    +mapStateToProps(state: Object): void
-    +render():ReactNode
-}
-
 class ImageGalleryInput <<component>>
 {
-    +state:Object
+    +state: Object
     +props:Object
     +onFileChange(files: File[]): void
     +handleUploadClicked() : void
@@ -230,39 +205,27 @@ class ImageGalleryInput <<component>>
     +render(): ReactNode
 }
 
-Redux <..>App
-Redux <..>QuestList
+ReduxStore <..>QuestList
 AddQuest *-- MainQuestInputForm
 ChangeQuestDialog *-- MainQuestInputForm
-Redux <..> Login
-Redux <..> ForgotPassword
-Dashboard *-- ListItems
-ListItems *-- AddQuest
-ListItems *-- QuestList
-ListItems *-- Statistics
+ReduxStore <..> Login
+ReduxStore <...> ForgotPassword
 QuestList *-- "0..*" QuestSummary
 QuestDetails *-- ChangeQuestDialog
-QuestSummary *-- QuestDetails
 QuestDetails *-- QuestDeleteAlertDialog
 ChangeQuestDialog *-- ImageDeleteAlertDialog
-BaseRouter ..> Login
-BaseRouter ..> ForgotPassword
-BaseRouter ..>Dashboard
 MainQuestInputForm *-- LocationSelectPin
-LocationSelectPin *-- Marker
 MainQuestInputForm *-- ImageGalleryInput
-App ..>BaseRouter
 ImageGalleryInput *-- UploadDialog
 Statistics *-- VisitedLocationsChart
 Statistics *-- AllQuestStatisticsSummary
 Statistics *-- TimeLineChart
 Statistics *-- Leaderboard
-Redux <..> ImageGalleryInput
-Redux <..> Dashboard
-Redux <..> ChangeQuestDialog
-Redux <..> QuestDeleteAlertDialog
-Redux <..>AddQuest
-Redux <..>QuestDetails
-Redux <..>QuestList
-Redux <..>Statistics
+ReduxStore <..> Dashboard
+ReduxStore <..> ImageGalleryInput
+ReduxStore <..> ChangeQuestDialog
+ReduxStore <..> QuestDeleteAlertDialog
+ReduxStore <..>AddQuest
+ReduxStore <..>QuestDetails
+ReduxStore <....>Statistics
 @enduml
