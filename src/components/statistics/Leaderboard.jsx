@@ -9,14 +9,17 @@ import TableRow from '@material-ui/core/TableRow';
 import {Date} from 'prismic-reactjs';
 
 
-function preventDefault(event) {
-    event.preventDefault();
-}
-
 const useStyles = makeStyles((theme) => ({
     seeMore: {
         marginTop: theme.spacing(3),
+    },
+    tr:{
+        background:"#f1f1f1",
+        '&:hover':{
+            cursor:'pointer'
+        }
     }
+
 }));
 
 function Leaderboard(props) {
@@ -25,13 +28,13 @@ function Leaderboard(props) {
     return (
         <React.Fragment>
             <TableContainer>
-                <Table className={classes.table} size="small" aria-label="a dense table">
+                <Table size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Redni broj</TableCell>
-                            <TableCell align="right">Korisnicko ime</TableCell>
-                            <TableCell align="right">Osvojeni broj bodova&nbsp;</TableCell>
-                            <TableCell align="right">Trajanje igre&nbsp;</TableCell>
+                            <TableCell component="th" className={classes.tr} onClick={()=>alert('table head clicked')}>Redni broj</TableCell>
+                            <TableCell align="right" className={classes.tr}>Korisnicko ime</TableCell>
+                            <TableCell align="right" className={classes.tr}>Osvojeni broj bodova&nbsp;</TableCell>
+                            <TableCell align="right" className={classes.tr}>Trajanje igre&nbsp;</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
