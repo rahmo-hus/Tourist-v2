@@ -8,7 +8,7 @@ import thunk from "redux-thunk";
 import firebaseConf from "./config/fbConfig";
 import firebase from "firebase/app";
 import {makeStyles} from '@material-ui/core/styles';
-import {createFirestoreInstance, getFirestore, reduxFirestore,} from "redux-firestore";
+import {createFirestoreInstance, getFirestore, reduxFirestore} from "redux-firestore";
 import {getFirebase, isLoaded, ReactReduxFirebaseProvider,} from "react-redux-firebase";
 import {CircularProgress} from "@material-ui/core";
 

@@ -1,0 +1,268 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+
+class App <<component>>
+{
+    +render():ReactNode
+}
+
+class Login <<component>>
+{
+    +classes: Theme
+    +emailRef: ReactReference
+    +passwordRef: ReactReference
+    +props: Object
+    +handleSubmit(event: FormSubmitEvent): void
+    +mapDispatchToProps(dispatch: DispatchEvent): void
+    +mapStateToProps(state: Object): void
+    +render(): ReactNode
+}
+
+class ForgotPassword <<component>>
+{
+    +classes: Theme
+    +emailRef: ReactReference
+    +message: String
+    +props:Object
+    +handleSubmit((event: FormSubmitEvent): void
+    +mapStateToProps(state: Object):void
+    +mapDispatchToProps(dispatch: DispatchEvent):void
+    +render():ReactNode
+}
+
+class Dashboard <<component>>
+{
+    +props: Object
+    +classes: Theme
+    +title: String
+    +open: Boolean
+    +setOpen(open: Boolean): void
+    +handleDrawerOpen():void
+    +handleDrawerClose(): void
+    +setTitle(title: String): void
+    +mapDispatchToProps(dispatch: DispatchEvent):void
+    +render(): ReactNode
+}
+
+class AddQuest <<component>>
+{
+    +state: Object
+    +props:Object
+    +handleChange(event: FormChangeEvent):void
+    +handleCoordinates(event: FormChangeEvent): void
+    +addGalleryImageURLs(urls: String[]): void
+    +submitQuest(event: FormSubmitEvent): void
+    +mapDispatchToProps (dispatch: DispatchEvent):void
+    +mapStateToProps (state: Object): void
+    +render(): ReactNode
+}
+
+class QuestDetails <<component>>
+{
+    +props:Object
+    +classes: Theme
+    +language: String
+    +mapStateToProps(state: Object): void
+    +render(): ReactNode
+}
+
+class QuestList <<component>>
+{
+    +props:Object
+    +classes: Theme
+    +searchText: String
+    +content: ReactNode
+    +handleChange(event: FormChangeEvent): void
+    +mapStateToProps (state: Object): void
+    +render(): ReactNode
+}
+
+class QuestSummary <<component>>
+{
+    +props:Object
+    +classes:Theme
+    +render():ReactNode
+}
+
+class Redux <<provider>>
+{
+    +store
+}
+
+class MainQuestInputForm <<component>>
+{
+    +props:Object
+    +constructor(props)
+    +render():ReactNode
+}
+
+class ChangeQuestDialog <<component>>
+{
+    +open: Boolean
+    +classes: Theme
+    +props: Object
+    +questProperties: Object
+    +currentGallery: String[]
+    +handleClickOpen(): void
+    +handleClose(): void
+    +handleChange(event: FormChangeEvent): void
+    +handleConfirm() :void
+    +removeImageFromGallery(image: String): void
+    +handleCoordinates:(event: FormChangeEvent): void
+    +mapDispatchToProps(dispatch: DispatchEvent): void
+    +mapStateToProps(state: Object): void
+    +render():ReactNode
+}
+
+class ListItems <<component>>
+{
+    +props: Object
+    +component: String
+    +setComponent(title: String): void
+    +render():ReactNode
+}
+
+class ImageDeleteAlertDialog <<component>>
+{
+    +props:Object
+    +open: Boolean
+    +classes: Theme
+    +handleClickOpen():void
+    +handleClose(): void
+    +render:ReactNode
+}
+
+class QuestDeleteAlertDialog <<component>>
+{
+    +props:Object
+    +open:Boolean
+    +handleClickOpen(): void
+    +handleClose():void
+    +handleQuestDelete(): void
+    +mapStateToProps(state: Object):void
+    +mapDispatchToProps(dispatch: DispatchEvent):void
+    +render():ReactNode
+}
+
+class UploadDialog <<component>>
+{
+    +props:Object
+    +open: Boolean
+    +handleClose(): void
+    +render:ReactNode
+}
+
+class Statistics <<component>>
+{
+    +classes:Theme
+    +value:Integer
+    +fixedHeightPaper:Object
+    +props:Object
+    +mapStateToProps(state: Object):void
+    +mapDispatchToProps(dispatch: DispatchEvent):void
+    +render():ReactNode
+}
+
+class Leaderboard <<component>>
+{
+    +props:Object
+    +classes: Theme
+    +render():ReactNode
+}
+
+class TimeLineChart <<component>>
+{
+    +props:Object
+    +classes:Theme
+    +data:Object[]
+    +filterFinishedGamesByMonth(month:String):void
+    +filterStartedGamesByMonth(month:String):void
+    +render():ReactNode
+}
+
+class VisitedLocationsChart <<component>>
+{
+    +props:Object
+    +dataPoints: Object[]
+    +options: Object
+    +render():ReactNode
+}
+
+class AllQuestStatisticsSummary <<component>>
+{
+    +props:Object
+    +classes:Theme
+    +getAppearancesCount(id:Integer):void
+    +getQuestAccomplishmentsCount(id:Integer):void
+    +tableContent:ReactNode
+    +render():ReactNode
+}
+
+class LocationSelectPin <<component>>
+{
+    +props:Object
+    +render(): ReactNode
+}
+
+class Marker <<component>>
+{
+    +props:Object
+    +render():ReactNode
+}
+
+class BaseRouter <<router>>
+{
+    +props:Object
+    +mapStateToProps(state: Object): void
+    +render():ReactNode
+}
+
+class ImageGalleryInput <<component>>
+{
+    +state:Object
+    +props:Object
+    +onFileChange(files: File[]): void
+    +handleUploadClicked() : void
+    +mapDispatchToProps(dispatch: DispatchEvent):void
+    +mapStateToProps((state: Object):void
+    +render(): ReactNode
+}
+
+Redux <..>App
+Redux <..>QuestList
+AddQuest *-- MainQuestInputForm
+ChangeQuestDialog *-- MainQuestInputForm
+Redux <..> Login
+Redux <..> ForgotPassword
+Dashboard *-- ListItems
+ListItems *-- AddQuest
+ListItems *-- QuestList
+ListItems *-- Statistics
+QuestList *-- "0..*" QuestSummary
+QuestDetails *-- ChangeQuestDialog
+QuestSummary *-- QuestDetails
+QuestDetails *-- QuestDeleteAlertDialog
+ChangeQuestDialog *-- ImageDeleteAlertDialog
+BaseRouter ..> Login
+BaseRouter ..> ForgotPassword
+BaseRouter ..>Dashboard
+MainQuestInputForm *-- LocationSelectPin
+LocationSelectPin *-- Marker
+MainQuestInputForm *-- ImageGalleryInput
+App ..>BaseRouter
+ImageGalleryInput *-- UploadDialog
+Statistics *-- VisitedLocationsChart
+Statistics *-- AllQuestStatisticsSummary
+Statistics *-- TimeLineChart
+Statistics *-- Leaderboard
+Redux <..> ImageGalleryInput
+Redux <..> Dashboard
+Redux <..> ChangeQuestDialog
+Redux <..> QuestDeleteAlertDialog
+Redux <..>AddQuest
+Redux <..>QuestDetails
+Redux <..>QuestList
+Redux <..>Statistics
+@enduml
