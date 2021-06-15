@@ -76,8 +76,8 @@ function Statistics(props) {
     };
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    const {games, statistics, leaderboard, tasks} = props;
-    if (games && statistics && leaderboard && tasks) {
+    const {games, statistics, leaderboard,  quests} = props;
+    if (games && statistics && leaderboard && quests) {
         return (
             <div className={classes.root}>
                 <AppBar position="static">
@@ -102,7 +102,7 @@ function Statistics(props) {
                     <Leaderboard leaderboard={leaderboard}/>
                 </TabPanel>
                 <TabPanel index={value} value={3}>
-                    <IndividualTaskSummary tasks={tasks} games={games}/>
+                    <IndividualTaskSummary quests={quests} games={games}/>
                 </TabPanel>
             </div>
         );
@@ -119,7 +119,7 @@ const mapStateToProps = (state) => {
         statistics: state.firestore.ordered.statistics,
         leaderboard: state.firestore.ordered.halloffame,
         games: state.firestore.ordered.game,
-        tasks: state.firestore.ordered.tasks
+        quests: state.firestore.ordered.quests
     }
 }
 
@@ -130,14 +130,13 @@ export default compose(
             collection: 'statistics'
         },
         {
-            collection: 'halloffame',
-            orderBy: ['score', 'desc']
+            collection: 'halloffame'
         },
         {
             collection: 'game'
         },
         {
-            collection: 'tasks'
+            collection: 'quests'
         }
     ])
 )(Statistics)

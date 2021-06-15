@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme) => {
 export default function IndividualTaskSummary(props) {
 
     const classes = useStyles();
-    const {tasks, games} = props;
+    const {quests, games} = props;
 
     function getAppearancesCount(id) {
         let count = 0;
         games.map((game, key) => {
-            count += game.tasks.filter(task => task.id === id).length;
+            count += game.tasks.filter(quest => quest.id === id).length;
         })
         return count;
     }
@@ -28,12 +28,12 @@ export default function IndividualTaskSummary(props) {
         return count;
     }
 
-    const tableContent = tasks.map((task, key) => {
+    const tableContent = quests.map((task, key) => {
         const appearancesCount = getAppearancesCount(task.id);
         const questAccomplishmentsCount = getQuestAccomplishmentsCount(task.id);
         return (
             <TableRow>
-                <TableCell component="th" scope="row">{task.title}</TableCell>
+                <TableCell component="th" scope="row">{task.title.en_us}</TableCell>
                 <TableCell align="right">{appearancesCount}</TableCell>
                 <TableCell align="right">{questAccomplishmentsCount}</TableCell>
                 <TableCell
