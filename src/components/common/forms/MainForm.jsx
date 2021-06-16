@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import {FormControl, InputLabel, MenuItem, Paper, Select} from "@material-ui/core";
+import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import LocationPin from "./LocationPin";
 import ImageGalleryForm from "./ImageGalleryForm";
 
 const useStyles = theme => ({
     paper: {
-        padding:16
+        padding: 16
     },
     formControl: {
         margin: theme.spacing(1),
@@ -31,8 +31,7 @@ class MainForm extends Component {
         const {values} = this.props;
 
         return (
-            <>
-                {/*<form autoComplete="off" onSubmit={this.props.submitQuest}>*/}
+            <div>
                 <Grid container
                       justify="center"
                       alignItems="center"
@@ -159,10 +158,8 @@ class MainForm extends Component {
                     <LocationPin locationCoordinates={values.locationCoordinates}
                                  handleCoordinates={this.props.handleCoordinates}/>
                 </Grid>
-
                 <ImageGalleryForm/>
-                {/*</form>*/}
-            </>
+            </div>
         );
     }
 }

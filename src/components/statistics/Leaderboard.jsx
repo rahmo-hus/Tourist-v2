@@ -29,7 +29,7 @@ function Leaderboard(props) {
 
     const sortByUsername = () => {
         setReverse(reverse*(-1))
-        setLeaderboard((board) => [...board.sort((a, b) => a.username > b.username ? reverse : reverse*(-1))]);
+        setLeaderboard((board) => [...board.sort((a, b) => a.username.toLowerCase() > b.username.toLowerCase() ? reverse : reverse*(-1))]);
     }
 
     const sortByScore = () =>{
@@ -40,7 +40,7 @@ function Leaderboard(props) {
     const sortByDuration = () =>{
         setReverse(reverse*(-1));
         setLeaderboard((board) => [...board.sort((a,b) => ((a.endTime.valueOf() - a.startTime.valueOf()) -
-            (b.endTime.valueOf() - b.startTime.valueOf()))*reverse)])
+            (b.endTime.valueOf() - b.startTime.valueOf()))*reverse  )])
     }
 
     let content = leaderboard.map((value, key) => {

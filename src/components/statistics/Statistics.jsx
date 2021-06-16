@@ -76,7 +76,7 @@ function Statistics(props) {
     };
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    const {games, statistics, leaderboard,  quests} = props;
+    const {games, statistics, leaderboard, quests} = props;
     if (games && statistics && leaderboard && quests) {
         return (
             <div className={classes.root}>
@@ -94,9 +94,7 @@ function Statistics(props) {
                     </Paper>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Paper className={fixedHeightPaper}>
-                        <VisitedLocationsChart statistics={statistics}/>
-                    </Paper>
+                    <VisitedLocationsChart statistics={statistics}/>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     <Leaderboard leaderboard={leaderboard}/>
