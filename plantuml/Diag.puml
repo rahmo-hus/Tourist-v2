@@ -118,7 +118,7 @@ class ImageDeleteAlertDialog <<(F, green) component>>
     +classes: Theme
     +handleClickOpen():void
     +handleClose(): void
-    +render:ReactNode
+    +render():ReactNode
 }
 
 class QuestDeleteAlertDialog <<(F, green) component>>
@@ -209,7 +209,7 @@ ReduxStore <..>QuestList
 AddQuest *-- MainQuestInputForm
 ChangeQuestDialog *-- MainQuestInputForm
 ReduxStore <..> Login
-ReduxStore <...> ForgotPassword
+ReduxStore <....> ForgotPassword
 QuestList *-- "0..*" QuestSummary
 QuestDetails *-- ChangeQuestDialog
 QuestDetails *-- QuestDeleteAlertDialog
@@ -221,11 +221,11 @@ Statistics *-- VisitedLocationsChart
 Statistics *-- AllQuestStatisticsSummary
 Statistics *-- TimeLineChart
 Statistics *-- Leaderboard
-ReduxStore <..> Dashboard
+ReduxStore <...> Dashboard
 ReduxStore <..> ImageGalleryInput
 ReduxStore <..> ChangeQuestDialog
 ReduxStore <..> QuestDeleteAlertDialog
-ReduxStore <..>AddQuest
+ReduxStore <.....>AddQuest
 ReduxStore <..>QuestDetails
 ReduxStore <....>Statistics
 @enduml

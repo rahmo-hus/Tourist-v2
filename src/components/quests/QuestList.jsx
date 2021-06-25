@@ -31,7 +31,9 @@ function QuestList(props) {
         return searchText === '' ?
             <QuestSummary quest={quest} />
             :
-            quest.title.en_us.toLowerCase().includes(searchText.toLowerCase()) ? <QuestSummary quest={quest} /> : <></>
+            quest.title.en_us.toLowerCase().includes(searchText.toLowerCase()) ||
+            quest.title.sr_bih.toLowerCase().includes(searchText.toLowerCase())
+                ? <QuestSummary quest={quest} /> : <></>
     }) : (
         <div className={classes.root}>
             <CircularProgress />
@@ -48,7 +50,7 @@ function QuestList(props) {
                 <TextField
                     className={classes.searchBar}
                     id="outlined-search"
-                    label="Pretraga zadataka"
+                    label="Pretraga zadataka po nazivu"
                     onChange={handleChange}
                     type="search"
                     variant="outlined" />

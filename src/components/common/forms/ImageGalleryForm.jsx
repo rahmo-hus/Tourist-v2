@@ -28,8 +28,7 @@ const useStyles = theme => ({
 class ImageGalleryForm extends Component {
 
     state = {
-        mainImg: undefined,
-        gallery: undefined,
+        gallery: [],
         nextButtonDisabled: true,
         uploadDisabled: false,
         imagesURL: []
@@ -39,13 +38,6 @@ class ImageGalleryForm extends Component {
     onFileChange = files => {
         this.setState({gallery: files})
     }
-
-    handleMainImageChange = e => {
-        this.setState({
-            mainImg: e.target.files[0]
-        })
-    }
-
     handleUploadClicked = () => {
         this.setState({uploadDisabled: true});
         this.props.uploadMultipleFiles(this.state.gallery);

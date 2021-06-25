@@ -1,8 +1,22 @@
+import {
+    ADDING_QUEST,
+    CREATE_QUEST,
+    CREATE_QUEST_ERROR,
+    GALLERY_UPLOAD_SUCCESS,
+    QUEST_DELETE_ERROR,
+    QUEST_DELETE_SUCCESS,
+    QUEST_UPDATE_ERROR,
+    QUEST_UPDATE_SUCCESS,
+    RESTORE_DEFAULTS,
+    UPLOAD_ERROR,
+    UPLOAD_PROGRESS
+} from "../types";
+
 export const createQuest = (quest) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
 
         const firestore = getFirestore();
-        dispatch({type: "ADDING_TASK"})
+        dispatch({type: ADDING_QUEST})
         firestore
             .collection("quests")
             .add({
@@ -11,14 +25,14 @@ export const createQuest = (quest) => {
             })
             .then((ref) => {
                 dispatch({
-                    type: "CREATE_TASK",
+                    type: CREATE_QUEST,
                     quest: quest
                 });
                 firestore.collection("statistics").doc(ref.id).set({title: quest.title, timesSolved: 0});
             })
             .catch((err) => {
                 dispatch({
-                    type: "CREATE_TASK_ERROR",
+                    type: CREATE_QUEST_ERROR,
                     err: err,
                 });
             });
@@ -41,7 +55,7 @@ export const uploadMultipleFiles = (files) => {
                     const progress = snapshot.bytesTransferred * 100 / snapshot.totalBytes;
                     if (snapshot.state === firebase.storage.TaskState.RUNNING) {
                         dispatch({
-                            type: "UPLOAD_PROGRESS",
+                            type: UPLOAD_PROGRESS,
                             uploadProgress: Math.round(progress),
                             success: false
                         })
@@ -57,13 +71,13 @@ export const uploadMultipleFiles = (files) => {
         Promise.all(promises)
             .then(() => {
                 dispatch({
-                    type: "GALLERY_UPLOAD_SUCCESS",
+                    type: GALLERY_UPLOAD_SUCCESS,
                     gallery: imageURLs,
                     success: true
                 })
             })
             .catch(err => dispatch({
-                type: "UPLOAD_ERROR",
+                type: UPLOAD_ERROR,
                 err
             }));
     }
@@ -76,12 +90,12 @@ export const deleteTask = (id) => {
         firestore.collection('quests').doc(id).delete()
             .then(() => {
                 dispatch({
-                    type: "DELETE_SUCCESS"
+                    type: QUEST_DELETE_SUCCESS
                 });
                 firestore.collection('statistics').doc(id).delete().then().catch();
             }).catch(err => {
             dispatch({
-                type: "DELETE_ERROR",
+                type: QUEST_DELETE_ERROR,
                 err
             })
         })
@@ -90,7 +104,7 @@ export const deleteTask = (id) => {
 export const restoreDefaults = () => {
     return (dispatch, state, {getFirebase, getFirestore}) => {
         dispatch({
-            type: "RESTORE_DEFAULTS",
+            type: RESTORE_DEFAULTS,
             err: null,
             imageURL: '',
             uploadProgress: 0,
@@ -100,23 +114,23 @@ export const restoreDefaults = () => {
     }
 }
 
-export const updateQuest = (task, id) => {
+export const updateQuest = (quest, id) => {
     return (dispatch, state, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
 
         firestore.collection('quests').doc(id).update({
-            ...task
+            ...quest
         }).then(() => {
             dispatch({
-                type: "UPDATE_SUCCESS"
+                type: QUEST_UPDATE_SUCCESS
             })
         }).catch(err => {
             dispatch({
-                type: "UPDATE_ERROR",
+                type: QUEST_UPDATE_ERROR,
                 err
             })
         })
 
-        firestore.collection('statistics').doc(id).update({title: task.title});
+        firestore.collection('statistics').doc(id).update({title: quest.title});
     }
 }

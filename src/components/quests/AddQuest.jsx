@@ -118,24 +118,26 @@ class AddQuest extends Component {
 
         return (
             <Paper className={classes.paper}>
-                <Grid container direction="column">
+                <form autoComplete="off" onSubmit={this.submitQuest}>
+                    <Grid container direction="column">
 
-                    <MainForm values={values}
-                              handleCoordinates={this.handleCoordinates}
-                              handleLocationDescriptionChangeEn={this.handleLocationDescriptionEn}
-                              handleTitleChangeEn={this.handleTitleChangeEn}
-                              handleGameDescriptionChangeEn={this.handleGameDescriptionChangeEn}
-                              handleLocationDescriptionChangeBih={this.handleLocationDescriptionBih}
-                              handleTitleChangeBih={this.handleTitleChangeBih}
-                              handleGameDescriptionChangeBih={this.handleGameDescriptionChangeBih}
-                              handleDifficultyChange={this.handleDifficultyChange}
-                              submitQuest={this.submitQuest}/>
-                    <Button color="primary"
-                            variant="contained"
-                            onClick={this.submitQuest}>
-                        Submit
-                    </Button>
-                </Grid>
+                        <MainForm values={values}
+                                  handleCoordinates={this.handleCoordinates}
+                                  handleLocationDescriptionChangeEn={this.handleLocationDescriptionEn}
+                                  handleTitleChangeEn={this.handleTitleChangeEn}
+                                  handleGameDescriptionChangeEn={this.handleGameDescriptionChangeEn}
+                                  handleLocationDescriptionChangeBih={this.handleLocationDescriptionBih}
+                                  handleTitleChangeBih={this.handleTitleChangeBih}
+                                  handleGameDescriptionChangeBih={this.handleGameDescriptionChangeBih}
+                                  handleDifficultyChange={this.handleDifficultyChange}
+                                  submitQuest={this.submitQuest}/>
+                        <Button color="primary"
+                                variant="contained"
+                                type="submit">
+                            Submit
+                        </Button>
+                    </Grid>
+                </form>
             </Paper>
         )
     }

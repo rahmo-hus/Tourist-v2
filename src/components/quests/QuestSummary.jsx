@@ -24,10 +24,10 @@ const QuestSummary = (props) =>{
                     <div className={classes.cardDetails}>
                         <CardContent>
                             <Typography component="h2" variant="h5">
-                                {quest.title.en_us}
+                                {quest.title.en_us} / {quest.title.sr_bih}
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
-                                {quest.gameDescription.en_us}
+                                {quest.title.sr_bih}
                             </Typography>
                             <Typography variant="subtitle1" color="primary">
                                 Otvori za detalje...

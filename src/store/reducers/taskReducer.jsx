@@ -1,3 +1,17 @@
+import {
+    ADDING_QUEST,
+    CREATE_QUEST,
+    CREATE_QUEST_ERROR,
+    GALLERY_UPLOAD_SUCCESS,
+    QUEST_DELETE_ERROR,
+    QUEST_DELETE_SUCCESS,
+    QUEST_UPDATE_ERROR,
+    QUEST_UPDATE_SUCCESS,
+    RESTORE_DEFAULTS,
+    UPLOAD_ERROR,
+    UPLOAD_PROGRESS
+} from "../types";
+
 const initState = {
     error: '',
     success: '',
@@ -9,47 +23,41 @@ const initState = {
 const taskReducer = (state = initState, action) => {
 
     switch (action.type) {
-        case "CREATE_TASK":
+        case CREATE_QUEST:
             return {
                 ...state,
                 inProgress: false,
                 success: 'Uspjesno dodato'
             }
-        case "CREATE_TASK_ERROR":
+        case CREATE_QUEST_ERROR:
             return {
                 ...state,
                 inProgress: false,
                 error: action.err
             }
-        case "ADDING_TASK":
+        case ADDING_QUEST:
             return {
                 ...state,
                 inProgress: true
             }
-        case "UPLOAD_SUCCESS":
-            return {
-                ...state,
-                imageURL: action.imageURL
-            }
-
-        case "UPLOAD_ERROR":
+        case UPLOAD_ERROR:
             return {
                 ...state,
                 err: action.err
             }
 
-        case "UPLOAD_PENDING":
+        case UPLOAD_PROGRESS:
             return {
                 ...state,
                 uploadProgress: action.uploadProgress
             }
-        case "GALLERY_UPLOAD_SUCCESS":
+        case GALLERY_UPLOAD_SUCCESS:
             return {
                 ...state,
                 gallery: action.gallery,
                 uploadSuccess: action.success
             }
-        case "RESTORE_DEFAULTS":
+        case RESTORE_DEFAULTS:
             return {
                 ...state,
                 imageURL: action.imageURL,
@@ -58,16 +66,16 @@ const taskReducer = (state = initState, action) => {
                 success: '',
                 uploadSuccess: action.success
             }
-        case "DELETE_SUCCESS":
+        case QUEST_DELETE_SUCCESS:
             return state;
-        case "DELETE_ERROR":
+        case QUEST_DELETE_ERROR:
             return {
                 ...state,
                 err: action.err
             }
-        case "UPDATE_SUCCESS":
+        case QUEST_UPDATE_SUCCESS:
             return state;
-        case "UPDATE_FAILED":
+        case QUEST_UPDATE_ERROR:
             return {
                 ...state,
                 err: action.err

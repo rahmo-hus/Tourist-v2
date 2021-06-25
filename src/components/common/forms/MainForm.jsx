@@ -77,7 +77,7 @@ class MainForm extends Component {
                             required
                             id="title_sr-bih"
                             name="title_sr-bih"
-                            label="Naslov (maticni)"
+                            label="Naslov (srpski jezik)"
                             variant="outlined"
                             value={values.title.sr_bih}
                             onChange={this.props.handleTitleChangeBih}
@@ -89,7 +89,7 @@ class MainForm extends Component {
                             required
                             id="title_en-us"
                             name="title_en-us"
-                            label="Naslov (engleski)"
+                            label="Naslov (engleski jezik)"
                             variant="outlined"
                             value={values.title.en_us}
                             onChange={this.props.handleTitleChangeEn}
@@ -107,7 +107,7 @@ class MainForm extends Component {
                             rows={4}
                             value={values.gameDescription.sr_bih}
                             onChange={this.props.handleGameDescriptionChangeBih}
-                            label="Opis igre (maticni)"
+                            label="Opis igre (srpski jezik)"
                         />
                     </Grid>
                     <Grid container item xs={12}>
@@ -122,7 +122,7 @@ class MainForm extends Component {
                             value={values.gameDescription.en_us}
                             onChange={this.props.handleGameDescriptionChangeEn}
                             rows={4}
-                            label="Opis igre (engleski)"
+                            label="Opis igre (engleski jezik)"
                         />
                     </Grid>
                     <Grid container item xs={12}>
@@ -136,7 +136,7 @@ class MainForm extends Component {
                             value={values.locationDescription.sr_bih}
                             onChange={this.props.handleLocationDescriptionChangeBih}
                             rows={4}
-                            label="Detaljan opis lokacije (maticni)"
+                            label="Detaljan opis lokacije (srpski jezik)"
                         />
                     </Grid>
                     <Grid container item xs={12}>
@@ -150,7 +150,7 @@ class MainForm extends Component {
                             onChange={this.props.handleLocationDescriptionChangeEn}
                             value={values.locationDescription.en_us}
                             rows={4}
-                            label="Detaljan opis lokacije (engleski)"
+                            label="Detaljan opis lokacije (engleski jezik)"
                         />
                     </Grid>
                 </Grid>

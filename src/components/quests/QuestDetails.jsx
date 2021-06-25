@@ -1,4 +1,5 @@
 import {
+    Button,
     Card,
     CardActions,
     CardContent,
@@ -21,8 +22,9 @@ import ChangeQuestDialog from "../dialogs/ChangeQuestDialog";
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import Grid from "@material-ui/core/Grid";
+import QRCode from 'qrcode.react'
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles(theme => ({
         root: {
             minWidth: 275,
         },
@@ -38,12 +40,12 @@ const useStyles = makeStyles(theme=>({
         },
         image_container: {
             position: 'relative',
-            height: '300px'
+            height: '500px'
         },
         image: {
             objectFit: 'cover',
             objectPosition: 'center',
-            height: '300px'
+            height: '500px'
         },
         x_button: {
             position: 'absolute',
@@ -53,6 +55,12 @@ const useStyles = makeStyles(theme=>({
         formControl: {
             margin: theme.spacing(1),
             minWidth: 120,
+        },
+        progress: {
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)"
         }
     }
 ));
@@ -64,6 +72,19 @@ function QuestDetails(props) {
     const [language, selectLanguage] = useState(10);
     const {quest} = props;
 
+
+    const downloadQR = () => {
+        const canvas = document.getElementById("qr-code");
+        const pngUrl = canvas
+            .toDataURL("image/png")
+            .replace("image/png", "image/octet-stream");
+        let downloadLink = document.createElement("a");
+        downloadLink.href = pngUrl;
+        downloadLink.download = quest.title.sr_bih + '.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }
 
     if (quest) {
         return (
@@ -79,7 +100,7 @@ function QuestDetails(props) {
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     value={language}
-                                    onChange={e =>selectLanguage(e.target.value)}
+                                    onChange={e => selectLanguage(e.target.value)}
                                 >
                                     <MenuItem value={10}>Engleski</MenuItem>
                                     <MenuItem value={20}>Srpski</MenuItem>
@@ -110,7 +131,7 @@ function QuestDetails(props) {
                             gutterBottom
                             align="center"
                         >
-                            Kratak opis
+                            Kratak opis igre
                         </Typography>
                         <Typography
                             className={classes.pos}
@@ -184,37 +205,62 @@ function QuestDetails(props) {
                             component="p"
                         >   {quest.difficulty}
                         </Typography>
-                        {quest.headingImageURL !== "" && (
-                            <>
-                                <Divider/>
-                                <Typography
-                                    className={classes.pos}
-                                    align="center"
-                                    variant="body1"
-                                    component="p"
-                                >
-                                </Typography>{" "}
+                        <Divider/>
+                        <Typography
+                            className={classes.pos}
+                            align="center"
+                            variant="body1"
+                            component="p"
+                        >
+                            <Typography
+                                className={classes.title}
+                                color="textSecondary"
+                                gutterBottom
+                                align="center"
+                            >
+                                Fotografije
+                            </Typography>
+                        </Typography>{" "}
+                        {
+                            quest.imagesURL &&
+                            <Carousel
+                                plugins={[
+                                    'arrows'
+                                ]}
+                                dynamicHeight={true}
+                                width="50%">
                                 {
-                                    quest.imagesURL &&
-                                    <Carousel
-                                        plugins={[
-                                            'arrows'
-                                        ]}
-                                        dynamicHeight={true}
-                                        width="50%">
-                                        {
-                                            quest.imagesURL.map((image, key) => {
-                                                return (
-                                                    <div className={classes.image_container}>
-                                                        <img className={classes.image} src={image} alt="photo"/>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </Carousel>
+                                    quest.imagesURL.map((image, key) => {
+                                        return (
+                                            <div className={classes.image_container}>
+                                                <img className={classes.image} src={image} alt="photo"/>
+                                            </div>
+                                        )
+                                    })
                                 }
-                            </>
-                        )}
+                            </Carousel>
+                        }
+                        <Divider/>
+                        <Typography
+                            className={classes.title}
+                            color="textSecondary"
+                            gutterBottom
+                            align="center"
+                        >
+                            QR kod zadatka
+                        </Typography>
+                        <Grid container
+                        direction="column"
+                        alignContent="center">
+                            <QRCode
+                                id="qr-code"
+                                value={props.match.params.id}
+                                size={290}
+                                level={"H"}
+                                includeMargin={true}
+                            />
+                            <Button onClick={downloadQR}> Download QR code</Button>
+                        </Grid>
                     </CardContent>
                     <CardActions>
                         <ChangeQuestDialog id={props.match.params.id} quest={quest}/>
@@ -224,7 +270,9 @@ function QuestDetails(props) {
             </div>
         );
     } else {
-        return <CircularProgress/>
+        return <div className={classes.progress}>
+            <CircularProgress />
+        </div>
     }
 }
 

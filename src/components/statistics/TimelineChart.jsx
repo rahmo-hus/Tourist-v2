@@ -22,7 +22,7 @@ export default function TimelineChart(props) {
 
     function filterFinishedGamesByMonth(month) {
         return games.filter(item => item.startTime.toDate().getMonth() === month
-            && item.tasks.filter(task => task.isCompleted).length === item.tasks.length
+            && item.quests.filter(quest => quest.isCompleted).length === item.quests.length
             && item.startTime.toDate().getFullYear() === selectedYear.getFullYear()).length
     }
 

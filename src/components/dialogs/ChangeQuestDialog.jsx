@@ -40,7 +40,7 @@ function ChangeQuestDialog(props) {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
     const {quest, id} = props;
-    const [fileChangeClicked, setFileChangeClicked] = React.useState(false);
+    const [, setFileChangeClicked] = React.useState(false);
     const [questProperties, setQuestProperties] = React.useState({});
     const [currentGallery, setCurrentGallery] = React.useState([]);
     const [imgURL, setImgURL] = React.useState('')
@@ -147,7 +147,6 @@ function ChangeQuestDialog(props) {
             imagesURL: currentGalleryLocal
         }, id);
         setCurrentGallery([]);
-        //TODO: handle uduplavanje
     }
 
     const removeImageFromGallery = image => {

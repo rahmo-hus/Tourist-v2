@@ -26,7 +26,7 @@ export default function IndividualTaskSummary(props) {
     function getAppearancesCount(id) {
         let count = 0;
         games.map((game, key) => {
-            count += game.tasks.filter(quest => quest.id === id).length;
+            count += game.quests.filter(quest => quest.id === id).length;
         })
         return count;
     }
@@ -34,7 +34,7 @@ export default function IndividualTaskSummary(props) {
     function getQuestAccomplishmentsCount(id) {
         let count = 0;
         games.map((game, key) => {
-            count += game.tasks.filter(task => task.id === id && task.isCompleted).length;
+            count += game.quests.filter(quest => quest.id === id && quest.isCompleted).length;
         })
         return count;
     }
