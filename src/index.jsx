@@ -11,6 +11,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import {createFirestoreInstance, getFirestore, reduxFirestore} from "redux-firestore";
 import {getFirebase, isLoaded, ReactReduxFirebaseProvider,} from "react-redux-firebase";
 import {CircularProgress} from "@material-ui/core";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -1,27 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
-import TableHead from "@material-ui/core/TableHead";
-import {makeStyles} from "@material-ui/core/styles";
+import React from "react";
+import {MDBCard, MDBCardBody, MDBDataTableV5} from "mdbreact";
 
-const useStyles = makeStyles((theme) => ({
-    tr: {
-        background: '#f1f1f1',
-        '&:hover': {
-            cursor: 'pointer'
-        }
-    }
-}));
 
 export default function IndividualTaskSummary(props) {
 
-    const classes = useStyles();
-    const {quests, games} = props;
-    const [reverse, setReverse] = useState(1);
-    let [statistics, setStatistics] = useState([]);
-
-    useEffect(() =>{
-        setQuestStatisticsData();
-    }, []);
+    const {quests, games, statistics} = props;
+    let timesSolvedTotal = 0;
 
     function getAppearancesCount(id) {
         let count = 0;
@@ -39,73 +23,75 @@ export default function IndividualTaskSummary(props) {
         return count;
     }
 
-    const setQuestStatisticsData = () => quests.map((quest, key) =>{
-        const questTitle = quest.title.sr_bih;
-        const appearancesCount = getAppearancesCount(quest.id);
-        const questAccomplishmentsCount = getQuestAccomplishmentsCount(quest.id);
-        const successPercentage = appearancesCount !==0 ? Math.round(100*questAccomplishmentsCount/appearancesCount) : 0;
-
-        const newElement ={
-            questTitle,
-            appearancesCount,
-            questAccomplishmentsCount,
-            successPercentage
+    const columns = [
+        {
+            label: 'Naziv zadatka',
+            field: 'title',
+            sort: 'desc'
+        },
+        {
+            label: 'Ukupan broj pojavljivanja',
+            field: 'appearancesCount'
+        },
+        {
+            label: 'Ukupan broj izvšavanja',
+            field: 'accomplishmentsCount'
+        },
+        {
+            label: 'Postotak uspješnosti',
+            field: 'successPercentage'
+        },
+        {
+            label: 'Prosječna ocjena',
+            field: 'averageRating'
+        },
+        {
+            label: 'Postotak po posjećenosti',
+            field: 'visitPercentage'
         }
+    ];
 
-        setStatistics(prevState => [...prevState, newElement]);
+    const rows = quests.map((quest, key) => {
 
-    })
+        timesSolvedTotal === 0 && statistics.map((value, key) => {
+            timesSolvedTotal += value.timesSolved
+        });
+        const title = quest.title.sr_bih + ' / ' + quest.title.en_us;
+        const appearancesCount = getAppearancesCount(quest.id);
+        const accomplishmentsCount = getQuestAccomplishmentsCount(quest.id);
+        const successPercentage = (appearancesCount !== 0 ? Math.round(100 * accomplishmentsCount / appearancesCount) : 0) + '%';
+        const averageRating = (quest.rating.reduce((a, b) => a + b, 0) / quest.rating.length) || 0;
+        const visitPercentage = (timesSolvedTotal !== 0 ? Math.round(statistics.filter(item => item.id === quest.id)[0].timesSolved * 100 / timesSolvedTotal) : 0) + '%';
 
-    const sortByTitle = () =>{
-        setReverse(reverse*(-1));
-        setStatistics( (stats) => [...stats.sort((a,b) => a.questTitle.toLowerCase() > b.questTitle.toLowerCase() ? reverse : reverse*(-1))] )
-    }
-
-    const sortByAppearancesCount = () => {
-        setReverse(reverse*(-1));
-        setStatistics((stats) => [...stats.sort((a,b) => (a.appearancesCount - b.appearancesCount)*reverse)]);
-    }
-
-    const sortByAccomplishmentCount = () =>{
-        setReverse(reverse*(-1));
-        setStatistics((stats) => [...stats.sort((a,b) => (a.questAccomplishmentsCount - b.questAccomplishmentsCount)*reverse)]);
-    }
-
-    const sortBySuccessPercentage = () =>{
-        setReverse(reverse*(-1));
-        setStatistics( (stats) => [...stats.sort((a,b) => (a.successPercentage - b.successPercentage) * reverse)]);
-    }
-
-    const tableContent = statistics.map((quest, key) => {
-        return(
-            <TableRow>
-                <TableCell component="th" scope="row">{quest.questTitle}</TableCell>
-                <TableCell align="right">{quest.appearancesCount}</TableCell>
-                <TableCell align="right">{quest.questAccomplishmentsCount}</TableCell>
-                <TableCell align="right">{quest.successPercentage}%</TableCell>
-                <TableCell align="right">0</TableCell>
-            </TableRow>
+        return ({
+                title,
+                appearancesCount,
+                accomplishmentsCount,
+                successPercentage,
+                averageRating,
+                visitPercentage
+            }
         )
-    })
+    });
 
     return (
         <React.Fragment>
-            <TableContainer>
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className={classes.tr} onClick={sortByTitle}>Naziv zadatka</TableCell>
-                            <TableCell className={classes.tr} align="right" onClick={sortByAppearancesCount}>Ukupan broj pojavljivanja</TableCell>
-                            <TableCell className={classes.tr} align="right" onClick={sortByAccomplishmentCount}>Ukupan broj izvrsavanja</TableCell>
-                            <TableCell className={classes.tr} align="right" onClick={sortBySuccessPercentage}>Postotak uspjesnosti</TableCell>
-                            <TableCell className={classes.tr} align="right">Prosječna ocjena</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tableContent}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <MDBCard>
+                <MDBCardBody>
+                    <MDBDataTableV5
+                        striped
+                        bordered
+                        hover
+                        materialSearch={true}
+                        proSelect
+                        data={{
+                            columns,
+                            rows
+                        }}
+                    >
+                    </MDBDataTableV5>
+                </MDBCardBody>
+            </MDBCard>
         </React.Fragment>
     )
 }

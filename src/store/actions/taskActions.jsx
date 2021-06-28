@@ -93,7 +93,6 @@ export const deleteTask = (id) => {
                     type: QUEST_DELETE_SUCCESS
                 });
                 firestore.collection('statistics').doc(id).delete().then().catch();
-                firestore.collection('rating').doc(id).delete().then().catch();
             }).catch(err => {
             dispatch({
                 type: QUEST_DELETE_ERROR,

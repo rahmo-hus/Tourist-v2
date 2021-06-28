@@ -5,7 +5,6 @@ import {compose} from 'redux'
 import {AppBar, Box, CircularProgress, Paper, Tab, Tabs, Typography} from "@material-ui/core";
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
-import VisitedLocationsChart from './VisitedLocationsChart';
 import TimelineChart from "./TimelineChart";
 import clsx from "clsx";
 import IndividualTaskSummary from "./IndividualTaskSummary";
@@ -83,9 +82,8 @@ function Statistics(props) {
                 <AppBar position="static">
                     <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" variant="fullWidth">
                         <Tab label="Broj odigranih igara" {...a11yProps(0)} />
-                        <Tab label="Posjećene lokacije" {...a11yProps(1)} />
-                        <Tab label="Rang lista" {...a11yProps(2)} />
-                        <Tab label="Zadaci" {...a11yProps(3)} />
+                        <Tab label="Rang lista" {...a11yProps(1)} />
+                        <Tab label="Zadaci" {...a11yProps(2)} />
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0}>
@@ -94,13 +92,10 @@ function Statistics(props) {
                     </Paper>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <VisitedLocationsChart statistics={statistics}/>
-                </TabPanel>
-                <TabPanel value={value} index={2}>
                     <Leaderboard leaderboard={leaderboard}/>
                 </TabPanel>
-                <TabPanel index={value} value={3}>
-                    <IndividualTaskSummary quests={quests} games={games}/>
+                <TabPanel index={value} value={2}>
+                    <IndividualTaskSummary quests={quests} games={games} statistics={statistics}/>
                 </TabPanel>
             </div>
         );

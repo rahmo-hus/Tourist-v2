@@ -49,7 +49,7 @@ class AddQuest <<component>>
     +submitQuest(event: FormSubmitEvent): void
     +mapDispatchToProps (dispatch: DispatchEvent):void
     +mapStateToProps (state: Object): void
-    +render(): ReactNode
+
 }
 
 class QuestDetails <<(F, green) component>>
