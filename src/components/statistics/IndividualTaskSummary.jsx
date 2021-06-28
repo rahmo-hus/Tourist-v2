@@ -83,6 +83,7 @@ export default function IndividualTaskSummary(props) {
                 <TableCell align="right">{quest.appearancesCount}</TableCell>
                 <TableCell align="right">{quest.questAccomplishmentsCount}</TableCell>
                 <TableCell align="right">{quest.successPercentage}%</TableCell>
+                <TableCell align="right">0</TableCell>
             </TableRow>
         )
     })
@@ -97,6 +98,7 @@ export default function IndividualTaskSummary(props) {
                             <TableCell className={classes.tr} align="right" onClick={sortByAppearancesCount}>Ukupan broj pojavljivanja</TableCell>
                             <TableCell className={classes.tr} align="right" onClick={sortByAccomplishmentCount}>Ukupan broj izvrsavanja</TableCell>
                             <TableCell className={classes.tr} align="right" onClick={sortBySuccessPercentage}>Postotak uspjesnosti</TableCell>
+                            <TableCell className={classes.tr} align="right">Prosječna ocjena</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

@@ -32,7 +32,8 @@ class AddQuest extends Component {
             lng: 17.1910
         },
         category: 'historijski',
-        difficulty: 1
+        difficulty: 1,
+        rating: []
     }
 
 

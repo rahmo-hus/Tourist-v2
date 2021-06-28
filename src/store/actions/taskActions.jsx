@@ -13,7 +13,7 @@ import {
 } from "../types";
 
 export const createQuest = (quest) => {
-    return (dispatch, getState, {getFirebase, getFirestore}) => {
+    return (dispatch, getState, {getFirestore}) => {
 
         const firestore = getFirestore();
         dispatch({type: ADDING_QUEST})
@@ -41,7 +41,7 @@ export const createQuest = (quest) => {
 
 export const uploadMultipleFiles = (files) => {
 
-    return (dispatch, state, {getFirebase, getFirestore}) => {
+    return (dispatch, state, {getFirebase}) => {
 
         const firebase = getFirebase();
         const imageURLs = [];
@@ -93,6 +93,7 @@ export const deleteTask = (id) => {
                     type: QUEST_DELETE_SUCCESS
                 });
                 firestore.collection('statistics').doc(id).delete().then().catch();
+                firestore.collection('rating').doc(id).delete().then().catch();
             }).catch(err => {
             dispatch({
                 type: QUEST_DELETE_ERROR,
@@ -102,7 +103,7 @@ export const deleteTask = (id) => {
     }
 }
 export const restoreDefaults = () => {
-    return (dispatch, state, {getFirebase, getFirestore}) => {
+    return (dispatch) => {
         dispatch({
             type: RESTORE_DEFAULTS,
             err: null,
@@ -115,7 +116,7 @@ export const restoreDefaults = () => {
 }
 
 export const updateQuest = (quest, id) => {
-    return (dispatch, state, {getFirebase, getFirestore}) => {
+    return (dispatch, state, {getFirestore}) => {
         const firestore = getFirestore();
 
         firestore.collection('quests').doc(id).update({
