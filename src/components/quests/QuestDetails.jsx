@@ -196,14 +196,14 @@ function QuestDetails(props) {
                             color="textSecondary"
                             gutterBottom
                             align="center"
-                        >Tezina
+                        >Težina
                         </Typography>
                         <Typography
                             className={classes.pos}
                             align="center"
                             variant="body1"
                             component="p"
-                        >   {quest.difficulty}
+                        >{quest.difficulty}
                         </Typography>
                         <Divider/>
                         <Typography
@@ -217,8 +217,7 @@ function QuestDetails(props) {
                                 color="textSecondary"
                                 gutterBottom
                                 align="center"
-                            >
-                                Fotografije
+                            >   Fotografije
                             </Typography>
                         </Typography>{" "}
                         {

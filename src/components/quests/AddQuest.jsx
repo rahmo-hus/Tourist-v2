@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import {Button, Paper, withStyles} from "@material-ui/core";
 import MainForm from "../common/forms/MainForm";
 import {compose} from "redux";
+import {Alert} from "@material-ui/lab";
 
 const useStyles = theme => ({
     paper: {
@@ -32,13 +33,13 @@ class AddQuest extends Component {
             lng: 17.1910
         },
         category: 'historijski',
-        difficulty: 1,
-        rating: []
+        difficulty: "easy",
+        rating: [],
+        submitted : false
     }
 
 
     handleDifficultyChange = input => e => {
-        console.log(this.state)
         this.setState({[input]: e.target.value});
     }
 
@@ -99,11 +100,14 @@ class AddQuest extends Component {
     submitQuest = event => {
 
         event.preventDefault();
+        this.setState({submitted: true});
+        const {submitted, ...questState} = this.state;
 
         this.props.createQuest({
-            ...this.state,
+            ...questState,
             imagesURL: this.props.images,
         })
+
     }
 
 
@@ -132,9 +136,14 @@ class AddQuest extends Component {
                                   handleGameDescriptionChangeBih={this.handleGameDescriptionChangeBih}
                                   handleDifficultyChange={this.handleDifficultyChange}
                                   submitQuest={this.submitQuest}/>
+
+                        {this.props.addQuestSuccess && <Alert severity="success">Uspješno dodan zadatak</Alert> }
+                        <br/>
+
                         <Button color="primary"
                                 variant="contained"
-                                type="submit">
+                                type="submit"
+                                disabled = {this.state.submitted}>
                             Submit
                         </Button>
                     </Grid>
@@ -155,7 +164,7 @@ const mapStateToProps = (state) => {
     return {
         error: state.quest.error,
         inProgress: state.quest.inProgress,
-        addTaskSuccess: state.quest.success,
+        addQuestSuccess: state.quest.success,
         images: state.quest.gallery
     };
 };

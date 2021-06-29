@@ -27,7 +27,8 @@ const taskReducer = (state = initState, action) => {
             return {
                 ...state,
                 inProgress: false,
-                success: 'Uspjesno dodato'
+                success: 'Uspjesno dodato',
+                id: action.id
             }
         case CREATE_QUEST_ERROR:
             return {

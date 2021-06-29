@@ -26,8 +26,10 @@ class LocationPin extends Component {
 
         return (
             <Grid container justify="center" direction="column">
-                <Grid container justify="center">
+                <Grid container justify="center" alignContent="center" direction="column">
+                    <br/>
                     <h1>Odabir lokacije na mapi</h1>
+                    <br/>
                 </Grid>
                 <div style={{height: '70vh', width: '100%'}}>
                     <GoogleMapReact

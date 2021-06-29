@@ -24,9 +24,11 @@ export const createQuest = (quest) => {
                 createdAt: new Date()
             })
             .then((ref) => {
+                console.log(ref)
                 dispatch({
                     type: CREATE_QUEST,
-                    quest: quest
+                    quest: quest,
+                    id:ref.id
                 });
                 firestore.collection("statistics").doc(ref.id).set({title: quest.title, timesSolved: 0});
             })

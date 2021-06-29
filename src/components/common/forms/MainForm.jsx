@@ -49,9 +49,9 @@ class MainForm extends Component {
                                 value={values.difficulty}
                                 onChange={this.props.handleDifficultyChange('difficulty')}
                             >
-                                <MenuItem value={1}>Easy</MenuItem>
-                                <MenuItem value={2}>Medium</MenuItem>
-                                <MenuItem value={3}>Hard</MenuItem>
+                                <MenuItem value="easy">Easy</MenuItem>
+                                <MenuItem value="medium">Medium</MenuItem>
+                                <MenuItem value="hard">Hard</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

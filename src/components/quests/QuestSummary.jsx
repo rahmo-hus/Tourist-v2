@@ -27,7 +27,7 @@ const QuestSummary = (props) =>{
                                 {quest.title.en_us} / {quest.title.sr_bih}
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
-                                {quest.title.sr_bih}
+                                {quest.gameDescription.sr_bih}
                             </Typography>
                             <Typography variant="subtitle1" color="primary">
                                 Otvori za detalje...

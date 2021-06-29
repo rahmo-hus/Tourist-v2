@@ -54,6 +54,7 @@ class ImageGalleryForm extends Component {
                       justify="center"
                       alignContent="center"
                       spacing={2}>
+                    <br/>
                     <Grid container justify="center" alignItems="center">
                         <h1>Upload fotografija</h1>
                     </Grid>
@@ -80,7 +81,7 @@ class ImageGalleryForm extends Component {
                         className={classes.button}
                         startIcon={<CloudUploadIcon/>}
                         onClick={this.handleUploadClicked}
-                        disabled={this.state.uploadDisabled}
+                        disabled={this.state.uploadDisabled || this.state.gallery.length === 0}
                     >
                         Upload
                     </Button>
