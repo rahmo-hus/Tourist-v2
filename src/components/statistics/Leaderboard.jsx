@@ -1,19 +1,10 @@
 import React, {useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import {Date} from 'prismic-reactjs';
 import {MDBCard, MDBCardBody, MDBDataTableV5} from 'mdbreact';
 
 
-const useStyles = makeStyles((theme) => ({
-    seeMore: {
-        marginTop: theme.spacing(3),
-    },
-}));
-
 function Leaderboard(props) {
-    const classes = useStyles();
-    const [reverse, setReverse] = useState(1);
-    const [leaderboard, setLeaderboard] = useState(props.leaderboard.slice());
+    const [leaderboard] = useState(props.leaderboard.slice());
 
 
     const columns = [

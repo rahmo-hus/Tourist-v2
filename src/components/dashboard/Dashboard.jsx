@@ -166,7 +166,7 @@ function Dashboard(props) {
 
                     <Switch>
                         <Route exact path={`${match.path}/`} render={() => {
-                            return <div><h2>Dobrodošli na pocetnu stranicu sistema Tourist</h2></div>
+                            return <div><h2>Dobrodošli na početnu stranicu sistema Tourist</h2></div>
                         }}/>
                         <Route path={`${match.path}/add-quest`} component={AddQuest}/>
                         <Route path={`${match.path}/quests`} component={QuestList}/>

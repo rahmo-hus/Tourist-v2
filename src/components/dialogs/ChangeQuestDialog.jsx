@@ -43,7 +43,7 @@ function ChangeQuestDialog(props) {
     const [, setFileChangeClicked] = React.useState(false);
     const [questProperties, setQuestProperties] = React.useState({});
     const [currentGallery, setCurrentGallery] = React.useState([]);
-    const [imgURL, setImgURL] = React.useState('')
+
     const handleClickOpen = () => {
         setOpen(true);
         setQuestProperties(quest);
@@ -64,7 +64,7 @@ function ChangeQuestDialog(props) {
         setCurrentGallery([]);
     };
 
-    const handleDifficultyChange = input => e => {
+    const handleCategoryChange = input => e => {
         setQuestProperties({
             ...questProperties,
             [input]: e.target.value
@@ -192,7 +192,7 @@ function ChangeQuestDialog(props) {
                 <DialogContent>
 
                     <MainForm values={questProperties}
-                              handleDifficultyChange={handleDifficultyChange}
+                              handleCategoryChange={handleCategoryChange}
                               handleTitleChangeBih={handleTitleChangeBih}
                               handleTitleChangeEn={handleTitleChangeEn}
                               handleLocationDescriptionChangeEn={handleLocationDescriptionChangeEn}

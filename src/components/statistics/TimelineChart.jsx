@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 
-// Generate Sales Data
 function createData(time, započeto, završeno) {
     return {time, započeto, završeno};
 }

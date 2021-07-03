@@ -10,7 +10,6 @@ import clsx from "clsx";
 import IndividualTaskSummary from "./IndividualTaskSummary";
 import Leaderboard from "./Leaderboard";
 
-
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
 

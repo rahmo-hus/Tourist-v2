@@ -33,13 +33,12 @@ class AddQuest extends Component {
             lng: 17.1910
         },
         category: 'historijski',
-        difficulty: "easy",
         rating: [],
         submitted : false
     }
 
 
-    handleDifficultyChange = input => e => {
+    handleCategoryChange = input => e => {
         this.setState({[input]: e.target.value});
     }
 
@@ -134,7 +133,7 @@ class AddQuest extends Component {
                                   handleLocationDescriptionChangeBih={this.handleLocationDescriptionBih}
                                   handleTitleChangeBih={this.handleTitleChangeBih}
                                   handleGameDescriptionChangeBih={this.handleGameDescriptionChangeBih}
-                                  handleDifficultyChange={this.handleDifficultyChange}
+                                  handleCategoryChange={this.handleCategoryChange}
                                   submitQuest={this.submitQuest}/>
 
                         {this.props.addQuestSuccess && <Alert severity="success">Uspješno dodan zadatak</Alert> }

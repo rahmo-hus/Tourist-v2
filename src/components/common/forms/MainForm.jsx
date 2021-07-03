@@ -40,21 +40,6 @@ class MainForm extends Component {
                     <Grid item xs>
                         <h1>Unos osnovnih podataka</h1>
                     </Grid>
-                    <Grid item xs>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel id="difficulty-label-id">Težina</InputLabel>
-                            <Select
-                                labelId="difficulty-label-id"
-                                id="difficulty"
-                                value={values.difficulty}
-                                onChange={this.props.handleDifficultyChange('difficulty')}
-                            >
-                                <MenuItem value="easy">Easy</MenuItem>
-                                <MenuItem value="medium">Medium</MenuItem>
-                                <MenuItem value="hard">Hard</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
                     <br/>
                     <Grid item xs>
                         <FormControl className={classes.formControl}>
@@ -63,12 +48,15 @@ class MainForm extends Component {
                                 labelId="category-label-id"
                                 id="category"
                                 value={values.category}
-                                onChange={this.props.handleDifficultyChange('category')}
+                                onChange={this.props.handleCategoryChange('category')}
                             >
                                 <MenuItem value={"kulturni"}>Kulturni</MenuItem>
                                 <MenuItem value={"historijski"}>Historijski</MenuItem>
                                 <MenuItem value={"priroda"}>Priroda</MenuItem>
+                                <MenuItem value={"umjetnost"}>Umjetnost</MenuItem>
+                                <MenuItem value={"sport"}>Sport</MenuItem>
                             </Select>
+                            <br/>
                         </FormControl>
                     </Grid>
                     <Grid container item xs={12}>

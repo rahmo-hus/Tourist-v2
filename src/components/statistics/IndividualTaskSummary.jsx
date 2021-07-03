@@ -60,7 +60,7 @@ export default function IndividualTaskSummary(props) {
         const appearancesCount = getAppearancesCount(quest.id);
         const accomplishmentsCount = getQuestAccomplishmentsCount(quest.id);
         const successPercentage = (appearancesCount !== 0 ? Math.round(100 * accomplishmentsCount / appearancesCount) : 0) + '%';
-        const averageRating = (quest.rating.reduce((a, b) => a + b, 0) / quest.rating.length) || 0;
+        const averageRating = Math.round((quest.rating.reduce((a, b) => a + b, 0) / quest.rating.length)*100) /100 || 0;
         const visitPercentage = (timesSolvedTotal !== 0 ? Math.round(statistics.filter(item => item.id === quest.id)[0].timesSolved * 100 / timesSolvedTotal) : 0) + '%';
 
         return ({
